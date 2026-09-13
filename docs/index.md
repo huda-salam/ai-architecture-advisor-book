@@ -38,3 +38,5 @@ Cross-cutting concerns:
 - [3. Relationship With CTO, Head of AI & Vendors](./chapters/03-relationships)
 - [4. Advisor Operating Principles](./chapters/04-operating-principles)
 - [5. Advisory Communication & Influence](./chapters/05-advisory-communication)
+- [6. How to Evaluate a Technology Proposal](./chapters/06-evaluating-proposals)
+- [7. Architecture Decision Framework](./chapters/07-architecture-decisions)
