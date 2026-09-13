@@ -51,6 +51,7 @@ export default withMermaid(defineConfig({
           { text: '17. Scalability & Performance', link: '/chapters/17-scalability-performance' },
           { text: '18. Reliability', link: '/chapters/18-reliability' },
           { text: '19. AI Security Model', link: '/chapters/19-ai-security-model' },
+          { text: '20. Identity & Access Control', link: '/chapters/20-identity-access-control' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -59,7 +60,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 16', link: '/chapters/16-evidence-review' },
           { text: 'Evidence Review — Chapter 17', link: '/chapters/17-evidence-review' },
           { text: 'Evidence Review — Chapter 18', link: '/chapters/18-evidence-review' },
-          { text: 'Evidence Review — Chapter 19', link: '/chapters/19-evidence-review' }
+          { text: 'Evidence Review — Chapter 19', link: '/chapters/19-evidence-review' },
+          { text: 'Evidence Review — Chapter 20', link: '/chapters/20-evidence-review' }
         ]
       }
     ],
