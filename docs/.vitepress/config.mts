@@ -11,7 +11,8 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Chapters', link: '/chapters/00-reasoning-evidence' }
+      { text: 'Chapters', link: '/chapters/00-reasoning-evidence' },
+      { text: 'Evidence Review', link: '/chapters/08-09-evidence-review' }
     ],
     sidebar: [
       {
@@ -38,7 +39,8 @@ export default withMermaid(defineConfig({
         collapsed: true,
         items: [
           { text: '8. AI Architecture Fundamentals', link: '/chapters/08-ai-architecture-fundamentals' },
-          { text: '9. Enterprise LLM Architecture', link: '/chapters/09-enterprise-llm-architecture' }
+          { text: '9. Enterprise LLM Architecture', link: '/chapters/09-enterprise-llm-architecture' },
+          { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' }
         ]
       }
     ],
