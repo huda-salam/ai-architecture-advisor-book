@@ -10,20 +10,14 @@ It is not an AI strategy plan, product manual, or implementation guide. Its purp
 
 ### The architecture spine
 
-```text
-Data Sources
-      ↓
-Data / Cloud Layer
-      ↓
-Processing & Intelligence Pipeline
-      ↓
-AI / ML / LLM Models
-      ↓
-Agents / Workflows
-      ↓
-AI-IDSS
-      ↓
-Regional Director Interface
+```mermaid
+flowchart TD
+    A[Data Sources] --> B[Data / Cloud Layer]
+    B --> C[Processing & Intelligence Pipeline]
+    C --> D[AI / ML / LLM Models]
+    D --> E[Agents / Workflows]
+    E --> F[AI-IDSS]
+    F --> G[Regional Director Interface]
 ```
 
 Cross-cutting concerns:
@@ -40,3 +34,5 @@ Cross-cutting concerns:
 - [5. Advisory Communication & Influence](./chapters/05-advisory-communication)
 - [6. How to Evaluate a Technology Proposal](./chapters/06-evaluating-proposals)
 - [7. Architecture Decision Framework](./chapters/07-architecture-decisions)
+- [8. AI Architecture Fundamentals](./chapters/08-ai-architecture-fundamentals)
+- [9. Enterprise LLM Architecture](./chapters/09-enterprise-llm-architecture)
