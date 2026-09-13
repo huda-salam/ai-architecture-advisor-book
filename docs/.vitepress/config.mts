@@ -59,6 +59,7 @@ export default withMermaid(defineConfig({
           { text: '25. AI Connectors', link: '/chapters/25-ai-connectors' },
           { text: '26. AI-IDSS Reference Architecture', link: '/chapters/26-ai-idss-reference-architecture' },
           { text: '27. Investment Risk Alert', link: '/chapters/27-investment-risk-alert' },
+          { text: '28. Explainability & Evidence', link: '/chapters/28-explainability-evidence' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -75,7 +76,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 24', link: '/chapters/24-evidence-review' },
           { text: 'Evidence Review — Chapter 25', link: '/chapters/25-evidence-review' },
           { text: 'Evidence Review — Chapter 26', link: '/chapters/26-evidence-review' },
-          { text: 'Evidence Review — Chapter 27', link: '/chapters/27-evidence-review' }
+          { text: 'Evidence Review — Chapter 27', link: '/chapters/27-evidence-review' },
+          { text: 'Evidence Review — Chapter 28', link: '/chapters/28-evidence-review' }
         ]
       }
     ],
