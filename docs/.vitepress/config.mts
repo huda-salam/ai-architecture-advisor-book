@@ -31,6 +31,13 @@ export default defineConfig({
           { text: '6. How to Evaluate a Technology Proposal', link: '/chapters/06-evaluating-proposals' },
           { text: '7. Architecture Decision Framework', link: '/chapters/07-architecture-decisions' }
         ]
+      },
+      {
+        text: 'Part III — Enterprise AI Architecture',
+        collapsed: true,
+        items: [
+          { text: '8. AI Architecture Fundamentals', link: '/chapters/08-ai-architecture-fundamentals' }
+        ]
       }
     ],
     search: {
