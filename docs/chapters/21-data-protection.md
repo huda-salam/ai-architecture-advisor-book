@@ -12,7 +12,7 @@ The advisor's question is therefore:
 
 > **Where can sensitive data exist, what can happen to it there, who can access it, and what control remains effective if another layer fails?**
 
-NIST treats data processing as a lifecycle that includes collection, retention, logging, generation, transformation, use, disclosure, transmission, and disposal. Privacy risk therefore cannot be reduced to breach prevention alone. [NIST Privacy Framework](https://www.nist.gov/privacy-framework)
+NIST's Privacy Framework treats privacy risk as arising from data processing across a lifecycle, while cybersecurity controls address protection of information and systems more broadly. The distinction matters: not every confidentiality problem is a privacy problem, and privacy risk is not reducible to breach prevention. [NIST Privacy Framework](https://www.nist.gov/privacy-framework) [NIST Privacy Framework FAQ](https://www.nist.gov/privacy-framework/frequently-asked-questions)
 
 ## 21.2 Data Classification Before Protection
 
@@ -35,7 +35,7 @@ Do not confuse classification with a security control. A label saying `CONFIDENT
 
 A secure architecture should avoid moving or retaining data that is not necessary for the stated purpose.
 
-NIST defines minimization as limiting the creation, collection, use, processing, storage, maintenance, dissemination, or disclosure of personal information to what is relevant and necessary for an authorized purpose, and retaining it only as long as necessary for that purpose. [NIST minimization glossary](https://csrc.nist.gov/glossary/term/minimization)
+NIST defines minimization specifically in relation to personal information: limiting collection, use, processing, storage, maintenance, dissemination, or disclosure to what is relevant and necessary for an authorized purpose, and retaining it only as long as necessary for that purpose. This is not a universal rule that less data is always better; minimization is purpose- and risk-dependent. [NIST minimization glossary](https://csrc.nist.gov/glossary/term/minimization)
 
 For AI systems this leads to a useful architecture question:
 
@@ -53,7 +53,7 @@ Possible techniques include:
 - retrieval of only relevant records;
 - derived features instead of raw attributes.
 
-These techniques are not interchangeable and do not provide identical guarantees. Their suitability depends on the use case, threat model, and reversibility requirements.
+These techniques are not interchangeable and do not provide identical guarantees. Their suitability depends on the use case, threat model, reversibility requirements, and analytical utility. NIST also notes that privacy-enhancing and data-minimizing techniques can involve trade-offs with accuracy in some conditions. [NIST AI trustworthiness characteristics](https://airc.nist.gov/airmf-resources/airmf/3-sec-characteristics/)
 
 ## 21.4 Data Flow Mapping
 
@@ -79,6 +79,12 @@ For AI-IDSS, a useful data-flow diagram is:
 Authoritative Sources
         │
         ↓
+Classification / Policy
+        │
+        ↓
+Pre-processing / Minimization
+        │
+        ↓
 Integration / Ingestion
         │
         ↓
@@ -102,9 +108,12 @@ Response / Recommendation
         │
         ↓
 Human Decision
+        │
+        ↓
+Retention / Deletion
 ```
 
-The purpose is not documentation for its own sake. The map reveals where data crosses trust, jurisdiction, provider, and authorization boundaries.
+The purpose is not documentation for its own sake. The map reveals where data crosses trust, jurisdiction, provider, and authorization boundaries, and where transformed or duplicated artifacts are created.
 
 ## 21.5 Encryption: What It Solves and What It Does Not
 
@@ -122,6 +131,12 @@ Consider separately:
 Encryption at rest is not equivalent to access control. A service that legitimately holds the decryption capability can still expose plaintext through an application flaw or excessive privilege.
 
 NIST's storage-encryption guidance describes encryption as a mechanism for restricting unauthorized access to stored information and emphasizes that the appropriate approach depends on storage type, information, environment, and threats. [NIST SP 800-111](https://csrc.nist.gov/pubs/sp/800/111/final)
+
+A useful control hierarchy for this chapter is therefore:
+
+**Classification → authorization → minimization → controlled processing → encryption/key management → monitoring/audit**
+
+This is an architectural heuristic, not a formal NIST ranking. The ordering emphasizes that encryption should complement, rather than substitute for, decisions about what data may be processed and who may access it.
 
 ## 21.6 Key Management Is Part of the Security Boundary
 
@@ -289,6 +304,8 @@ The advisor should not infer that selecting an Indonesia-based storage region au
 
 When sensitive data is sent to an external AI provider, evaluate the complete processing boundary.
 
+NIST's Generative AI Profile specifically identifies third-party GAI integrations as a source of potential intellectual-property, data-privacy, and information-security risk and recommends risk management and due diligence for third-party models, tools, data, and providers. [NIST AI RMF Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
+
 Questions include:
 
 1. What data leaves the organization's controlled environment?
@@ -341,7 +358,20 @@ For every significant data store, define:
 - backup implications;
 - verification method.
 
-Deletion is often harder than insertion because copies may exist in indexes, caches, replicas, snapshots, and backups.
+Deletion must be considered separately for each artifact class:
+
+| Artifact | Example deletion question |
+|---|---|
+| Source data | Has the authoritative record been deleted or deactivated? |
+| Extracted text | Has extracted content been removed? |
+| Embeddings/indexes | Has the derived representation been removed or invalidated? |
+| Cache | Can cached copies expire or be purged? |
+| Prompts/outputs | Are conversational or inference records retained? |
+| Logs/traces | Do observability systems contain sensitive payloads? |
+| Backups/snapshots | What is the backup retention and deletion behavior? |
+| Audit records | Which records must be preserved despite deletion elsewhere? |
+
+Deleting the source record does not by itself demonstrate that every derivative has disappeared. Conversely, not every audit record should necessarily be deleted when source data is removed; retention obligations may differ by artifact and purpose.
 
 Therefore the advisor should ask:
 
@@ -365,7 +395,7 @@ AI systems create additional artifacts:
 - traces;
 - safety-test datasets.
 
-Each artifact should have a defined purpose and protection requirement.
+Each artifact should have a defined purpose, owner, retention rule, and protection requirement.
 
 A useful lifecycle is:
 
@@ -587,10 +617,11 @@ Different data types can have materially different security, privacy, retention,
 
 ### Lifecycle
 
-- [ ] Retention is defined.
+- [ ] Retention is defined per relevant artifact class.
 - [ ] Deletion triggers are defined.
 - [ ] Derived copies are included in lifecycle analysis.
 - [ ] Backup behavior is understood.
+- [ ] Audit-retention requirements are distinguished from deletion requirements.
 
 ## 21.25 Evidence Discipline
 
@@ -598,9 +629,11 @@ Different data types can have materially different security, privacy, retention,
 
 Examples:
 
-- NIST defines data processing broadly across a lifecycle of data actions.
+- NIST's Privacy Framework addresses privacy risk arising from data processing and is centered on protecting individuals' privacy.
+- NIST explicitly distinguishes protection of business information from the primary scope of its Privacy Framework and points to cybersecurity safeguards for business information.
+- NIST defines minimization in terms of relevance, necessity, authorized purpose, and retention.
 - NIST provides guidance on storage encryption technologies.
-- NIST's Privacy Framework treats privacy risk as something that can arise from data processing, not only cybersecurity incidents. [NIST Privacy Framework](https://www.nist.gov/privacy-framework)
+- NIST's Generative AI Profile identifies third-party GAI integrations as potential sources of data-privacy and information-security risk and calls for due diligence and risk controls.
 
 ### Architecture Recommendation
 
@@ -609,6 +642,7 @@ Examples:
 - Minimize sensitive data before model inference where feasible.
 - Include vector indexes and logs in the data-protection boundary.
 - Treat credentials as both sensitive data and authority.
+- Map deletion separately across source and derived artifact classes.
 
 ### Inference
 
@@ -620,7 +654,11 @@ This is an architectural inference, not a universal empirical law.
 
 ### Provider-Specific Fact
 
-Retention, training use, regional processing, contractual controls, and subprocessors must be verified against the current provider's documentation and contract.
+Retention, training use, regional processing, contractual controls, subprocessors, and deletion behavior must be verified against the current provider's documentation and contract.
+
+### Assumption
+
+When a design review does not yet have provider or contractual evidence, statements about retention, regional processing, or training use must be marked as assumptions or unknowns—not treated as facts.
 
 ### Uncertainty
 
@@ -632,10 +670,11 @@ The advisor should revise a data-protection recommendation if credible evidence 
 
 - a less complex control provides equivalent protection against the defined threat;
 - a provider offers stronger contractual and technical guarantees than initially assumed;
-- a data transformation demonstrably reduces sensitivity without harming required analytical utility;
+- a data transformation demonstrably reduces exposure without harming required analytical utility;
 - retention or deletion requirements are materially different from the assumed lifecycle;
 - testing demonstrates that the proposed control causes unacceptable availability, latency, or operational risk;
-- regulatory or contractual requirements change the acceptable architecture.
+- regulatory or contractual requirements change the acceptable architecture;
+- a derived artifact is demonstrated to have materially different sensitivity from the precaution initially assumed.
 
 ## 21.27 Field Rule
 
