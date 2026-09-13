@@ -55,7 +55,7 @@ Each review should consider at least:
 | 20 | Identity & Access Control | `DONE` | `DONE` | 2–3+ | None currently recorded | `DEPLOYED` verified |
 | 21 | Data Protection | `DONE` | `DONE` | 3+ | None currently recorded after additional evidence-hardening iteration | Verify during final audit |
 | 22 | AI-Specific Threats | `DONE` | `DONE` | 3+ | None currently recorded after additional review | `DEPLOYED` verified (run 34787994748) |
-| 23 | Enterprise Integration Architecture | `DRAFT` | `DRAFT` | — | Planned; must be kept distinct from Chapter 13 Data Integration | Not applicable |
+| 23 | Enterprise Integration Architecture | `REVIEW_REQUIRED` | `DONE` | 2 | Fix one permanent-source formatting marker in chapter content, then build/deploy and perform final review | Not yet verified |
 | 24–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop and review sequentially | Not applicable |
 
 ## Chapters Requiring Known Re-Review
@@ -78,18 +78,26 @@ The NIST Data Governance and Management Profile was still described as work in p
 
 These chapters have strong substantive architecture and evidence reviews. Re-review is not currently blocking progress, but current vendor/model/security claims should be checked again before final publication because the subject changes rapidly.
 
+### Chapter 23 — Enterprise Integration Architecture
+
+**Status:** `REVIEW_REQUIRED` pending a small editorial correction.
+
+The substantive and evidence review passes are complete. A malformed temporary citation marker was accidentally included in the chapter during creation and must be replaced with the permanent source reference before the chapter is considered complete and deployed.
+
 ## Completed Additional Iterations
 
 | Chapter | Additional review | Result |
 |---:|---|---|
 | 21 | Additional evidence-hardening iteration | Completed; privacy/security distinction, minimization scope, provider due diligence, derived artifacts, retention/deletion, and data-flow boundaries strengthened. |
 | 22 | Additional evidence/security iteration | Completed; taxonomy, prompt injection, RAG poisoning, confabulation, agent authority, attack-path testing, and version/source discipline rechecked. No material blocking issue found. |
+| 23 | Substance + evidence review | Completed; enterprise topology was kept distinct from Chapter 13 data integration, NIST API/Zero Trust sources were checked, and product-driven overclaims were rejected. Editorial source-marker cleanup remains. |
 
 ## Deployment Verification Notes
 
 - Chapter 17: GitHub Actions build and deploy were explicitly verified successful.
 - Chapter 20: GitHub Actions build and deploy were explicitly verified successful.
 - Chapter 22: workflow run `34787994748` was explicitly verified with both `build` and `Deploy` jobs completed successfully.
+- Chapter 23: not yet verified.
 
 ## Re-Review Protocol
 
