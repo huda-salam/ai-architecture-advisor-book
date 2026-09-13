@@ -53,6 +53,7 @@ export default withMermaid(defineConfig({
           { text: '19. AI Security Model', link: '/chapters/19-ai-security-model' },
           { text: '20. Identity & Access Control', link: '/chapters/20-identity-access-control' },
           { text: '21. Data Protection', link: '/chapters/21-data-protection' },
+          { text: '22. AI-Specific Threats', link: '/chapters/22-ai-specific-threats' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -63,7 +64,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 18', link: '/chapters/18-evidence-review' },
           { text: 'Evidence Review — Chapter 19', link: '/chapters/19-evidence-review' },
           { text: 'Evidence Review — Chapter 20', link: '/chapters/20-evidence-review' },
-          { text: 'Evidence Review — Chapter 21', link: '/chapters/21-evidence-review' }
+          { text: 'Evidence Review — Chapter 21', link: '/chapters/21-evidence-review' },
+          { text: 'Evidence Review — Chapter 22', link: '/chapters/22-evidence-review' }
         ]
       }
     ],
