@@ -2,28 +2,26 @@
 
 > **Advisor question:** How should the enterprise connect applications, data, services, events, and external parties so that integration remains secure, reliable, evolvable, observable, and aligned with ownership boundaries?
 
-Chapter 13 treated **data integration**: how information crosses system boundaries while preserving meaning, identity, quality, and operational guarantees. This chapter moves one level upward.
+Chapter 13 focuses on **data integration**: how information crosses a boundary while preserving meaning, identity, quality, integrity, freshness, and failure semantics. This chapter moves one level upward.
 
-**Enterprise integration architecture** concerns the topology and governance of those connections across the enterprise: which systems communicate directly, which capabilities are exposed as services, where policy is enforced, where asynchronous communication is used, who owns each boundary, and how the architecture evolves.
+**Enterprise integration architecture** concerns the enterprise-wide organization of those connections: system boundaries, ownership, capability exposure, communication style, coupling, security enforcement, lifecycle, observability, and platform dependency.
 
 The distinction matters because a technically correct interface can still be part of a poor enterprise architecture.
 
 ---
 
-## 23.1 Integration Is an Enterprise Architecture Concern
+## 23.1 Enterprise Integration Is an Architecture Concern
 
-Integration is not simply a collection of APIs, queues, ETL jobs, and connectors.
+Integration is not simply a collection of APIs, queues, ETL jobs, and connectors. It defines how independently owned systems cooperate.
 
-It defines how independently owned systems cooperate.
-
-At enterprise scale, the advisor should understand:
+The advisor should understand:
 
 - system boundaries;
 - ownership boundaries;
 - trust boundaries;
 - data authority;
 - service authority;
-- integration patterns;
+- interaction patterns;
 - synchronous and asynchronous communication;
 - transaction boundaries;
 - failure domains;
@@ -53,13 +51,11 @@ The transport is only one layer of the architecture.
 
 ## 23.2 Chapter 13 vs Chapter 23
 
-The distinction should remain explicit.
-
 | Chapter 13 — Data Integration | Chapter 23 — Enterprise Integration Architecture |
 |---|---|
-| How data crosses a boundary | How the enterprise organizes integration boundaries |
+| How information crosses a boundary | How the enterprise organizes integration boundaries |
 | Semantic mapping | Ownership and topology |
-| CDC, ETL, messaging | API, event, workflow, integration-platform strategy |
+| CDC, ETL, messaging | API, event, workflow, platform strategy |
 | Data contracts | Service/interface boundaries |
 | Duplicate handling | Dependency and coupling management |
 | Data provenance | Enterprise observability and governance |
@@ -73,27 +69,26 @@ Chapter 23 asks:
 
 > **Should these systems interact this way, through this boundary, with this authority, and with this lifecycle?**
 
+This is an editorial architecture distinction; the two concerns overlap in real systems.
+
 ---
 
-## 23.3 Start With System Boundaries
+## 23.3 Start With System and Ownership Boundaries
 
-Before selecting an integration technology, identify the systems involved.
+Before selecting technology, identify each participating system.
 
 For each system, document:
 
 - business capability;
-- owner;
-- system of record responsibilities;
-- authoritative data;
-- exposed capabilities;
+- technical owner;
+- business/data owner;
+- authoritative data or capability;
 - consumers;
 - trust level;
 - security classification;
-- availability requirements;
+- availability requirement;
 - lifecycle;
 - external dependencies.
-
-A useful enterprise map is:
 
 ```text
                 ┌───────────────┐
@@ -111,24 +106,13 @@ A useful enterprise map is:
                   AI / Analytics
 ```
 
-The purpose is not to draw every connection. It is to make important boundaries visible.
-
----
-
-## 23.4 Ownership Before Connectivity
-
-Every important interface should have an owner.
-
-Ownership should answer:
+Every important interface should have an owner who can answer:
 
 - Who defines the contract?
 - Who approves changes?
-- Who operates the interface?
+- Who operates it?
 - Who owns incidents?
 - Who determines deprecation?
-- Who owns the underlying data or capability?
-
-An integration without clear ownership becomes an organizational dependency disguised as a technical dependency.
 
 **Field rule:**
 
@@ -136,9 +120,9 @@ An integration without clear ownership becomes an organizational dependency disg
 
 ---
 
-## 23.5 API as a Capability Boundary
+## 23.4 APIs as Capability Boundaries
 
-An API can expose a business capability rather than merely expose database fields.
+An API can expose a business capability rather than expose internal database structures.
 
 Prefer, where appropriate:
 
@@ -152,40 +136,21 @@ over:
 Consumer → Shared Database Tables
 ```
 
-The second pattern creates stronger coupling to internal implementation.
+The second pattern creates stronger coupling to implementation details. That does not make direct data access universally wrong; the advisor should understand the dependency being created.
 
-This does not mean database access is always wrong. It means the advisor should understand what dependency is being created.
+NIST SP 800-228 treats API security as a lifecycle concern covering development and runtime, with risk-based controls and multiple implementation options. The current publication is the March 13, 2026 update. [NIST SP 800-228](https://csrc.nist.gov/pubs/sp/800/228/upd1/final)
 
-NIST SP 800-228 treats API protection as a lifecycle concern spanning development and runtime, with risk-based controls rather than reliance on a single security mechanism. The current NIST update was published in March 2026. [NIST SP 800-228](https://csrc.nist.gov/pubs/sp/800/228/upd1/final)
-
----
-
-## 23.6 API Gateway
-
-An API gateway can provide a controlled entry point for APIs and may support functions such as:
-
-- routing;
-- authentication integration;
-- authorization enforcement;
-- rate limiting;
-- traffic control;
-- observability;
-- policy enforcement;
-- protocol mediation.
-
-But an API gateway is not automatically the complete API security architecture.
-
-NIST's API guidance describes controls across API lifecycle stages and discusses multiple implementation options. cite not permanent
+An API gateway may provide routing, traffic control, authentication integration, authorization enforcement, rate limiting, and observability, but it is not automatically the complete API security architecture.
 
 **Advisor question:**
 
-> Which security and operational responsibilities are actually enforced at the gateway, and which remain inside the application or downstream service?
+> Which responsibilities are enforced at the gateway, and which remain inside the application or downstream service?
 
 ---
 
-## 23.7 Service-to-Service Integration
+## 23.5 Service-to-Service Integration and Zero Trust
 
-In distributed systems, services may communicate directly.
+In distributed systems:
 
 ```text
 Service A → Service B
@@ -198,23 +163,24 @@ The architecture should make explicit:
 - authorization;
 - timeout;
 - retry policy;
-- circuit breaking;
 - request limits;
 - contract/version;
 - observability;
 - dependency criticality.
 
-NIST Zero Trust Architecture emphasizes resource protection rather than implicit trust based on network location, with authentication and authorization as distinct functions. [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final)
+NIST SP 800-207 defines Zero Trust around protecting resources rather than granting implicit trust based on network location, and treats authentication and authorization as distinct functions. [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final)
 
-For cloud-native environments, NIST SP 800-207A further describes application and service identities and policy enforcement mechanisms such as API gateways and service infrastructure. [NIST SP 800-207A](https://csrc.nist.gov/pubs/sp/800/207/a/final)
+NIST SP 800-207A applies these principles to cloud-native applications and discusses application/service identities and policy enforcement mechanisms. [NIST SP 800-207A](https://csrc.nist.gov/pubs/sp/800/207/a/final)
+
+**Architecture implication:** network reachability should not by itself determine whether one service is authorized to use another.
+
+This is an architecture application of Zero Trust principles, not a requirement for a particular product such as a service mesh.
 
 ---
 
-## 23.8 Synchronous vs Asynchronous Integration
+## 23.6 Synchronous vs Asynchronous Integration
 
-The first architectural question is often not REST vs messaging.
-
-It is:
+The first question is often not REST versus messaging. It is:
 
 > **Does the caller need the result before continuing?**
 
@@ -225,11 +191,7 @@ A → request → B
 A ← response ← B
 ```
 
-Useful when:
-
-- an immediate result is required;
-- the dependency can meet the latency requirement;
-- coupling is acceptable.
+Useful when immediate response is required and runtime coupling is acceptable.
 
 ### Asynchronous
 
@@ -237,23 +199,24 @@ Useful when:
 A → message → Broker → B
 ```
 
-Useful when:
-
-- work can continue independently;
-- temporary outages should be absorbed;
-- producers and consumers should be decoupled in time.
+Useful when work can continue independently or temporary dependency outages should be absorbed.
 
 Neither is inherently superior.
 
-**Recommendation:** choose communication timing based on business and operational requirements, not technology fashion.
+Choose based on:
+
+- business timing;
+- latency;
+- consistency;
+- failure tolerance;
+- coupling;
+- operational capability.
 
 ---
 
-## 23.9 Event-Driven Integration
+## 23.7 Event-Driven Integration
 
 An event communicates that something happened.
-
-Example:
 
 ```text
 Portfolio Financials Updated
@@ -265,12 +228,12 @@ Portfolio Financials Updated
       Model  Lake
 ```
 
-Events can reduce direct runtime coupling, but they introduce their own architectural requirements:
+An event architecture requires explicit decisions about:
 
 - event ownership;
-- event schema;
+- schema;
 - delivery semantics;
-- ordering expectations;
+- ordering;
 - replay;
 - retention;
 - consumer independence;
@@ -279,30 +242,24 @@ Events can reduce direct runtime coupling, but they introduce their own architec
 
 Do not equate event-driven architecture with guaranteed consistency or exactly-once processing.
 
----
+### Event backbone vs integration hub
 
-## 23.10 Event Backbone vs Integration Hub
-
-These patterns solve different problems.
-
-| Pattern | Strength | Risk |
+| Pattern | Typical strength | Main concern |
 |---|---|---|
-| Central integration hub | Central routing, transformation, policy | Central dependency and platform coupling |
-| Event backbone | Decoupled producers/consumers | Operational and semantic complexity |
-| Direct APIs | Simple capability access | Runtime coupling |
-| Workflow/orchestrator | Explicit multi-step process | Orchestration complexity and central control |
+| Direct API | Simple capability access | Runtime coupling |
+| Integration hub | Central routing/policy/reuse | Central dependency |
+| Event backbone | Temporal decoupling/fan-out | Operational and semantic complexity |
+| Workflow/orchestrator | Explicit process control | Orchestration complexity |
 
-A mature enterprise may use all four.
+A mature enterprise may use several patterns simultaneously.
 
 **Advisor principle:** architecture should be compositional rather than ideological.
 
 ---
 
-## 23.11 Workflow Orchestration
+## 23.8 Workflow Orchestration and Transaction Boundaries
 
-Some business processes span multiple systems.
-
-Example:
+Some business processes span multiple systems:
 
 ```text
 Investment Review
@@ -313,7 +270,7 @@ Validate Data
       ↓
 Run Risk Model
       ↓
-Retrieve Supporting Evidence
+Retrieve Evidence
       ↓
 Generate Assessment
       ↓
@@ -322,38 +279,22 @@ Human Review
 Record Decision
 ```
 
-A workflow engine or application orchestrator may coordinate such a process.
+An orchestrator can make sequencing, compensation, status, and failure handling explicit.
 
 The advisor should distinguish:
 
-- **orchestration** — one component coordinates the workflow;
-- **choreography** — participating systems react to events without one central coordinator.
+- **orchestration** — one component coordinates the process;
+- **choreography** — participants react to events without one central coordinator.
 
-Neither is universally better.
+The important question is not which pattern is fashionable, but which gives adequate visibility and control at acceptable complexity.
 
-Use explicit orchestration when process visibility, sequencing, compensation, and control are important. Use event-driven choreography where decentralized reaction and loose temporal coupling provide real value.
+Distributed workflows also require explicit transaction boundaries.
 
----
+Ask:
 
-## 23.12 Transaction Boundaries
+> **What must succeed together?**
 
-Distributed integration creates an important question:
-
-> What must succeed together?
-
-Consider:
-
-```text
-ERP Update
-    ↓
-Risk Model Update
-    ↓
-AI-IDSS Refresh
-```
-
-These operations may not belong to one atomic transaction.
-
-The architecture must therefore define:
+If operations cannot be atomic, define:
 
 - consistency requirements;
 - partial-failure behavior;
@@ -362,13 +303,13 @@ The architecture must therefore define:
 - reconciliation;
 - user-visible state.
 
-Do not pretend that a distributed workflow has atomicity simply because each individual API call succeeds.
+Do not imply distributed atomicity merely because each API call succeeds individually.
 
 ---
 
-## 23.13 Coupling
+## 23.9 Coupling
 
-Integration creates coupling in several dimensions:
+Integration creates several forms of coupling:
 
 | Coupling | Example |
 |---|---|
@@ -377,26 +318,24 @@ Integration creates coupling in several dimensions:
 | Temporal | Consumer must be available now |
 | Operational | Shared platform dependency |
 | Security | Shared identity/authorization model |
-| Version | Consumer depends on specific interface version |
+| Version | Consumer depends on interface version |
 | Organizational | Producer and consumer require coordinated ownership |
+
+The objective is not zero coupling.
+
+> **The objective is controlled coupling with explicit ownership and acceptable change cost.**
 
 The advisor should identify which coupling is intentional and which is accidental.
 
-**Field rule:**
-
-> The objective is not zero coupling. It is **controlled coupling with explicit ownership and acceptable change cost**.
-
 ---
 
-## 23.14 Canonical Models vs Domain Models
+## 23.10 Canonical Models and Domain Models
 
-Enterprise integration sometimes proposes one universal data model.
+A universal enterprise model can create useful shared semantics when many systems genuinely need the same representation.
 
-That can be useful when many systems genuinely share stable semantics.
+It can also become a central bottleneck for change.
 
-But a universal model can also become a central bottleneck for change.
-
-An alternative is to preserve domain-specific models and translate between them at explicit boundaries.
+An alternative is to preserve domain-specific models and translate at explicit boundaries:
 
 ```text
 Portfolio Domain Model
@@ -410,15 +349,15 @@ Risk Domain Model
 AI-IDSS Model
 ```
 
-**Recommendation:** use the smallest shared semantic model that creates meaningful interoperability without forcing unrelated domains into one abstraction.
+**Recommendation:** use shared models where their interoperability value justifies the governance and change cost. Do not create a universal model merely to eliminate all local schemas.
 
 This is an architecture recommendation, not a universal standard.
 
 ---
 
-## 23.15 Integration Platform / iPaaS / ESB
+## 23.11 Integration Platforms, iPaaS and ESB
 
-Integration platforms can centralize capabilities such as:
+Integration platforms can centralize:
 
 - routing;
 - transformation;
@@ -428,54 +367,25 @@ Integration platforms can centralize capabilities such as:
 - workflow;
 - security integration.
 
-An enterprise service bus (ESB), integration platform as a service (iPaaS), or cloud-native integration platform may all satisfy portions of this role.
-
-The technology name is less important than the architectural responsibility.
+An ESB, iPaaS, or cloud-native integration platform may satisfy some of these responsibilities.
 
 The advisor should ask:
 
 1. What problem requires a platform?
 2. Which integrations actually need it?
-3. What capabilities become standardized?
+3. What becomes standardized?
 4. What becomes platform-specific?
-5. What happens if the platform is unavailable?
-6. Can integrations be migrated without rewriting the enterprise?
+5. What happens if the platform fails?
+6. How difficult is migration away from it?
 7. What is the long-term operating cost?
 
-Avoid selecting an integration platform merely because it offers the largest connector catalog.
+Do not select an integration platform merely because it has the largest connector catalog.
 
 ---
 
-## 23.16 Security Architecture for Integration
+## 23.12 API Lifecycle and Contract Evolution
 
-Integration expands the attack surface because systems become reachable through additional boundaries.
-
-For each integration, evaluate:
-
-- identity;
-- authentication;
-- authorization;
-- encryption;
-- secret handling;
-- input validation;
-- output validation;
-- rate limiting;
-- abuse protection;
-- logging;
-- monitoring;
-- failure containment.
-
-Zero Trust provides an important architectural basis: network location should not create implicit trust, and access decisions should be tied to identities, resources, and policies. [NIST SP 800-207](https://csrc.nist.gov/pubs/sp/800/207/final)
-
-For cloud-native service environments, identity-based controls may be enforced through application/service infrastructure rather than relying only on network segmentation. [NIST SP 800-207A](https://csrc.nist.gov/pubs/sp/800/207/a/final)
-
----
-
-## 23.17 API Lifecycle and Contract Evolution
-
-An enterprise API is not finished when its first version is deployed.
-
-The lifecycle should address:
+An enterprise API has a lifecycle:
 
 ```text
 Design
@@ -497,13 +407,13 @@ Deprecate
 Retire
 ```
 
-OpenAPI provides a standardized machine-readable description format for HTTP APIs and currently publishes multiple specification versions, including 3.2.0. [OpenAPI Specification](https://spec.openapis.org/oas/)
+OpenAPI provides a machine-readable specification for HTTP APIs and currently publishes versions including 3.2.0. [OpenAPI Specification](https://spec.openapis.org/oas/)
 
-However, an API description is not the whole contract.
+However, an API description is not necessarily the complete enterprise contract.
 
-The enterprise contract may also need:
+A broader contract may also define:
 
-- semantic definitions;
+- business semantics;
 - authorization expectations;
 - rate limits;
 - error semantics;
@@ -515,26 +425,16 @@ The enterprise contract may also need:
 
 ---
 
-## 23.18 External and Partner Integration
+## 23.13 External and Partner Integration
 
-External integrations introduce additional uncertainty.
+External dependencies can include market-data providers, portfolio-company systems, banks, research providers, regulatory systems, SaaS platforms, and strategic partners.
 
-Examples:
-
-- Bloomberg / market-data providers;
-- portfolio-company systems;
-- banks;
-- research providers;
-- regulatory systems;
-- SaaS platforms;
-- strategic partners.
-
-The advisor should evaluate:
+Evaluate:
 
 - contractual dependency;
-- availability SLA;
+- availability commitment;
 - rate limits;
-- authentication method;
+- authentication;
 - data rights;
 - data residency;
 - versioning;
@@ -546,13 +446,13 @@ External API availability is an architectural dependency, not merely a vendor-ma
 
 ---
 
-## 23.19 Integration Observability
+## 23.14 Observability, Reliability and Failure Containment
 
-When an integration fails, the organization should be able to answer:
+When integration fails, the organization should be able to answer:
 
-> Where did the request or event stop?
+> **Where did the request or event stop, and what happened to the business process?**
 
-Useful observability concepts include:
+Useful observability includes:
 
 - correlation IDs;
 - distributed tracing;
@@ -566,17 +466,9 @@ Useful observability concepts include:
 - dead-letter count;
 - authorization failures.
 
-Observability should also respect data protection requirements.
+Logs must still respect data-protection requirements; debugging needs do not justify copying sensitive business information into every log.
 
-Logs should not become an uncontrolled copy of sensitive business information merely because developers need debugging context.
-
----
-
-## 23.20 Reliability and Failure Containment
-
-An enterprise integration architecture should assume dependencies will fail.
-
-Possible failures:
+For AI-IDSS, dependency failure can propagate:
 
 ```text
 Provider outage
@@ -590,24 +482,45 @@ Consumer lag
 Stale AI-IDSS data
 ```
 
-The architecture should define whether the AI-IDSS:
+The architecture should define whether the system:
 
 - blocks;
-- serves a stale-but-labelled result;
-- falls back to another source;
-- switches to a degraded mode;
+- serves a clearly labelled stale result;
+- falls back;
+- enters degraded mode;
 - requires human review;
 - abstains.
 
-The correct behavior depends on decision criticality.
-
-**Field rule:**
-
-> Do not hide integration failure behind apparently normal AI output.
+> **Do not hide integration failure behind apparently normal AI output.**
 
 ---
 
-## 23.21 Integration Architecture for AI-IDSS
+## 23.15 Integration Security
+
+For each integration, evaluate:
+
+- identity;
+- authentication;
+- authorization;
+- encryption;
+- secret handling;
+- input validation;
+- output validation;
+- rate limiting;
+- abuse protection;
+- audit;
+- monitoring;
+- failure containment.
+
+NIST SP 800-228 explicitly treats API protection as a lifecycle problem and discusses basic and advanced controls across pre-runtime and runtime stages. [NIST SP 800-228](https://csrc.nist.gov/pubs/sp/800/228/upd1/final)
+
+Security should follow the data and the action across the integration boundary.
+
+A powerful shared service identity should not silently broaden the authority of every caller.
+
+---
+
+## 23.16 Integration Architecture for AI-IDSS
 
 A reference architecture is:
 
@@ -651,17 +564,11 @@ flowchart LR
     SEC -.-> AI
 ```
 
-The integration layer should provide controlled interfaces into AI-IDSS rather than becoming an uncontrolled replica of every enterprise system.
+The integration layer should provide controlled interfaces into AI-IDSS rather than become an uncontrolled replica of every enterprise system.
 
----
+### AI-agent integration
 
-## 23.22 AI and Agent Integration
-
-AI agents introduce an additional architectural question:
-
-> Is the AI consuming information, requesting a capability, or changing enterprise state?
-
-These are different risk levels.
+The risk changes depending on whether AI:
 
 ```text
 Read
@@ -675,102 +582,57 @@ Request Action
 Execute Action
 ```
 
-As the architecture moves downward, authority and consequence generally increase.
-
 For agent integrations, define:
 
 - agent identity;
 - delegated authority;
-- allowed tools;
-- allowed resources;
+- allowed tools/resources;
 - operation scope;
 - transaction limits;
 - approval requirements;
 - idempotency;
 - audit;
-- rollback or compensation.
+- rollback or compensation where applicable.
 
-The model should not be the final authority that determines whether an action is permitted.
-
----
-
-## 23.23 Integration Decision Framework
-
-When evaluating an enterprise integration proposal, use this sequence:
-
-### Step 1 — Identify the capability
-
-What business capability or information must cross the boundary?
-
-### Step 2 — Identify ownership
-
-Who owns the source, capability, interface, and consumer?
-
-### Step 3 — Identify authority
-
-Who is allowed to perform the operation?
-
-### Step 4 — Define interaction semantics
-
-Is this:
-
-- query;
-- command;
-- event;
-- batch exchange;
-- workflow?
-
-### Step 5 — Define timing
-
-Is synchronous response required, or is asynchronous processing acceptable?
-
-### Step 6 — Define consistency
-
-What must be immediately consistent, eventually consistent, or explicitly stale?
-
-### Step 7 — Define failure behavior
-
-What happens when the dependency fails halfway through the process?
-
-### Step 8 — Define lifecycle
-
-How will the interface evolve and eventually be retired?
-
-### Step 9 — Compare architecture options
-
-Evaluate direct API, event, workflow, integration platform, shared data access, or hybrid approaches.
-
-### Step 10 — Evaluate reversibility
-
-How difficult is it to replace the integration technology or external provider?
+The model should not be the final authority determining whether an enterprise action is permitted.
 
 ---
 
-## 23.24 Decision Matrix
+## 23.17 Enterprise Integration Decision Framework
 
-A practical decision matrix can be:
+When evaluating an integration proposal:
+
+1. **Identify the capability** — what must cross the boundary?
+2. **Identify ownership** — who owns the source, interface, capability, and consumer?
+3. **Identify authority** — who may perform the operation?
+4. **Define interaction semantics** — query, command, event, batch, or workflow?
+5. **Define timing** — must it be synchronous?
+6. **Define consistency** — immediate, eventual, or explicitly stale?
+7. **Define failure behavior** — what happens after partial failure?
+8. **Define lifecycle** — how will the interface evolve and retire?
+9. **Compare patterns** — direct API, event, workflow, platform, shared data, or hybrid?
+10. **Evaluate reversibility** — how difficult is replacement?
+
+### Practical decision matrix
 
 | Dimension | Direct API | Event | Workflow | Integration Platform |
 |---|---:|---:|---:|---:|
 | Immediate response | High | Low | Medium | Medium |
 | Temporal decoupling | Low | High | Medium | Medium |
 | Process visibility | Medium | Low–Medium | High | High |
-| Operational simplicity | High for small scope | Medium | Medium | Variable |
 | Centralized policy | Medium | Medium | High | High |
 | Platform dependency | Low | Medium | Medium | High |
 | Large-scale fan-out | Low–Medium | High | Medium | High |
 
-These ratings are **architectural heuristics**, not universal performance measurements.
-
-The advisor should replace them with evidence from the actual environment before using them for a consequential decision.
+These are **architectural heuristics**, not universal performance measurements. Replace them with evidence from the actual environment before using them for a consequential decision.
 
 ---
 
-## 23.25 Common Enterprise Integration Anti-Patterns
+## 23.18 Common Anti-Patterns
 
 ### 1. Everything goes through one central bus
 
-Centralization can become a bottleneck and a single strategic dependency.
+Centralization can become a bottleneck and strategic dependency.
 
 ### 2. Every system exposes its database
 
@@ -790,7 +652,7 @@ Can become a central bottleneck and force unrelated domains into inappropriate a
 
 ### 6. One integration platform for everything
 
-A platform can standardize useful capabilities while also creating concentration and migration risk.
+Can standardize useful capabilities while also creating concentration and migration risk.
 
 ### 7. Shared service identity with unlimited authority
 
@@ -806,16 +668,14 @@ Incidents and contract changes become organizational disputes.
 
 ### 10. No exit path
 
-A technically successful integration can become strategically expensive if the provider or platform cannot be replaced.
+A successful integration can become strategically expensive if the provider or platform cannot be replaced.
 
 ---
 
-## 23.26 Technical Challenge Questions
-
-When reviewing an enterprise integration proposal, ask:
+## 23.19 Technical Challenge Questions
 
 1. What business capability is crossing the boundary?
-2. Who owns the source and who owns the interface?
+2. Who owns the source and interface?
 3. Which system is authoritative?
 4. Is this a query, command, event, batch exchange, or workflow?
 5. Why must it be synchronous?
@@ -826,24 +686,21 @@ When reviewing an enterprise integration proposal, ask:
 10. How are identities mapped?
 11. Where is authorization enforced?
 12. Does a service identity broaden authority?
-13. What data is exposed unnecessarily?
+13. What data or capability is exposed unnecessarily?
 14. How is the interface versioned?
 15. Who approves breaking changes?
-16. How are consumers discovered?
-17. What observability exists end-to-end?
-18. What happens when the integration platform fails?
-19. How difficult is migration away from the chosen platform?
-20. What is the external-provider exit strategy?
-21. Can an AI agent invoke this integration?
-22. If yes, what operations are allowed?
-23. What prevents model manipulation from becoming unauthorized action?
-24. Can the integration architecture preserve AI-IDSS evidence and provenance?
+16. What observability exists end-to-end?
+17. What happens when the integration platform fails?
+18. How difficult is migration away from the platform?
+19. What is the external-provider exit strategy?
+20. Can an AI agent invoke this integration?
+21. If yes, what operations are allowed?
+22. What prevents model manipulation from becoming unauthorized action?
+23. Can the integration preserve AI-IDSS evidence and provenance?
 
 ---
 
-## 23.27 Architecture Review Checklist
-
-Before approval, verify:
+## 23.20 Architecture Review Checklist
 
 - [ ] System boundaries are explicit.
 - [ ] Technical and business ownership are defined.
@@ -852,7 +709,7 @@ Before approval, verify:
 - [ ] Synchronous/asynchronous choice is justified.
 - [ ] Security boundaries are explicit.
 - [ ] Identity and authorization are defined.
-- [ ] Data and capability exposure is minimized.
+- [ ] Data/capability exposure is minimized.
 - [ ] Contracts are versioned.
 - [ ] Failure and retry semantics are defined.
 - [ ] Transaction boundaries are explicit.
@@ -866,69 +723,58 @@ Before approval, verify:
 
 ---
 
-## 23.28 Evidence Discipline
-
-The advisor should classify claims carefully.
+## 23.21 Evidence Discipline
 
 ### Fact
 
-Example: NIST SP 800-228 addresses API risks and controls across API lifecycle stages. [NIST SP 800-228](https://csrc.nist.gov/pubs/sp/800/228/upd1/final)
+NIST SP 800-228 addresses API risks and controls across API lifecycle stages. [NIST SP 800-228](https://csrc.nist.gov/pubs/sp/800/228/upd1/final)
 
-### Technical Standard / Specification
+### Technical specification
 
-Example: OpenAPI defines a machine-readable specification for HTTP APIs. [OpenAPI Specification](https://spec.openapis.org/oas/)
+OpenAPI provides a specification for describing HTTP APIs. [OpenAPI Specification](https://spec.openapis.org/oas/)
 
-### Architecture Recommendation
-
-Example:
+### Architecture recommendation
 
 > Use the least complex integration pattern that satisfies the required business, security, reliability, and lifecycle constraints.
 
 ### Inference
 
-Example:
-
-> A highly centralized integration platform can become a strategic dependency when many critical processes become difficult to migrate away from it.
+> A highly centralized integration platform can become a strategic dependency when critical processes become difficult to migrate away from it.
 
 ### Assumption
-
-Example:
 
 > **Assumption:** the portfolio ERP can expose reliable APIs without materially affecting its production workload.
 
 This must be validated before architecture approval.
 
-### Industry Evidence
+### Industry evidence
 
-A documented enterprise implementation may demonstrate feasibility, but it does not prove that the same pattern is optimal for another organization.
+A documented enterprise implementation can demonstrate feasibility, but does not prove that the same pattern is optimal elsewhere.
 
 ---
 
-## 23.29 What Would Change Our Mind?
+## 23.22 What Would Change Our Mind?
 
-The advisor should remain willing to change the integration recommendation if evidence shows that:
+Revisit the recommendation if evidence shows that:
 
-- workload characteristics are materially different from assumptions;
-- synchronous coupling is operationally acceptable;
+- a direct integration has lower risk and total cost;
 - event infrastructure creates more complexity than value;
-- a centralized platform has a demonstrably lower total cost and acceptable exit risk;
-- a direct integration has sufficiently low and stable complexity;
-- security controls can be enforced more effectively through another boundary;
-- the external provider has materially stronger contractual and technical guarantees than assumed;
-- reliability testing demonstrates that the proposed failure model is inadequate;
+- a central platform materially improves control without unacceptable lock-in;
+- service boundaries create unacceptable latency or operational overhead;
+- security can be enforced more effectively at another boundary;
+- external-provider guarantees materially change dependency risk;
+- reliability testing invalidates the assumed failure model;
 - AI-agent authority requirements change the consequence profile.
 
-The recommendation is therefore conditional on the architecture evidence, not on loyalty to a pattern.
+The recommendation is conditional on architecture evidence, not loyalty to a pattern.
 
 ---
 
-## 23.30 Field Rule
+## 23.23 Field Rule
 
 > **Design integration around capabilities, ownership, authority, failure, and lifecycle—not around the integration product.**
 
-A strong enterprise integration architecture does not maximize the number of APIs, events, connectors, or platforms.
-
-It creates **controlled boundaries** through which systems can cooperate without losing ownership, security, reliability, semantic integrity, or the ability to evolve.
+A strong enterprise integration architecture creates **controlled, observable, evolvable boundaries** between systems while preserving ownership, security, reliability, semantic integrity, and a credible path to change.
 
 For AI-IDSS, the final test is:
 
