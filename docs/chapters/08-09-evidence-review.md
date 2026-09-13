@@ -2,137 +2,347 @@
 
 ## Purpose
 
-This review records the evidence basis, confidence level, and caveats behind important architecture claims in Chapters 8 and 9. It distinguishes established guidance, technical inference, and advisor judgment.
+This review establishes the evidence discipline for Chapters 8 and 9.
 
-## 1. Enterprise AI Is More Than the Model
+The book must distinguish **fact** from **inference**, **assumption**, and **recommendation**. Technical claims presented as facts must be traceable to authoritative evidence. Where evidence is incomplete, the text must say so rather than filling the gap with plausible-sounding language.
 
-**Claim:** An enterprise AI capability should be evaluated as a system comprising models, data, retrieval/knowledge, orchestration, applications, infrastructure, security, governance, evaluation, and operational controls.
+This review is therefore part of the architecture method, not merely a bibliography.
 
-**Evidence:** NIST's Generative AI Profile treats risk management across the AI lifecycle and addresses risks involving models, applications, cloud services, acquisition, and organizational processes. [NIST AI RMF: Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence-profile)
+---
 
-**Basis:** Consistent with socio-technical systems thinking: outcomes depend on interactions among technical components, people, processes, and controls.
+## 1. Evidence Standard
 
-**Confidence:** High.
+### Fact
 
-**Advisor implication:** A proposal specifying only a model while ignoring data authority, authorization, retrieval, workflow, evaluation, reliability, or operations is incomplete.
+A factual statement should be supported by an authoritative source appropriate to the claim—for example:
 
-## 2. RAG Is an Architecture Pattern, Not a Guarantee
+- a standards body or government publication;
+- a primary technical specification or official product documentation;
+- peer-reviewed research where the claim is scientific;
+- an official contractual or regulatory source where the claim is legal or contractual; or
+- directly verified project evidence.
 
-**Claim:** RAG can connect a model to external enterprise knowledge, but a vector database or retrieval layer does not by itself establish answer quality or authorization correctness.
+### Theory
 
-**Evidence:** OWASP's GenAI/LLM guidance treats vector and embedding components as security-relevant attack surfaces. [OWASP GenAI Security Project](https://genai.owasp.org/llm-top-10/)
+A conceptual statement derived from an established theory or academic framework.
 
-**Inference:** Evaluate RAG end-to-end: ingestion → indexing → authorization → retrieval → ranking → context construction → generation → evidence presentation.
+### Industry Evidence
 
-**Confidence:** High.
+A claim supported by documented real-world implementation. An industry case is evidence of what happened in that context; it is **not automatically proof that the same architecture is optimal elsewhere**.
 
-## 3. Deterministic Controls vs LLM Judgment
+### Technical Evidence
 
-**Claim:** Authorization, accounting calculations, policy gates, API contracts, and other deterministic controls should normally remain deterministic rather than being delegated to unconstrained LLM judgment.
+A claim supported by technical standards, specifications, benchmarks, test results, or primary technical documentation.
 
-**Evidence:** OWASP identifies prompt injection, sensitive information disclosure, improper output handling, and excessive agency as GenAI risks. [OWASP GenAI LLM Top 10](https://genai.owasp.org/llm-top-10/)
+### Inference
 
-**Architectural pattern:**
+A conclusion derived from evidence. Inference must be labelled when a reasonable reader could otherwise mistake it for an established fact.
 
-```text
-Model proposes
-      ↓
-Policy / Authorization
-      ↓
-Optional Human Approval
-      ↓
-Tool / API execution
-      ↓
-Audit
-```
+### Assumption
 
-**Confidence:** High for the principle; implementation remains context-dependent.
+A deliberately introduced proposition used to test reasoning when required evidence is unavailable. Assumptions must be explicitly labelled.
 
-## 4. Numerical Probabilities Need Defined Semantics
+### Recommendation
+
+Advisor judgment based on evidence, constraints, assumptions, and trade-offs.
+
+### Uncertainty
+
+A material question for which evidence is insufficient or conflicting.
+
+### Confidence
+
+A judgment about the strength of the conclusion—not a substitute for evidence.
+
+> **Rule: Confidence does not upgrade an unsupported claim into a fact.**
+
+---
+
+## 2. Enterprise AI Is More Than the Model
+
+**Claim:** An enterprise AI capability should be evaluated as a system rather than as a model alone.
+
+**Evidence:** NIST's Generative AI Profile treats risk across the AI lifecycle and discusses risks at model, application/implementation, and ecosystem levels. NIST describes the profile as a companion resource to AI RMF 1.0 for incorporating trustworthiness considerations into the design, development, use, and evaluation of AI systems. [NIST AI RMF: Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence-profile)
+
+**Inference:** For architecture review, the model should therefore be considered one component within a larger system of data, software, infrastructure, controls, users, and operational processes.
+
+**Confidence:** High for the system-level framing.
+
+**Important distinction:** The six-layer architecture used in Chapter 8 is an **advisor's logical architecture model**, not a NIST-defined canonical architecture. It is a reasoning tool created for this handbook.
+
+---
+
+## 3. RAG Is an Architecture Pattern, Not a Guarantee
+
+**Claim:** Retrieval-Augmented Generation can connect a model to external knowledge, but the existence of a vector database or retrieval component does not by itself establish answer correctness, authorization correctness, or freshness.
+
+**Evidence:** OWASP's GenAI security work identifies vector and embedding weaknesses as security concerns in its 2025 guidance, and the current 2026 release continues to address security risks across LLM applications. [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+
+**Inference:** A RAG system should therefore be evaluated end-to-end: ingestion → indexing → authorization → retrieval → ranking → context construction → generation → evidence presentation.
+
+**Confidence:** High for the architectural review principle.
+
+**Assumption used in Chapter 8:** The handbook assumes that enterprise knowledge is sufficiently structured and accessible to support an explicit retrieval architecture. This assumption must be validated for each implementation.
+
+---
+
+## 4. Deterministic Controls vs LLM Judgment
+
+**Claim:** Authorization, accounting calculations, policy gates, and other controls with deterministic semantics should normally not be delegated solely to unconstrained language-model judgment.
+
+**Evidence:** OWASP's current GenAI security guidance identifies risks including prompt injection, sensitive information disclosure, excessive agency, supply-chain risk, and improper output handling. The 2026 OWASP release is the current Top 10 release as of this edition of the handbook. [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+
+**Inference:** Where a system can separate model reasoning from authorization and execution, explicit policy and authorization controls provide a stronger architectural boundary than treating the model's output as authority.
+
+**Recommendation:** For consequential enterprise actions, use explicit permission boundaries and, where required by the use case, human approval.
+
+**Confidence:** High for the separation-of-concerns principle; exact implementation is context-dependent.
+
+---
+
+## 5. Numerical Probabilities Need Defined Semantics
 
 **Claim:** “Probability of material deterioration = 68%” should not be treated as a calibrated probability merely because an LLM generated the number.
 
-**Basis:** A probability estimate requires a defined event, reference population, estimation procedure, and interpretation. Calibration is distinct from language fluency.
+**Basis:** A probability claim has a defined statistical meaning only when the event, reference population or prediction target, estimation procedure, and interpretation are defined. Calibration is a statistical property that must be evaluated; linguistic plausibility is not equivalent to calibration.
 
-**Architecture implication:** Identify whether the number comes from a statistical model, supervised classifier, calibrated predictive model, ensemble, deterministic score, or explicitly qualitative/LLM assessment. If it is presented as a genuine probability, define validation, calibration, monitoring, and interpretation.
+**Inference:** If an AI-IDSS presents a numerical probability, the architecture should identify its computational origin—for example, a statistical model, supervised classifier, calibrated predictive model, ensemble, or another explicitly defined method.
 
-**Confidence:** High.
+**Recommendation:** Do not label an LLM-generated judgment as a probability unless the system has a documented statistical interpretation and appropriate validation.
 
-**Red flag:** A numerical probability with no documented model, target definition, validation/calibration method, monitoring approach, or interpretation rule is an evaluation gap.
+**Confidence:** High for the semantic distinction.
 
-## 5. “Data Cannot Leave” Does Not Imply “Build Our Own LLM”
+**Assumption for testing:** If the intended output is only a qualitative risk assessment, the interface should not use probability-like numbers merely to make the recommendation appear more precise.
 
-**Claim:** A confidentiality, residency, or contractual restriction does not by itself determine model deployment architecture.
+---
 
-**Reasoning:** First establish what data is restricted; whether processing, storage, or both are restricted; geography; contractual requirements; encryption; retention; identity/network controls; third-party processing restrictions; and whether minimized or transformed data can be processed outside the controlled boundary.
+## 6. “Data Cannot Leave” Does Not Imply “Build Our Own LLM”
+
+**Claim:** A confidentiality, residency, or contractual restriction does not by itself determine the model deployment architecture.
+
+**Reasoning:** The constraint must first be decomposed into questions such as:
+
+- What data is restricted?
+- Is processing, storage, or both restricted?
+- Where may processing occur?
+- Are third-party processors permitted?
+- What retention rules apply?
+- What network and identity controls are required?
+- Can data be minimized, masked, tokenized, or otherwise transformed?
+- What contractual commitments are required?
+
+**Inference:** Only after these constraints are established can managed, self-hosted, hybrid, or other options be compared rationally.
 
 **Confidence:** High as a decision-framework principle.
 
-**Caveat:** Technical controls do not prove legal or contractual compliance. Those requirements must be verified with the appropriate legal, compliance, security, and contractual authorities.
+**Important caveat:** A technical capability does not establish legal, regulatory, or contractual compliance. Such requirements must be verified against the applicable authoritative legal, regulatory, security, and contractual sources.
 
-## 6. “Enterprise” or “Private” Does Not Automatically Mean Secure
+**Assumption for testing:** If the actual requirement is “raw confidential records must never be processed by a third-party service,” then a managed external model may be excluded. That is a test assumption, not a universal rule.
 
-**Claim:** Deployment labels are not security properties.
+---
 
-**Evidence:** NIST AI RMF and its GenAI Profile emphasize explicit trustworthiness characteristics, controls, measurement, and lifecycle practices. OWASP identifies application-level vulnerabilities independent of a simple hosting label. [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) · [OWASP](https://genai.owasp.org/)
+## 7. “Enterprise”, “Private”, and “On-Premise” Are Not Security Properties
 
-**Advisor test:** Review identity, authorization, network boundaries, encryption, secrets, data handling, retention, logging, monitoring, isolation, incident response, and supply-chain dependencies.
+**Claim:** Deployment labels do not by themselves establish security.
 
-**Confidence:** High.
+**Evidence:** NIST AI RMF approaches AI trustworthiness and risk through explicit characteristics, controls, measurement, and lifecycle practices rather than through a hosting label. OWASP documents application-level GenAI risks that can arise regardless of a simple public/private distinction. [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) · [OWASP GenAI Security Project](https://genai.owasp.org/)
 
-## 7. Self-Hosting Trades Managed-Service Burden for Responsibility
-
-**Claim:** Self-hosting can increase infrastructure and serving control, but transfers responsibilities such as capacity, availability, patching, serving software, observability, hardening, upgrades, incident response, and licensing compliance to the organization.
+**Inference:** Architecture review should examine the actual control plane: identity, authorization, network boundaries, encryption, secrets, data handling, retention, logging, monitoring, isolation, incident response, and dependencies.
 
 **Confidence:** High.
 
-**Economic caveat:** Self-hosting is not inherently cheaper. TCO depends on utilization, model size, infrastructure pricing, engineering, reliability requirements, support, and lifecycle costs.
+---
 
-## 8. Security Baseline
+## 8. Self-Hosting Trades Managed-Service Responsibility for Organizational Responsibility
 
-Use the **current OWASP GenAI/LLM Top 10** for threat-oriented review rather than relying on old 2023 terminology. The project has evolved through 2025 and 2026 releases. Version-sensitive claims should point to the current project. [OWASP current project](https://genai.owasp.org/initiatives/top-10-for-llm-and-genai/)
+**Claim:** Self-hosting can increase control over the model-serving environment, but it also places more operational responsibility on the organization.
 
-NIST AI RMF remains a complementary risk-management framework. Its GenAI Profile was published in 2024 and is intended to help organizations govern, map, measure, and manage GenAI risks across the lifecycle. [NIST](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence-profile)
+**Technical reasoning:** A self-hosted deployment requires the organization or its infrastructure operator to address the relevant serving infrastructure, capacity, availability, software maintenance, observability, security hardening, upgrades, incident response, and licensing obligations.
 
-## 9. Evidence Classification
+**Confidence:** High as an operational principle.
 
-| Label | Meaning |
-|---|---|
-| **Fact** | Directly supported by authoritative evidence or verified technical documentation |
-| **Theory** | Supported by an established conceptual or academic framework |
-| **Industry Evidence** | Supported by documented real-world implementation |
-| **Technical Evidence** | Supported by standards, specifications, or primary technical documentation |
-| **Inference** | Reasoned conclusion from evidence |
-| **Assumption** | Temporarily accepted because evidence is incomplete |
-| **Recommendation** | Advisor judgment based on evidence and constraints |
-| **Uncertainty** | Material information that remains unresolved |
+**Economic caveat:** Self-hosting is not inherently cheaper. Any TCO conclusion must use the actual workload, utilization, infrastructure pricing, engineering effort, reliability requirements, support model, and lifecycle assumptions.
 
-A recommendation must not be presented as fact merely because it is technically plausible.
+**Assumption for testing:** A workload with high sustained utilization may have different economics from a low-volume or highly variable workload. This should be measured rather than asserted.
 
-## 10. What Would Change the Advisor's Mind?
+---
 
-For material architecture decisions, define reversal conditions. Examples include:
+## 9. Security Baseline Must Be Version-Aware
 
-- a regulatory interpretation changes the permissible processing boundary;
-- vendor contractual controls differ materially from assumptions;
-- workload measurements change TCO;
-- evaluation shows the model misses the required quality threshold;
+As of **September 2026**, OWASP identifies its **GenAI LLM Top 10 2026** as the current release. The 2026 publication was released in August 2026 and is the appropriate current reference for version-sensitive statements about the OWASP LLM Top 10. [OWASP 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) citeturn0search0
+
+NIST's **Generative AI Profile (NIST AI 600-1)** was published July 26, 2024 and remains a companion resource to the AI RMF for generative-AI risk management. NIST's AI RMF site notes that the framework is being revised, so the book should distinguish the current published framework from future revisions. [NIST](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence-profile) citeturn0search1turn0search10
+
+**Rule for this book:** Version-sensitive security claims must name the relevant version or link to the current authoritative source. The book should not silently carry forward obsolete security terminology.
+
+---
+
+## 10. Vendor Claims Require Primary-Source Verification
+
+For claims about a commercial model or platform, the book must not infer capabilities from the vendor's brand position or from secondary commentary.
+
+Examples of claims that require current primary evidence before being presented as facts:
+
+- whether customer data is retained;
+- whether data is used for training or service improvement;
+- supported data-residency regions;
+- encryption behavior;
+- private networking options;
+- identity and access-control integration;
+- service-level commitments;
+- model availability;
+- context limits;
+- pricing;
+- rate limits;
+- supported APIs;
+- deployment options; and
+- model lifecycle or deprecation policies.
+
+**Required source order:**
+
+1. current contractual terms where applicable;
+2. official security/privacy documentation;
+3. official technical documentation;
+4. official pricing/service documentation;
+5. authoritative standards or regulators where relevant;
+6. independent evidence such as peer-reviewed research or reputable testing;
+7. secondary commentary only as supporting context.
+
+**Rule:** A vendor claim is evidence of what the vendor states, not independent proof that the capability performs as claimed.
+
+---
+
+## 11. Industry Cases Are Evidence, Not Templates
+
+A documented enterprise implementation can demonstrate that an architecture or operating model was used in a particular context.
+
+It does **not** prove that the same architecture is optimal for this organization.
+
+When the book later presents a case study, record:
+
+> Context → Requirement → Constraints → Architecture → Decision → Outcome → Evidence → Transferable lesson → Non-transferable assumptions
+
+This prevents successful case studies from becoming cargo-cult architecture.
+
+---
+
+## 12. Assumptions Are Allowed—But Must Be Visible
+
+The handbook may use assumptions to help readers reason about an architecture.
+
+For example:
+
+> **Assumption:** The portfolio risk workflow requires current financial data and supporting investment documents, and the organization can identify authoritative sources for both.
+
+This assumption allows the reader to test the architecture:
+
+> If the assumption is false, which part of the architecture changes?
+
+That is useful reasoning. What is not acceptable is silently converting the assumption into a fact.
+
+A useful notation is:
+
+> **Assumption → Consequence → Evidence Needed → Decision if False**
+
+---
+
+## 13. What Would Change the Advisor's Mind?
+
+For material architecture decisions, define reversal conditions.
+
+Examples:
+
+- authoritative legal or regulatory interpretation changes the permissible processing boundary;
+- contractual terms differ materially from assumptions;
+- measured workload volume changes TCO;
+- evaluation shows that the selected model misses the required quality threshold;
 - measured latency or availability invalidates the design;
-- sustained utilization changes the economics of self-hosting;
+- sustained utilization changes self-hosting economics;
 - a new interoperability constraint appears; or
 - security assessment identifies unacceptable residual risk.
 
-## 11. Chapter 8–9 Review Checklist
+This turns architecture review into a testable decision process rather than a one-time opinion.
+
+---
+
+## 14. Adversarial Review of Chapters 8–9
+
+Before accepting a material claim, the advisor should attempt to disprove it.
+
+### Challenge 1 — “The LLM can do the analysis.”
+
+Ask:
+
+- Which analysis?
+- What accuracy is required?
+- Is the task deterministic, statistical, retrieval-based, or generative?
+- What evidence demonstrates that the chosen method is fit for the task?
+
+### Challenge 2 — “RAG solves hallucination.”
+
+Ask:
+
+- What evidence is retrieved?
+- Is retrieval complete and authorized?
+- What happens when evidence is missing or contradictory?
+- How is answer faithfulness evaluated?
+
+### Challenge 3 — “Private deployment is safer.”
+
+Ask:
+
+- Safer against which threat?
+- Which control improves?
+- Which new operational risks are introduced?
+- What evidence demonstrates the net reduction in risk?
+
+### Challenge 4 — “Self-hosting is cheaper.”
+
+Ask:
+
+- At what utilization?
+- Including engineering and operations?
+- Including redundancy and incident response?
+- Compared with which managed-service price and contract?
+
+### Challenge 5 — “We need our own LLM because the data is confidential.”
+
+Ask:
+
+- What exactly must remain inside the controlled boundary?
+- Can the data be minimized or transformed?
+- What managed-service controls are contractually and technically available?
+- Is the actual requirement legal, contractual, security, or merely organizational preference?
+
+### Challenge 6 — “The model says 68%.”
+
+Ask:
+
+- What event is being predicted?
+- What is the target definition?
+- What model produced the number?
+- How was it validated?
+- Is it calibrated?
+- What population does the probability refer to?
+- How is drift monitored?
+
+If these questions cannot be answered, the number should not be treated as a statistically meaningful probability.
+
+---
+
+## 15. Chapter 8–9 Review Checklist
 
 ### System
 - What business decision or task is supported?
 - What is the authoritative source for each important fact?
 - Which components are deterministic and which are probabilistic?
+- Which claims are facts, and which are recommendations or assumptions?
 
 ### Model
 - What claim does each model make?
 - Is the method appropriate for that claim?
 - How is quality evaluated?
+- Which model/version was actually tested?
 
 ### Knowledge / RAG
 - How is evidence retrieved?
@@ -144,7 +354,7 @@ For material architecture decisions, define reversal conditions. Examples includ
 - What data crosses each trust boundary?
 - Who can access it?
 - What happens to prompts, outputs, and logs?
-- Which AI-specific threats are tested?
+- Which current threat framework is being used?
 
 ### Operations
 - What happens when the model/provider fails?
@@ -157,6 +367,8 @@ For material architecture decisions, define reversal conditions. Examples includ
 - Can the organization reconstruct why an important recommendation was produced?
 - What evidence would cause the recommendation to be reversed?
 
+---
+
 ## Field Rule
 
-> **Do not recommend an architecture merely because it is possible. Recommend it because the evidence, constraints, economics, risk posture, and decision requirements justify it—and record what evidence would cause the recommendation to change.**
+> **Never silently turn an assumption into a fact. Never present a plausible technical statement as established knowledge without an authoritative basis. When evidence is incomplete, say so—and use the uncertainty to improve the architecture question.**
