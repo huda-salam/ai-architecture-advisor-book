@@ -76,7 +76,7 @@ A judgment about the strength of the conclusion—not a substitute for evidence.
 
 **Claim:** Retrieval-Augmented Generation can connect a model to external knowledge, but the existence of a vector database or retrieval component does not by itself establish answer correctness, authorization correctness, or freshness.
 
-**Evidence:** OWASP's GenAI security work identifies vector and embedding weaknesses as security concerns in its 2025 guidance, and the current 2026 release continues to address security risks across LLM applications. [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+**Evidence:** OWASP's **2025** GenAI guidance explicitly documented vector and embedding weaknesses as security concerns relevant to RAG architectures. The current **2026** OWASP Top 10 reorganizes the risk categories, so the 2025 vector/embedding category should not be presented as a named 2026 Top-10 category. The 2026 release remains the current version of the OWASP GenAI LLM Top 10 as of this edition. [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
 
 **Inference:** A RAG system should therefore be evaluated end-to-end: ingestion → indexing → authorization → retrieval → ranking → context construction → generation → evidence presentation.
 
@@ -169,9 +169,9 @@ A judgment about the strength of the conclusion—not a substitute for evidence.
 
 ## 9. Security Baseline Must Be Version-Aware
 
-As of **September 2026**, OWASP identifies its **GenAI LLM Top 10 2026** as the current release. The 2026 publication was released in August 2026 and is the appropriate current reference for version-sensitive statements about the OWASP LLM Top 10. [OWASP 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) citeturn0search0
+As of **September 2026**, OWASP identifies its **GenAI LLM Top 10 2026** as the current release. The 2026 publication was released in August 2026 and is the appropriate current reference for version-sensitive statements about the OWASP LLM Top 10. [OWASP 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
 
-NIST's **Generative AI Profile (NIST AI 600-1)** was published July 26, 2024 and remains a companion resource to the AI RMF for generative-AI risk management. NIST's AI RMF site notes that the framework is being revised, so the book should distinguish the current published framework from future revisions. [NIST](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence-profile) citeturn0search1turn0search10
+NIST's **Generative AI Profile (NIST AI 600-1)** was published July 26, 2024 and remains a companion resource to the AI RMF for generative-AI risk management. NIST's AI RMF site notes that the framework is being revised, so the book should distinguish the current published framework from future revisions. [NIST](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence-profile)
 
 **Rule for this book:** Version-sensitive security claims must name the relevant version or link to the current authoritative source. The book should not silently carry forward obsolete security terminology.
 
