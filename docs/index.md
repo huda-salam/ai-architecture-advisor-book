@@ -36,3 +36,4 @@ Cross-cutting concerns:
 - [7. Architecture Decision Framework](./chapters/07-architecture-decisions)
 - [8. AI Architecture Fundamentals](./chapters/08-ai-architecture-fundamentals)
 - [9. Enterprise LLM Architecture](./chapters/09-enterprise-llm-architecture)
+- [Evidence Review — Chapters 8–9](./chapters/08-09-evidence-review)
