@@ -8,7 +8,7 @@ This chapter therefore treats data architecture as a system of capabilities and 
 
 ## 12.1 What Enterprise Data Architecture Is
 
-**Fact / Technical evidence.** NIST's Big Data Reference Architecture is explicitly designed as a vendor-neutral, technology- and infrastructure-agnostic conceptual model. It identifies architectural roles, functional components, activities, and cross-cutting fabrics rather than prescribing a particular product. citeturn0search1turn0search36
+**Fact / Technical evidence.** NIST's Big Data Reference Architecture is a vendor-neutral, technology- and infrastructure-agnostic conceptual model. It identifies architectural roles, functional components, activities, and cross-cutting management and security/privacy fabrics rather than prescribing a particular product. See [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture).
 
 For this manual, enterprise data architecture means the design of:
 
@@ -59,7 +59,7 @@ flowchart LR
     M -.-> P
 ```
 
-The arrows represent data movement and dependency. Governance and metadata are not optional decorations; they are cross-cutting architectural capabilities.
+The arrows represent data movement and dependency. Governance and metadata are cross-cutting architectural capabilities, not merely documentation added after implementation.
 
 **Inference:** A mature AI architecture should make it possible to answer, for an important output, at least these questions:
 
@@ -76,7 +76,7 @@ If the architecture cannot answer these questions, the organization may still ha
 
 ## 12.3 Source Systems and Systems of Record
 
-A **system of record (SoR)** is the authoritative operational source for a defined business fact or transaction.
+A **system of record (SoR)** should be understood as an organizational designation: for a defined business fact or transaction, the organization identifies a particular source as authoritative.
 
 Examples may include:
 
@@ -89,9 +89,11 @@ Examples may include:
 | Employee identity | Identity / HR system |
 | Approved investment memo | Controlled document repository |
 
+These are examples, not universal assignments. The organization must explicitly define which source is authoritative for each critical business fact.
+
 **Architectural principle:** do not create an AI database and quietly allow it to become the authoritative source for facts that belong to an operational system.
 
-An AI platform may create **derived data**—embeddings, extracted entities, classifications, summaries, scores, features, or recommendations—but those outputs should have explicitly defined authority and lifecycle.
+An AI platform may create **derived data**—embeddings, extracted entities, classifications, summaries, scores, features, or recommendations—but those outputs should have explicitly defined authority and lifecycle. A derived artifact may be designated authoritative for a particular purpose only through an explicit governance decision.
 
 ### 12.3.1 Authoritative vs derived data
 
@@ -188,9 +190,9 @@ A single organization can legitimately use several of these. The architectural r
 
 ## 12.8 Data Lake, Warehouse, and Lakehouse
 
-These terms describe architectural patterns, not universal quality levels.
+These terms describe architectural patterns, not universal quality levels. NIST and ISO reference-architecture work likewise focuses on architectural concepts and views rather than prescribing one storage product or topology; see [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture) and [ISO/IEC 20547-3:2020](https://www.iso.org/standard/71277.html).
 
-A data lake is commonly used for scalable storage of structured, semi-structured, and unstructured data. A data warehouse is optimized for structured analytical workloads. A lakehouse combines capabilities associated with both patterns. These distinctions are documented in current cloud architecture guidance, but implementations differ by platform. citeturn1search3turn1search8
+A data lake is commonly used for scalable storage of heterogeneous data. A data warehouse is optimized for structured analytical workloads. A lakehouse is an implementation pattern intended to combine capabilities associated with lake and warehouse approaches. Exact capabilities and boundaries vary by platform.
 
 A useful decision frame is:
 
@@ -205,7 +207,7 @@ A useful decision frame is:
 
 **Important:** the table is a starting hypothesis, not a product-selection rule.
 
-A current Microsoft architecture guide, for example, distinguishes warehouse and lakehouse workloads by factors such as data type, development model, and transaction requirements. citeturn1search6turn1search9
+Do not infer that a lake, warehouse, or lakehouse is inherently more secure, more governed, or better for AI. Those properties depend on architecture, implementation, configuration, controls, and operating practices.
 
 ## 12.9 Transformation and Validation
 
@@ -298,16 +300,16 @@ For AI-IDSS, this is particularly important because the same portfolio company m
 - trading name;
 - ERP identifier;
 - investment identifier;
-- Bloomberg identifier;
+- market-data identifier;
 - document-system identifier.
 
 Entity resolution should be deterministic where authoritative identifiers exist and should expose ambiguity rather than silently guessing.
 
 ## 12.12 Data Quality
 
-ISO 8000-1 establishes principles for information and data quality, while ISO 8000-150 addresses organizational roles and responsibilities for data-quality management. citeturn0search7turn0search0
+**Fact / Technical evidence.** [ISO 8000-1:2022](https://www.iso.org/standard/81745.html) establishes principles and an overview for data quality. Related ISO 8000 parts address measurement/concepts, data rules and profiling, completeness, and provenance-related requirements.
 
-For this manual, data quality should be evaluated against the intended use rather than treated as one universal number.
+For this manual, data quality should be evaluated against the intended use rather than treated as one universal number. ISO 8000-140, for example, makes clear that completeness requirements depend on the data, context, and use.
 
 Useful dimensions include:
 
@@ -362,7 +364,7 @@ The exact thresholds are domain-specific and should be treated as explicit assum
 
 Data architecture is partly organizational architecture.
 
-ISO 8000-150 specifically addresses the need to establish appropriate roles and responsibilities for data-quality management. citeturn0search0
+**Fact / Technical evidence.** ISO 8000-150 addresses roles and responsibilities associated with data-quality management. The advisor should therefore require explicit accountability for critical data rather than assuming that platform ownership equals business ownership.
 
 At minimum, critical data should have clearly assigned responsibility for:
 
@@ -412,7 +414,9 @@ For AI systems, metadata should also describe derived artifacts where material:
 
 ## 12.16 Data Lineage and Provenance
 
-**Lineage** describes how data moves and transforms through systems. **Provenance** captures information about the origin and history of a particular data artifact or result.
+**Lineage** describes how data moves and transforms through systems. **Provenance** records information about origin and history associated with data or other artifacts. NIST defines provenance in terms of the chronology of origin, development, ownership, location, and changes associated with systems or data; see the [NIST provenance glossary](https://csrc.nist.gov/glossary/term/provenance).
+
+**Critical precision:** provenance is not proof that the data is accurate. A perfectly documented chain can still originate from an incorrect source or contain an incorrect transformation.
 
 For an AI-IDSS recommendation, the desired chain is approximately:
 
@@ -436,6 +440,8 @@ Recommendation presented to RD
 
 This is not merely an audit feature. It supports debugging, reconciliation, model evaluation, incident investigation, and executive challenge.
 
+Not every intermediate artifact must be retained forever. Retention should be determined by auditability, reproducibility, privacy, regulatory requirements, security, operational value, and cost.
+
 ## 12.17 Data Contracts
 
 A data contract makes expectations between producer and consumer explicit.
@@ -458,6 +464,8 @@ A useful contract can specify:
 ## 12.18 Access Control and Data Isolation
 
 Authorization must be enforced before data becomes available to downstream AI components.
+
+NIST defines authorization as the decision to permit or deny a subject's access to a system resource. NIST's Big Data Reference Architecture also places authentication, authorization, and audit within the security/privacy architecture rather than treating them as prompt-level behavior. See the [NIST authorization glossary](https://csrc.nist.gov/glossary/term/authorization) and [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture).
 
 For a portfolio environment, the architecture should answer:
 
@@ -500,7 +508,7 @@ All documents → unrestricted vector index → LLM
 
 because retrieval itself can become a confidentiality boundary failure.
 
-The vector representation should not be treated as magically detached from the access rights of the underlying source.
+The vector representation should not be treated as magically detached from the access rights of the underlying source. A vector database is a retrieval mechanism; authorization must be enforced by the retrieval architecture and underlying data controls.
 
 ## 12.20 Data Architecture for Analytics and ML
 
@@ -517,7 +525,7 @@ Analytical and ML workloads may require additional artifacts:
 
 The critical architectural principle is reproducibility.
 
-If a risk model produced a 68% probability on 1 September, the organization should be able to determine what data, feature definitions, model version, and calculation produced that result.
+If a risk model produced a 68% probability on 1 September, the organization should be able to determine what data, feature definitions, model version, and calculation produced that result. Whether the value is statistically well calibrated is a separate model-evaluation question; the data architecture must at least make the result reproducible and traceable.
 
 Otherwise, the number is difficult to defend retrospectively.
 
@@ -599,7 +607,7 @@ Operational and analytical workloads can have different requirements.
 
 ### Mistake 3 — “More data means better AI.”
 
-More data can increase noise, duplication, conflict, cost, and attack surface.
+More data is not automatically better decision support. Additional data can introduce noise, duplication, conflicting definitions, processing cost, privacy exposure, and attack surface. Treat this as an architectural inference rather than a universal empirical law.
 
 ### Mistake 4 — “The vector database is the knowledge base.”
 
@@ -691,11 +699,15 @@ The following distinctions must remain explicit.
 | Statement | Classification |
 |---|---|
 | NIST publishes a vendor-neutral Big Data Reference Architecture | **Fact / Technical evidence** |
-| ISO 8000-150 addresses roles and responsibilities for data quality management | **Fact / Technical evidence** |
+| ISO 8000-1 establishes principles and an overview for data quality | **Fact / Technical evidence** |
+| ISO 8000-150 addresses roles and responsibilities for data-quality management | **Fact / Technical evidence** |
 | A lakehouse combines capabilities associated with lake and warehouse patterns | **Industry/technical evidence; implementation-dependent** |
 | Critical AI outputs should have reproducible data lineage | **Recommendation / architectural inference** |
+| Provenance demonstrates accuracy | **Incorrect — provenance establishes origin/history, not truth** |
 | Every organization should use a lakehouse | **Unsupported universal claim — reject** |
 | Streaming is required for enterprise AI | **Unsupported universal claim — reject** |
+| A vector database is inherently required for RAG | **Unsupported universal claim — reject** |
+| More data automatically improves AI decision quality | **Unsupported universal claim — reject** |
 
 The advisor should continuously separate what a standard says from what the advisor recommends.
 
@@ -722,9 +734,16 @@ And for AI-IDSS:
 
 ### Primary evidence
 
-- NIST, *Big Data Interoperability Framework: Volume 6, Reference Architecture*. citeturn0search1turn0search36
-- NIST, *NBDIF Version 3.0 Final*. citeturn0search10
-- ISO, *ISO 8000-1:2022 — Data quality — Part 1: Overview*. citeturn0search7
-- ISO, *ISO 8000-150:2022 — Data quality management: Roles and responsibilities*. citeturn0search0
-- Microsoft Learn, *Big Data Architectures / Lakehouse*. citeturn1search3turn1search8
-- AWS Prescriptive Guidance, *Designing a data lake for growth and scale*. citeturn1search12turn1search16
+- NIST, *Big Data Interoperability Framework: Volume 6, Reference Architecture*. [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture)
+- NIST, *Big Data Interoperability Framework: Volume 6, Reference Architecture* PDF. [NIST SP 1500-6r2](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1500-6r2.pdf)
+- NIST, *Big Data Interoperability Framework: Volume 4, Security and Privacy Version 3*. [NIST SP 1500-4r2](https://csrc.nist.gov/pubs/sp/1500/4/r2/final)
+- NIST, *Provenance*. [NIST CSRC Glossary](https://csrc.nist.gov/glossary/term/provenance)
+- NIST, *Authorization*. [NIST CSRC Glossary](https://csrc.nist.gov/glossary/term/authorization)
+- ISO, *ISO/IEC 20547-3:2020 — Big data reference architecture — Part 3: Reference architecture*. [ISO](https://www.iso.org/standard/71277.html)
+- ISO, *ISO 8000-1:2022 — Data quality — Part 1: Overview*. [ISO](https://www.iso.org/standard/81745.html)
+- ISO, *ISO 8000-8:2015 — Data quality — Part 8: Information and data quality concepts*. [ISO](https://www.iso.org/standard/60805.html)
+- ISO, *ISO/TS 8000-82:2022 — Data quality — Part 82: Data rules and data profiling*. [ISO](https://www.iso.org/standard/78707.html)
+- ISO, *ISO 8000-120:2016 — Data quality — Part 120: Master data: Exchange of characteristic data: Provenance*. [ISO](https://www.iso.org/standard/62393.html)
+- ISO, *ISO 8000-140:2016 — Data quality — Part 140: Master data: Exchange of characteristic data: Completeness*. [ISO](https://www.iso.org/standard/62395.html)
+
+**Evidence note:** Standards and reference architectures establish concepts, requirements, and architectural guidance; they do not by themselves prove that one implementation pattern is optimal for every organization. Vendor-specific platform claims should be verified against current primary documentation during an architecture decision.
