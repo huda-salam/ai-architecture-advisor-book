@@ -12,7 +12,7 @@ export default withMermaid(defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Chapters', link: '/chapters/00-reasoning-evidence' },
-      { text: 'Evidence Review', link: '/chapters/08-09-evidence-review' }
+      { text: 'Evidence Review', link: '/chapters/00-07-evidence-audit' }
     ],
     sidebar: [
       {
@@ -23,7 +23,8 @@ export default withMermaid(defineConfig({
           { text: '2. Relationship With the Regional Director', link: '/chapters/02-relationship-with-rd' },
           { text: '3. Relationship With CTO, Head of AI & Vendors', link: '/chapters/03-relationships' },
           { text: '4. Advisor Operating Principles', link: '/chapters/04-operating-principles' },
-          { text: '5. Advisory Communication & Influence', link: '/chapters/05-advisory-communication' }
+          { text: '5. Advisory Communication & Influence', link: '/chapters/05-advisory-communication' },
+          { text: 'Evidence Audit — Chapters 0–7', link: '/chapters/00-07-evidence-audit' }
         ]
       },
       {
