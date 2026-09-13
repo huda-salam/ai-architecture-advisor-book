@@ -25,8 +25,9 @@
 | 23 | Enterprise Integration Architecture | `DONE` | `DONE` | 2+ | Deployment verification pending | Not yet verified |
 | 24 | API Architecture | `DONE` | `DONE` | 2+ | Final permanent-source scan before sign-off | Not yet verified |
 | 25 | AI Connectors | `DONE` | `DONE` | 3+ | Recheck protocol/security sources when material changes occur | Not yet verified |
-| 26 | AI-IDSS Reference Architecture | `DONE` | `DONE` | 3+ | Verify build/deploy; keep AI RMF version-aware | Not yet verified |
-| 27–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop sequentially | Not applicable |
+| 26 | AI-IDSS Reference Architecture | `DONE` | `DONE` | 3+ | Verify build/deploy; keep AI RMF version-aware; clean permanent citation markers if still present | Not yet verified |
+| 27 | Investment Risk Alert | `DONE` | `DONE` | 3+ | Verify build/deploy; final permanent-source scan | Not yet verified |
+| 28–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop sequentially | Not applicable |
 
 ## Review Dimensions
 
@@ -42,10 +43,11 @@ Every chapter is reviewed for substance, evidence, claim classification, archite
 | 24 | Substance + evidence iteration | Completed; capability boundaries, security/lifecycle controls, AI-agent authority, error semantics, third-party APIs, and current sources rechecked. |
 | 25 | Three-pass connector architecture review | Completed; connector/API/tool distinctions, identity/authorization, capability minimization, semantic integrity, MCP version claims, lifecycle, observability, and AI-IDSS authority boundaries rechecked. |
 | 26 | Three-pass reference-architecture review | Completed; architecture decomposition, cross-chapter consistency, AI RMF evidence, human decision boundary, evidence chain, failure/degraded modes, portfolio isolation, vendor neutrality, and falsifiability rechecked. |
+| 27 | Three-pass investment-risk-alert review | Completed; probability semantics, event definition, calibration, leakage, evidence lineage, thresholds, uncertainty, monitoring, LLM-vs-predictive-model distinction, and human decision boundary rechecked. |
 
-## Chapter 26 Evidence Position
+## Chapter 27 Evidence Position
 
-Primary sources checked include NIST AI RMF 1.0, current NIST AI RMF status, NIST AI RMF Core, NIST AI 600-1 Generative AI Profile, and NIST AI 800-4 on post-deployment monitoring. The evidence review distinguishes framework facts from architecture recommendations and explicitly rejects universal claims such as “every AI-IDSS needs an agent/RAG/LLM/vector database/cloud.”
+Primary sources checked include NIST AI RMF 1.0, current NIST AI RMF status, NIST AI RMF Core Measure guidance, NIST AI 600-1 Generative AI Profile, and peer-reviewed literature on probability calibration and risk prediction. The evidence review explicitly distinguishes empirical/modeling claims from architecture recommendations and treats the 68% example and 60% threshold as illustrative assumptions rather than facts.
 
 ## Deployment Verification Notes
 
@@ -56,6 +58,7 @@ Primary sources checked include NIST AI RMF 1.0, current NIST AI RMF status, NIS
 - Chapter 24: deployment still requires verification.
 - Chapter 25: deployment still requires verification.
 - Chapter 26: deployment still requires verification; verify the latest workflow for the final Chapter 26 commit before claiming publication success.
+- Chapter 27: deployment still requires verification; verify the latest workflow after the Chapter 27 commits before claiming publication success.
 
 ## Final Book-Wide Audit
 
