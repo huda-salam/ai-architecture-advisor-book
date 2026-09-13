@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'AI Technology & Architecture Advisor',
   description: 'A technical advisory field manual for AI, architecture, data, cloud, security and enterprise technology decisions.',
   lang: 'en-US',
@@ -36,7 +37,8 @@ export default defineConfig({
         text: 'Part III — Enterprise AI Architecture',
         collapsed: true,
         items: [
-          { text: '8. AI Architecture Fundamentals', link: '/chapters/08-ai-architecture-fundamentals' }
+          { text: '8. AI Architecture Fundamentals', link: '/chapters/08-ai-architecture-fundamentals' },
+          { text: '9. Enterprise LLM Architecture', link: '/chapters/09-enterprise-llm-architecture' }
         ]
       }
     ],
@@ -51,4 +53,4 @@ export default defineConfig({
       pattern: 'https://github.com/huda-salam/ai-architecture-advisor-book/edit/main/docs/:path'
     }
   }
-})
+}))
