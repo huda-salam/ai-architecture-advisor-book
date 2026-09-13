@@ -29,7 +29,8 @@
 | 27 | Investment Risk Alert | `DONE` | `DONE` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
 | 28 | Explainability & Evidence | `DONE` | `DONE` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
 | 29 | Human Decision Boundary | `DONE` | `DONE` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
-| 30–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop sequentially | Not applicable |
+| 30 | Model Selection | `DONE` | `EVIDENCE-HARDENED` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
+| 31–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop sequentially | Not applicable |
 
 ## Review Dimensions
 
@@ -48,10 +49,11 @@ Every chapter is reviewed for substance, evidence, claim classification, archite
 | 27 | Three-pass investment-risk-alert review | Completed; probability semantics, event definition, calibration, leakage, evidence lineage, thresholds, uncertainty, monitoring, LLM-vs-predictive-model distinction, and human decision boundary rechecked. |
 | 28 | Three-pass explainability/evidence review | Completed; explanation-vs-evidence distinction, provenance, source authority, post-hoc rationalization, explanation fidelity, contradictory evidence, and cross-chapter evidence-chain consistency rechecked. |
 | 29 | Three-pass human-decision-boundary review | Completed; human-AI configuration, authority, meaningful override, automation bias, moral crumple zone, authorization separation, review capacity, fail-safe behavior, and automation-expansion criteria rechecked. |
+| 30 | Three-pass model-selection review | Completed; workload-first selection, technology-class choice, benchmark interpretation, representative evaluation, system-level testing, latency/cost, data boundary, deployment, versioning, routing/fallback, and vendor dependency rechecked. |
 
-## Chapter 29 Evidence Position
+## Chapter 30 Evidence Position
 
-Primary sources checked include NIST AI RMF 1.0 Appendix C, current NIST AI RMF Core/Playbook material, NIST Generative AI Profile, and peer-reviewed research on human-in-the-loop systems, automation bias, and distributed responsibility. The evidence review distinguishes framework facts from architecture recommendations and rejects universal claims that every AI system must use human-in-the-loop or that human review automatically makes an AI system safe.
+Primary sources checked include NIST AI RMF 1.0, current NIST AI RMF Core/trustworthiness material, NIST AI 800-3 (2026) on benchmark/generalized accuracy and uncertainty, NIST AI measurement/evaluation material, and Stanford CRFM HELM research. The evidence review distinguishes framework facts from architecture recommendations and explicitly rejects universal claims about any model family, model size, deployment mode, or benchmark ranking.
 
 ## Deployment Verification Notes
 
@@ -65,6 +67,7 @@ Primary sources checked include NIST AI RMF 1.0 Appendix C, current NIST AI RMF 
 - Chapter 27: deployment still requires verification after latest commits.
 - Chapter 28: deployment still requires verification after latest commits.
 - Chapter 29: deployment still requires verification after latest commits.
+- Chapter 30: deployment still requires verification after latest commits.
 
 ## Final Book-Wide Audit
 
