@@ -7,7 +7,6 @@ export default withMermaid(defineConfig({
   lang: 'en-US',
   base: '/ai-architecture-advisor-book/',
   cleanUrls: true,
-
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
@@ -48,17 +47,17 @@ export default withMermaid(defineConfig({
           { text: '13. Data Integration Architecture', link: '/chapters/13-data-integration' },
           { text: '14. Data Governance & Lineage', link: '/chapters/14-data-governance-lineage' },
           { text: '15. Cloud Architecture', link: '/chapters/15-cloud-architecture' },
+          { text: '16. Compute & Model Deployment', link: '/chapters/16-compute-model-deployment' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
           { text: 'Evidence Review — Chapter 14', link: '/chapters/14-evidence-review' },
-          { text: 'Evidence Review — Chapter 15', link: '/chapters/15-evidence-review' }
+          { text: 'Evidence Review — Chapter 15', link: '/chapters/15-evidence-review' },
+          { text: 'Evidence Review — Chapter 16', link: '/chapters/16-evidence-review' }
         ]
       }
     ],
-    search: {
-      provider: 'local'
-    },
+    search: { provider: 'local' },
     footer: {
       message: 'Technical advisory field manual — living document.',
       copyright: 'Maintained as an evolving architecture reference.'
