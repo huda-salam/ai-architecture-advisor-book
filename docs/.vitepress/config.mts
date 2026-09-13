@@ -12,7 +12,7 @@ export default withMermaid(defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Chapters', link: '/chapters/00-reasoning-evidence' },
-      { text: 'Evidence Review', link: '/chapters/00-07-evidence-audit' }
+      { text: 'Evidence Review', link: '/chapters/evidence-review' }
     ],
     sidebar: [
       {
