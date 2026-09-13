@@ -57,6 +57,7 @@ export default withMermaid(defineConfig({
           { text: '23. Enterprise Integration Architecture', link: '/chapters/23-enterprise-integration-architecture' },
           { text: '24. API Architecture', link: '/chapters/24-api-architecture' },
           { text: '25. AI Connectors', link: '/chapters/25-ai-connectors' },
+          { text: '26. AI-IDSS Reference Architecture', link: '/chapters/26-ai-idss-reference-architecture' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -71,7 +72,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 22', link: '/chapters/22-evidence-review' },
           { text: 'Evidence Review — Chapter 23', link: '/chapters/23-evidence-review' },
           { text: 'Evidence Review — Chapter 24', link: '/chapters/24-evidence-review' },
-          { text: 'Evidence Review — Chapter 25', link: '/chapters/25-evidence-review' }
+          { text: 'Evidence Review — Chapter 25', link: '/chapters/25-evidence-review' },
+          { text: 'Evidence Review — Chapter 26', link: '/chapters/26-evidence-review' }
         ]
       }
     ],
