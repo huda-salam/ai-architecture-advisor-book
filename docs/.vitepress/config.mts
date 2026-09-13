@@ -49,13 +49,15 @@ export default withMermaid(defineConfig({
           { text: '15. Cloud Architecture', link: '/chapters/15-cloud-architecture' },
           { text: '16. Compute & Model Deployment', link: '/chapters/16-compute-model-deployment' },
           { text: '17. Scalability & Performance', link: '/chapters/17-scalability-performance' },
+          { text: '18. Reliability', link: '/chapters/18-reliability' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
           { text: 'Evidence Review — Chapter 14', link: '/chapters/14-evidence-review' },
           { text: 'Evidence Review — Chapter 15', link: '/chapters/15-evidence-review' },
           { text: 'Evidence Review — Chapter 16', link: '/chapters/16-evidence-review' },
-          { text: 'Evidence Review — Chapter 17', link: '/chapters/17-evidence-review' }
+          { text: 'Evidence Review — Chapter 17', link: '/chapters/17-evidence-review' },
+          { text: 'Evidence Review — Chapter 18', link: '/chapters/18-evidence-review' }
         ]
       }
     ],
