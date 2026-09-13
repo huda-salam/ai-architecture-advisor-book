@@ -43,6 +43,7 @@ export default withMermaid(defineConfig({
           { text: '8. AI Architecture Fundamentals', link: '/chapters/08-ai-architecture-fundamentals' },
           { text: '9. Enterprise LLM Architecture', link: '/chapters/09-enterprise-llm-architecture' },
           { text: '10. RAG Architecture', link: '/chapters/10-rag-architecture' },
+          { text: '11. Agentic Architecture', link: '/chapters/11-agentic-architecture' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' }
         ]
       }
