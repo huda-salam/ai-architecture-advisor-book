@@ -26,9 +26,10 @@
 | 24 | API Architecture | `DONE` | `DONE` | 2+ | Final permanent-source scan before sign-off | Not yet verified |
 | 25 | AI Connectors | `DONE` | `DONE` | 3+ | Recheck protocol/security sources when material changes occur | Not yet verified |
 | 26 | AI-IDSS Reference Architecture | `DONE` | `DONE` | 3+ | Clean permanent citation markers if still present; final audit | `DEPLOYED` verified (run 34789266465) |
-| 27 | Investment Risk Alert | `DONE` | `DONE` | 3+ | Final permanent-source scan | Not yet verified |
-| 28 | Explainability & Evidence | `DONE` | `DONE` | 3+ | Verify build/deploy; final permanent-source scan | Not yet verified |
-| 29–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop sequentially | Not applicable |
+| 27 | Investment Risk Alert | `DONE` | `DONE` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
+| 28 | Explainability & Evidence | `DONE` | `DONE` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
+| 29 | Human Decision Boundary | `DONE` | `DONE` | 3+ | Verify latest deployment; final permanent-source scan | Not yet verified |
+| 30–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop sequentially | Not applicable |
 
 ## Review Dimensions
 
@@ -45,23 +46,25 @@ Every chapter is reviewed for substance, evidence, claim classification, archite
 | 25 | Three-pass connector architecture review | Completed; connector/API/tool distinctions, identity/authorization, capability minimization, semantic integrity, MCP version claims, lifecycle, observability, and AI-IDSS authority boundaries rechecked. |
 | 26 | Three-pass reference-architecture review | Completed; architecture decomposition, cross-chapter consistency, AI RMF evidence, human decision boundary, evidence chain, failure/degraded modes, portfolio isolation, vendor neutrality, and falsifiability rechecked. |
 | 27 | Three-pass investment-risk-alert review | Completed; probability semantics, event definition, calibration, leakage, evidence lineage, thresholds, uncertainty, monitoring, LLM-vs-predictive-model distinction, and human decision boundary rechecked. |
-| 28 | Three-pass explainability/evidence review | Completed; transparency vs explainability vs interpretability, evidence vs explanation, provenance, lineage, post-hoc rationalization, contradictory evidence, citation validity, explanation fidelity, security, and human review boundaries rechecked. |
+| 28 | Three-pass explainability/evidence review | Completed; explanation-vs-evidence distinction, provenance, source authority, post-hoc rationalization, explanation fidelity, contradictory evidence, and cross-chapter evidence-chain consistency rechecked. |
+| 29 | Three-pass human-decision-boundary review | Completed; human-AI configuration, authority, meaningful override, automation bias, moral crumple zone, authorization separation, review capacity, fail-safe behavior, and automation-expansion criteria rechecked. |
 
-## Chapter 28 Evidence Position
+## Chapter 29 Evidence Position
 
-Primary sources checked include NIST AI RMF 1.0, current NIST AI RMF status, NIST AI RMF Core Measure 2.9, NIST AI RMF Playbook, and NIST AI 600-1 Generative AI Profile. The evidence review explicitly distinguishes framework facts from architecture recommendations and rejects universal claims about inherently interpretable models, post-hoc explanation fidelity, citation validity, provenance-as-accuracy, and human approval.
+Primary sources checked include NIST AI RMF 1.0 Appendix C, current NIST AI RMF Core/Playbook material, NIST Generative AI Profile, and peer-reviewed research on human-in-the-loop systems, automation bias, and distributed responsibility. The evidence review distinguishes framework facts from architecture recommendations and rejects universal claims that every AI system must use human-in-the-loop or that human review automatically makes an AI system safe.
 
 ## Deployment Verification Notes
 
 - Chapter 17: build and deploy explicitly verified successful.
 - Chapter 20: build and deploy explicitly verified successful.
 - Chapter 22: run `34787994748` explicitly verified with build and deploy successful.
+- Chapter 26: run `34789266465` explicitly verified with build and deploy successful.
 - Chapter 23: deployment still requires verification.
 - Chapter 24: deployment still requires verification.
 - Chapter 25: deployment still requires verification.
-- Chapter 26: run `34789266465` explicitly verified with build and deploy successful.
-- Chapter 27: deployment still requires verification; verify the latest workflow after the Chapter 27 commits before claiming publication success.
-- Chapter 28: deployment still requires verification; verify the latest workflow after the Chapter 28 commits before claiming publication success.
+- Chapter 27: deployment still requires verification after latest commits.
+- Chapter 28: deployment still requires verification after latest commits.
+- Chapter 29: deployment still requires verification after latest commits.
 
 ## Final Book-Wide Audit
 
