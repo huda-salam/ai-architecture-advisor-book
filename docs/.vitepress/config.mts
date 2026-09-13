@@ -47,10 +47,12 @@ export default withMermaid(defineConfig({
           { text: '12. Enterprise Data Architecture', link: '/chapters/12-enterprise-data-architecture' },
           { text: '13. Data Integration Architecture', link: '/chapters/13-data-integration' },
           { text: '14. Data Governance & Lineage', link: '/chapters/14-data-governance-lineage' },
+          { text: '15. Cloud Architecture', link: '/chapters/15-cloud-architecture' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
-          { text: 'Evidence Review — Chapter 14', link: '/chapters/14-evidence-review' }
+          { text: 'Evidence Review — Chapter 14', link: '/chapters/14-evidence-review' },
+          { text: 'Evidence Review — Chapter 15', link: '/chapters/15-evidence-review' }
         ]
       }
     ],
