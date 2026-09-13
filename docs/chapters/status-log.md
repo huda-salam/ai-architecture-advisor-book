@@ -57,7 +57,8 @@ Each review should consider at least:
 | 22 | AI-Specific Threats | `DONE` | `DONE` | 3+ | None currently recorded after additional review | `DEPLOYED` verified (run 34787994748) |
 | 23 | Enterprise Integration Architecture | `DONE` | `DONE` | 2+ | None currently recorded; deployment verification pending | Not yet verified (latest run 34788425015 pending) |
 | 24 | API Architecture | `DONE` | `DONE` | 2+ | Permanent-source cleanup should be checked before final sign-off; deployment pending | Not yet verified |
-| 25–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop and review sequentially | Not applicable |
+| 25 | AI Connectors | `DONE` | `DONE` | 3+ | Recheck protocol/security sources when MCP, API, or agent-security guidance materially changes | Not yet verified |
+| 26–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop and review sequentially | Not applicable |
 
 ## Chapters Requiring Known Re-Review
 
@@ -99,6 +100,7 @@ The chapter was reviewed for capability boundaries, authentication versus author
 | 22 | Additional evidence/security iteration | Completed; taxonomy, prompt injection, RAG poisoning, confabulation, agent authority, attack-path testing, and version/source discipline rechecked. No material blocking issue found. |
 | 23 | Substance + evidence + editorial correction | Completed; enterprise topology was kept distinct from Chapter 13 data integration, NIST API/Zero Trust sources were checked, product-driven overclaims were rejected, and the temporary source-marker issue was corrected. |
 | 24 | Substance + evidence iteration | Completed; API capability boundaries, security/lifecycle controls, AI-agent authority, error semantics, third-party APIs, and current primary/industry sources were rechecked. |
+| 25 | Three-pass connector architecture review | Completed; connector/API/tool distinctions, identity and authorization, capability minimization, semantic integrity, MCP version claims, lifecycle, observability, and AI-IDSS authority boundaries were rechecked. |
 
 ## Deployment Verification Notes
 
@@ -107,6 +109,7 @@ The chapter was reviewed for capability boundaries, authentication versus author
 - Chapter 22: workflow run `34787994748` was explicitly verified with both `build` and `Deploy` jobs completed successfully.
 - Chapter 23: latest workflow run `34788425015` was pending at the time of this update; do not claim deployment success until rechecked.
 - Chapter 24: deployment has not yet been verified.
+- Chapter 25: deployment has not yet been verified; verify the workflow triggered by the Chapter 25 commits before claiming publication success.
 
 ## Re-Review Protocol
 
