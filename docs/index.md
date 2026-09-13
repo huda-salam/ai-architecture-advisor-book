@@ -36,8 +36,14 @@ Cross-cutting concerns:
 - [7. Architecture Decision Framework](./chapters/07-architecture-decisions)
 - [8. AI Architecture Fundamentals](./chapters/08-ai-architecture-fundamentals)
 - [9. Enterprise LLM Architecture](./chapters/09-enterprise-llm-architecture)
+- [10. RAG Architecture](./chapters/10-rag-architecture)
 
-### Evidence audits
+### Evidence reviews
 
+- [Evidence Review](./chapters/evidence-review)
 - [Evidence Audit — Chapters 0–7](./chapters/00-07-evidence-audit)
 - [Evidence Review — Chapters 8–9](./chapters/08-09-evidence-review)
+
+### Project standards
+
+- [Knowledge-Ready Editorial Standard](./standards/knowledge-ready-editorial-standard)
