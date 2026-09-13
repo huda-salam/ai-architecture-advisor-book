@@ -32,6 +32,7 @@ function closeViewer() {
   viewer = null
   content = null
   document.body.classList.remove('diagram-viewer-open')
+  document.removeEventListener('keydown', handleEscape)
 }
 
 function zoomAt(factor: number, clientX?: number, clientY?: number) {
@@ -93,7 +94,10 @@ function openViewer(svg: SVGElement) {
   stage.className = 'diagram-viewer-stage'
 
   content = document.createElement('div')
-  content.className = 'diagram-viewer-content'
+  content.className = 'diagram-viewer-content mermaid'
+
+  // Keep the Mermaid wrapper class so VitePress/Mermaid CSS continues to
+  // style node labels, edges, markers, and other generated SVG elements.
   content.appendChild(svg.cloneNode(true))
   stage.appendChild(content)
   viewer.append(toolbar, stage)
@@ -137,7 +141,7 @@ function openViewer(svg: SVGElement) {
   }, { passive: true })
 
   stage.addEventListener('touchmove', (event) => {
-    if (event.touches.length !== 2) return
+    if (event.touches.length !== 2 || touchDistance === 0) return
     event.preventDefault()
     const distance = Math.hypot(
       event.touches[0].clientX - event.touches[1].clientX,
@@ -155,10 +159,7 @@ function openViewer(svg: SVGElement) {
 }
 
 function handleEscape(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
-    closeViewer()
-    document.removeEventListener('keydown', handleEscape)
-  }
+  if (event.key === 'Escape') closeViewer()
 }
 
 function installDiagramViewer() {
