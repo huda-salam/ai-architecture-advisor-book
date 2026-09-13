@@ -56,7 +56,8 @@ Each review should consider at least:
 | 21 | Data Protection | `DONE` | `DONE` | 3+ | None currently recorded after additional evidence-hardening iteration | Verify during final audit |
 | 22 | AI-Specific Threats | `DONE` | `DONE` | 3+ | None currently recorded after additional review | `DEPLOYED` verified (run 34787994748) |
 | 23 | Enterprise Integration Architecture | `DONE` | `DONE` | 2+ | None currently recorded; deployment verification pending | Not yet verified (latest run 34788425015 pending) |
-| 24–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop and review sequentially | Not applicable |
+| 24 | API Architecture | `DONE` | `DONE` | 2+ | Permanent-source cleanup should be checked before final sign-off; deployment pending | Not yet verified |
+| 25–54 | Subsequent chapters | `DRAFT` | `DRAFT` | — | Develop and review sequentially | Not applicable |
 
 ## Chapters Requiring Known Re-Review
 
@@ -78,6 +79,18 @@ The NIST Data Governance and Management Profile was still described as work in p
 
 These chapters have strong substantive architecture and evidence reviews. Re-review is not currently blocking progress, but current vendor/model/security claims should be checked again before final publication because the subject changes rapidly.
 
+### Chapter 23 — Enterprise Integration Architecture
+
+**Status:** `DONE` with deployment verification pending.
+
+The substantive and evidence review passes are complete. The chapter was checked for its distinction from Chapter 13 and its NIST/API/Zero Trust evidence. Deployment must still be verified.
+
+### Chapter 24 — API Architecture
+
+**Status:** `DONE` for the current two-pass content/evidence scope; deployment not yet verified.
+
+The chapter was reviewed for capability boundaries, authentication versus authorization, object/property authorization, API lifecycle, error semantics, idempotency, rate/resource controls, gateway boundaries, third-party APIs, and AI-agent authority. Current NIST, OpenAPI, IETF, and OWASP sources were checked. A final repository scan should confirm that no temporary/session-specific citation markers remain in the permanent chapter file.
+
 ## Completed Additional Iterations
 
 | Chapter | Additional review | Result |
@@ -85,6 +98,7 @@ These chapters have strong substantive architecture and evidence reviews. Re-rev
 | 21 | Additional evidence-hardening iteration | Completed; privacy/security distinction, minimization scope, provider due diligence, derived artifacts, retention/deletion, and data-flow boundaries strengthened. |
 | 22 | Additional evidence/security iteration | Completed; taxonomy, prompt injection, RAG poisoning, confabulation, agent authority, attack-path testing, and version/source discipline rechecked. No material blocking issue found. |
 | 23 | Substance + evidence + editorial correction | Completed; enterprise topology was kept distinct from Chapter 13 data integration, NIST API/Zero Trust sources were checked, product-driven overclaims were rejected, and the temporary source-marker issue was corrected. |
+| 24 | Substance + evidence iteration | Completed; API capability boundaries, security/lifecycle controls, AI-agent authority, error semantics, third-party APIs, and current primary/industry sources were rechecked. |
 
 ## Deployment Verification Notes
 
@@ -92,6 +106,7 @@ These chapters have strong substantive architecture and evidence reviews. Re-rev
 - Chapter 20: GitHub Actions build and deploy were explicitly verified successful.
 - Chapter 22: workflow run `34787994748` was explicitly verified with both `build` and `Deploy` jobs completed successfully.
 - Chapter 23: latest workflow run `34788425015` was pending at the time of this update; do not claim deployment success until rechecked.
+- Chapter 24: deployment has not yet been verified.
 
 ## Re-Review Protocol
 
