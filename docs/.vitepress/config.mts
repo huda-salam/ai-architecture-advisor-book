@@ -45,7 +45,8 @@ export default withMermaid(defineConfig({
           { text: '10. RAG Architecture', link: '/chapters/10-rag-architecture' },
           { text: '11. Agentic Architecture', link: '/chapters/11-agentic-architecture' },
           { text: '12. Enterprise Data Architecture', link: '/chapters/12-enterprise-data-architecture' },
-          { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' }
+          { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
+          { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' }
         ]
       }
     ],
