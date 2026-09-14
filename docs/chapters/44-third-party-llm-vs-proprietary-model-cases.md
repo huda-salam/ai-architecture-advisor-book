@@ -34,7 +34,7 @@ The model is only one layer of the system.
 | Application over third-party API | Application, workflow, data controls | Model provider |
 | Enterprise model platform | Identity, policy, orchestration, data boundary, evaluation, routing | One or more model providers |
 | Self-hosted open-weight model | Serving environment, deployment, model weights | Model publisher, hardware, runtime, engineering ecosystem |
-| Proprietary foundation model | Training pipeline, model weights, model lifecycle | Hardware, data, talent, software ecosystem |
+| Provider-owned proprietary foundation model | Training pipeline, model weights, model lifecycle | Hardware, data, talent, software ecosystem |
 
 These are materially different investments.
 
@@ -204,9 +204,13 @@ Only then should model ownership be considered.
 
 The argument for third-party models must not become naive vendor advocacy.
 
-BIS identifies third-party dependencies, concentration, data quality, privacy, security, and operational resilience as important AI risks for financial institutions. Its 2026 analysis specifically notes that dependence on third parties can amplify AI data-related risks and that concentration among major AI, cloud, and data providers complicates dependency management. citeturn0search6turn0search8
+BIS identifies third-party dependencies, concentration, data quality, privacy, security, and operational resilience as important AI risks for financial institutions. Its 2026 analysis specifically notes that dependence on third parties can amplify AI data-related risks and that concentration among major AI, cloud, and data providers complicates dependency management. **This is supervisory evidence, not vendor evidence.**
 
-BIS also notes that AI systems often depend on specialized hardware, cloud services, external data providers, and pretrained models concentrated among a relatively small number of providers. citeturn0search8
+Sources:
+- https://www.bis.org/publications/fsi-insight-73-data-we-trust-emerging-policy-and-supervisory-approaches-ai-data-use-financial-services
+- https://www.bis.org/publications/fsi-summary-financial-stability-implications-artificial-intelligence-executive-summary
+
+BIS also notes that AI systems often depend on specialized hardware, cloud services, external data providers, and pretrained models concentrated among a relatively small number of providers. 
 
 Therefore a third-party architecture should explicitly address:
 
@@ -314,7 +318,7 @@ The evidence must be refreshed because the frontier can move faster than the arc
 
 ## 44.14 A Better Decision Matrix
 
-| Dimension | Third-party model | Enterprise platform + multiple models | Self-hosted open-weight | Proprietary foundation model |
+| Dimension | Third-party model | Enterprise platform + multiple models | Self-hosted open-weight | Provider-owned proprietary foundation model |
 |---|---|---|---|---|
 | Frontier capability access | Often strong | Often strong | Variable | Depends on investment |
 | Control over weights | Low | Low/variable | High | High |
