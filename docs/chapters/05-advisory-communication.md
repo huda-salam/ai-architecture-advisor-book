@@ -2,17 +2,35 @@
 
 Technical correctness alone is insufficient. A technically excellent recommendation can fail if it is poorly structured, overly confrontational, insufficiently evidenced, or unclear about the actual decision.
 
-The advisor therefore needs two capabilities:
+The advisor therefore needs two complementary capabilities:
 
-> **Technical judgment** — knowing what is technically correct or defensible.
+> **Technical judgment** — understanding whether a technical position is sound, defensible, or insufficiently supported.
 
-> **Advisory communication** — communicating that judgment so the right decision can be made.
+> **Advisory communication** — communicating that judgment so the appropriate decision can be made.
 
 The objective is not to win an argument.
 
 > **The objective is to improve decision quality.**
 
-## 5.1 Core Communication Model
+## 5.1 Communication Must Preserve Technical Integrity
+
+The advisor should be able to compress a complex technical analysis without removing the reasoning that makes the conclusion defensible.
+
+The basic transformation is:
+
+```text
+Technical depth
+      ↓
+Decision-relevant findings
+      ↓
+Executive implication
+      ↓
+Recommendation
+```
+
+Executive compression is therefore not simplification for its own sake. It is **controlled loss of implementation detail while preserving decision-critical meaning**.
+
+## 5.2 Core Communication Model
 
 The default model is:
 
@@ -32,31 +50,27 @@ Example:
 >
 > **Recommendation:** Evaluate an enterprise LLM with controlled data processing and private connectivity before committing to self-hosting.
 
-## 5.2 Executive Compression
+## 5.3 Executive Compression
 
 For the RD, compress the analysis into:
 
 > **Bottom Line → Why → Risk → Recommendation**
 
-Example:
+The advisor should still be able to expand the reasoning immediately when challenged.
 
-> **Bottom line:** I don't recommend building our own foundation model at this stage.
->
-> **Why:** The primary requirement appears to be data control, which can potentially be satisfied without owning the model.
->
-> **Risk:** Self-hosting creates significant infrastructure, MLOps and operational complexity.
->
-> **Recommendation:** Use a controlled enterprise model initially, while preserving the option to self-host if defined technical or economic thresholds are reached.
-
-## 5.3 Technical Discussion Model
+## 5.4 Technical Discussion Model
 
 With CTOs, architects and engineering leaders:
 
-> **Requirement → Constraint → Architecture → Alternatives → Trade-offs → Decision**
+> **Requirement → Constraint → Architecture → Alternatives → Trade-offs → Evidence → Decision**
 
-The advisor should move between executive compression and technical depth depending on the audience.
+With the RD:
 
-## 5.4 Challenge the Assumption
+> **Decision → Key Finding → Consequence → Recommendation → Conditions**
+
+The advisor must be fluent in both levels and able to move between them without changing the underlying technical position.
+
+## 5.5 Challenge the Assumption
 
 Use:
 
@@ -72,7 +86,7 @@ Ask:
 
 Then determine the actual freshness requirement. “Real-time” may turn out to mean “less than 15 minutes old,” which can materially change architecture and cost.
 
-## 5.5 Challenge the Requirement Before the Solution
+## 5.6 Challenge the Requirement Before the Solution
 
 Ask:
 
@@ -85,7 +99,7 @@ Examples:
 - “We need fine-tuning.” → What problem cannot be solved through prompting or retrieval?
 - “We need our own LLM.” → Which requirement cannot be satisfied by an existing model under appropriate controls?
 
-## 5.6 Second-Opinion Model
+## 5.7 Second-Opinion Model
 
 Use:
 
@@ -95,7 +109,7 @@ A strong second opinion may agree with most of a proposal and challenge only the
 
 > **“I agree with the objective and most of the architecture. My main difference is the model deployment strategy.”**
 
-## 5.7 Dissenting-Opinion Model
+## 5.8 Dissenting-Opinion Model
 
 For material disagreement:
 
@@ -115,7 +129,7 @@ Example:
 >
 > **Confidence:** Medium-high. The remaining uncertainty is expected inference volume, which should be validated through benchmarking.
 
-## 5.8 The “I Don't Know Yet” Model
+## 5.9 The “I Don't Know Yet” Model
 
 Use:
 
@@ -125,7 +139,7 @@ Example:
 
 > “We know that the model performs well on the vendor benchmark. We don't yet know whether it performs adequately on our portfolio documents. That uncertainty affects whether I can recommend production deployment. I recommend testing it against a representative internal evaluation set.”
 
-## 5.9 Evidence Ladder
+## 5.10 Evidence Ladder
 
 Important claims should identify the type and strength of evidence:
 
@@ -141,7 +155,7 @@ Assumption
 
 This is not an absolute hierarchy. The point is to know what kind of evidence is actually supporting the claim.
 
-## 5.10 Fact vs Interpretation
+## 5.11 Fact vs Interpretation
 
 Separate observations from conclusions.
 
@@ -163,7 +177,7 @@ Then:
 
 **Recommendation:** add an appropriate grounding mechanism and re-evaluate.
 
-## 5.11 Translate Technical Issues for the RD
+## 5.12 Translate Technical Issues for the RD
 
 | Technical statement | Executive translation |
 |---|---|
@@ -181,7 +195,21 @@ The advisor must be able to answer:
 
 > **Why should the RD care?**
 
-## 5.12 Communicating Risk
+## 5.13 Communicating Technical Dissent
+
+A dissent should be technically substantive but organizationally neutral.
+
+Prefer:
+
+> **“I do not support the current architecture because assumption X is not yet supported by evidence. I recommend evaluating option B before committing to the current design.”**
+
+Avoid:
+
+> “The Head of AI's design is wrong.”
+
+The difference is important: the first challenges a technical conclusion; the second personalizes the disagreement.
+
+## 5.14 Communicating Risk
 
 Use:
 
@@ -191,7 +219,7 @@ Example:
 
 > “The architecture introduces a potential data-isolation risk because authorization is enforced only at the application layer. I recommend enforcing authorization before retrieval and explicitly testing cross-tenant access.”
 
-## 5.13 When the Proposal Is Good
+## 5.15 When the Proposal Is Good
 
 Independence does not mean permanent skepticism.
 
@@ -199,7 +227,9 @@ The advisor should be willing to say:
 
 > “I independently reviewed the proposal and agree with the architecture. The security boundary is appropriate, the integration pattern is consistent with our requirements, and the projected workload is within the stated capacity assumptions. I have no material technical objection.”
 
-## 5.14 Communication Anti-Patterns
+Agreement is a valid advisory conclusion.
+
+## 5.16 Communication Anti-Patterns
 
 ### Authority argument
 
@@ -231,7 +261,7 @@ Explaining implementation details without connecting them to the decision.
 
 All replace reasoning with authority, ideology, noise or organizational conflict.
 
-## 5.15 The C-A-E-I-R Formula
+## 5.17 The C-A-E-I-R Formula
 
 For daily use:
 
@@ -247,36 +277,33 @@ For daily use:
 
 **Recommendation** — What should we do?
 
-Example:
-
-> **Context:** We need secure AI access to portfolio-company data.
->
-> **Assumption:** This requires an internally hosted foundation model.
->
-> **Evidence:** The security requirement primarily concerns data access, retention and isolation.
->
-> **Implication:** Model ownership may not be necessary and could add substantial operational complexity.
->
-> **Recommendation:** Evaluate controlled enterprise inference first, with self-hosting retained as an alternative.
-
-## 5.16 Advisory Communication Test
+## 5.18 Advisory Communication Test
 
 Before communicating a recommendation, ask:
 
 1. Have I separated facts from assumptions?
 2. Have I challenged the underlying requirement?
-3. Have I considered alternatives?
-4. Can I explain why the issue matters?
-5. Have I quantified the material impact where possible?
-6. Have I stated my recommendation?
-7. Have I stated my confidence?
-8. Do I know what would change my mind?
-9. Am I challenging the architecture rather than the person?
-10. Does the decision maker understand what decision is actually required?
+3. Do I understand the technical mechanism well enough to defend or challenge it?
+4. Have I considered alternatives?
+5. Can I explain why the issue matters?
+6. Have I quantified the material impact where possible?
+7. Have I stated my recommendation?
+8. Have I stated my confidence?
+9. Do I know what would change my mind?
+10. Am I challenging the architecture rather than the person?
+11. Does the decision maker understand what decision is actually required?
 
-## 5.17 Communication Examples as a Recurring Pattern
+## 5.19 Communication as a Successor Skill
 
-Each major architecture chapter should later include a small **“How to Communicate This to the RD”** section.
+A successor should not have to learn the organization's advisory language by trial and error.
+
+Every major architecture chapter should therefore eventually include examples showing:
+
+- the technical finding;
+- the evidence supporting it;
+- the challenge or disagreement;
+- the implication for the organization;
+- the recommendation to the RD.
 
 For example:
 
