@@ -20,9 +20,9 @@ For the advisor, the important issues are therefore not only retrieval quality. 
 
 ## 10.1 What RAG Is
 
-**Fact:** NIST defines RAG as a type of generative-AI system in which a model is paired with a separate information-retrieval system or knowledge base. The retrieval system identifies relevant information from the knowledge base and provides it to the model as context for generating a response. NIST also notes that this allows the knowledge available to the system to be modified without retraining the underlying model. citeturn0search0
+**Fact:** NIST defines RAG as a type of generative-AI system in which a model is paired with a separate information-retrieval system or knowledge base. The retrieval system identifies relevant information from the knowledge base and provides it to the model as context for generating a response. NIST also notes that this allows the knowledge available to the system to be modified without retraining the underlying model. [NIST RAG Glossary](https://csrc.nist.gov/glossary/term/rag)
 
-The original RAG research introduced a formulation combining parametric model memory with non-parametric memory accessed through retrieval. The research demonstrated the value of retrieval for knowledge-intensive tasks, while also highlighting limitations of relying on model parameters alone for precise knowledge access and provenance. citeturn0academia25
+The original RAG research introduced a formulation combining parametric model memory with non-parametric memory accessed through retrieval. [Lewis et al., Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
 
 For enterprise architecture, the useful abstraction is simpler:
 
@@ -257,7 +257,7 @@ But enterprise retrieval can involve multiple signals:
 - reranking; and
 - query decomposition or rewriting.
 
-NIST's TREC Retrieval-Augmented Generation work treats retrieval and generation as separable evaluation problems and includes retrieval, augmented generation, and end-to-end RAG tasks. This reinforces the architectural distinction between finding evidence and generating an answer from evidence. citeturn0search5turn0search26
+NIST's TREC RAG work treats retrieval and generation as separable evaluation problems. The current TREC program includes a RAG track with separate retrieval and RAG tasks, while TREC 2025 research also used layered evaluation of relevance, completeness, attribution, and agreement. This reinforces the architectural distinction between finding evidence and generating an answer from evidence. [NIST TREC 2026 RAG track](https://trec.nist.gov/cfp.html) · [TREC 2025 RAG overview](https://trec.nist.gov/pubs/trec34/papers/Overview_rag.pdf)
 
 A useful conceptual model is:
 
@@ -295,7 +295,7 @@ It must also ask:
 
 > **“Which of the relevant documents is this user authorized to retrieve?”**
 
-OWASP's 2025 guidance on vector and embedding weaknesses explicitly discusses unauthorized access and data leakage risks in RAG systems, including cross-context or multi-tenant scenarios, and recommends permission-aware controls. citeturn0search1
+OWASP's 2025 guidance on vector and embedding weaknesses documents unauthorized access and data-leakage risks in RAG/vector systems, including cross-context or multi-tenant scenarios. [OWASP LLM08:2025 Vector and Embedding Weaknesses](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/)
 
 This creates a critical architecture principle:
 
@@ -303,7 +303,7 @@ This creates a critical architecture principle:
 
 A highly relevant document can still be an unauthorized document.
 
-Therefore, access control should not be treated as an afterthought after vector search.
+Therefore, the retrieval path must enforce or be downstream of an authorization decision appropriate to the source and resource model. The durable requirement is that unauthorized information must not enter the model context.
 
 ---
 
@@ -415,7 +415,7 @@ Possible controls include:
 
 RAG does not guarantee factual correctness.
 
-The TREC RAG program explicitly treats retrieval, augmented generation, and end-to-end RAG as distinct evaluation problems. This is consistent with a basic architecture lesson: a system can retrieve relevant material yet still produce a poor answer, or generate a fluent answer from inadequate retrieval. citeturn0search5turn0search26
+The current TREC RAG program explicitly separates retrieval and RAG tasks, while published TREC work evaluates retrieval, answer completeness, and attribution-related properties. This is consistent with a basic architecture lesson: a system can retrieve relevant material yet still produce a poor answer, or generate a fluent answer from inadequate retrieval. [NIST TREC](https://trec.nist.gov/)
 
 > **Retrieval creates an evidence opportunity. It does not create truth.**
 
@@ -449,7 +449,7 @@ The advisor should distinguish:
 
 **Retrieval provenance** — what information was actually retrieved for this query.
 
-**Reasoning provenance** — how the system used the retrieved information to form its conclusion.
+**Reasoning provenance** — the observable relationship among inputs, retrieved evidence, system/model outputs, validations, and the resulting recommendation. This does not require disclosure of hidden model chain-of-thought.
 
 These are related but not identical.
 
@@ -508,7 +508,7 @@ Questions include:
 - Is latency acceptable?
 - Is the cost acceptable?
 
-NIST's TREC RAG work explicitly separates retrieval, augmented generation, and end-to-end evaluation, providing a useful conceptual basis for this layered approach. citeturn0search5turn0search26
+NIST's TREC work provides a useful research/evaluation basis for separating retrieval from generation and evaluating RAG systems as complete pipelines. [NIST TREC RAG track](https://trec.nist.gov/cfp.html)
 
 > **Do not evaluate a RAG system only by asking whether the final answer “sounds good.”**
 
@@ -699,8 +699,8 @@ These questions turn “we have RAG” from a technology label into an architect
 
 ### Evidence anchors
 
-- NIST CSRC, **RAG glossary definition** — authoritative definition of retrieval-augmented generation. citeturn0search0
-- Lewis et al., **Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks** (2020) — foundational research on combining parametric and non-parametric memory. citeturn0academia25
-- NIST TREC, **Retrieval-Augmented Generation tracks** — current research/evaluation framing that separates retrieval, augmented generation, and end-to-end RAG. citeturn0search5turn0search26
-- OWASP, **LLM08:2025 Vector and Embedding Weaknesses** — evidence for access-control and data-leakage risks in RAG/vector systems. citeturn0search1
-- NIST, **AI RMF: Generative AI Profile** — broader risk-management context for generative-AI systems. citeturn0search3
+- NIST CSRC, **RAG glossary definition** — authoritative definition of retrieval-augmented generation. [NIST RAG Glossary](https://csrc.nist.gov/glossary/term/rag)
+- Lewis et al., **Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks** (2020) — foundational research on combining parametric and non-parametric memory. [arXiv](https://arxiv.org/abs/2005.11401)
+- NIST TREC, **Retrieval-Augmented Generation tracks** — evaluation/research framing that separates retrieval and RAG tasks. [TREC RAG](https://trec.nist.gov/cfp.html)
+- OWASP, **LLM08:2025 Vector and Embedding Weaknesses** — evidence for access-control and data-leakage risks in RAG/vector systems. [OWASP](https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/)
+- NIST, **AI RMF: Generative AI Profile** — broader risk-management context for generative-AI systems. [NIST](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
