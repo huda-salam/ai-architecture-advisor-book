@@ -1,10 +1,10 @@
 # Chapter 30 — Model Selection
 
-> **Advisor question:** Which model should we choose, and what evidence justifies the choice?
+> **Advisor question:** Which model should we choose, and what evidence justifies the choice **now**?
 
 ## FOUNDATION
 
-Model selection is an **architecture decision**, not a benchmark contest.
+Model selection is an **architecture and sourcing decision**, not a permanent benchmark contest.
 
 The correct question is not:
 
@@ -12,13 +12,21 @@ The correct question is not:
 
 It is:
 
-> Which model, or combination of models, is sufficiently capable for the defined workload while satisfying the required risk, latency, reliability, data-boundary, operational, cost, and dependency constraints?
+> Which model, endpoint, or model portfolio is sufficiently capable for the defined workload while satisfying the required quality, risk, latency, reliability, data-boundary, operational, cost, and dependency constraints?
 
 A useful decision frame is:
 
-**Capability × Workload × Risk × Latency × Cost × Data Boundary × Reliability × Vendor Dependency**
+**Capability × Workload × Risk × Latency × Cost × Data Boundary × Reliability × Dependency × Business Value**
 
-A model with the highest public benchmark score can still be the wrong enterprise choice. NIST explicitly treats AI trustworthiness as multi-dimensional and emphasizes that accuracy must be evaluated using realistic test sets representative of expected use; tradeoffs between characteristics are expected. urlNIST AI RMF 1.0https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
+The final term matters. A technically superior model is not necessarily the economically superior system.
+
+**ARCHITECTURE WARNING**
+
+> **A model comparison is a dated observation, not a permanent ranking.**
+
+Frontier-model capability is advancing quickly enough that some benchmarks can become saturated or less discriminating within months. Stanford's 2026 AI Index reports that difficult evaluations can saturate rapidly and that leading models have converged on several broad capability measures. It also notes that competitive pressure is increasingly shifting toward cost, reliability, and domain-specific performance. urlStanford AI Index 2026 — Technical Performancehttps://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
+
+Therefore this chapter deliberately separates **durable selection principles** from **time-sensitive model comparisons**.
 
 ---
 
@@ -47,7 +55,7 @@ If the workload is undefined, model selection is premature.
 
 ## 30.2 Choose the Technology Class Before the Model
 
-A common architectural error is assuming every AI problem requires an LLM.
+A common architectural error is assuming every AI problem requires a general-purpose LLM.
 
 First compare the solution classes:
 
@@ -62,13 +70,11 @@ First compare the solution classes:
 | Semantic retrieval | Embedding + search |
 | Summarization | LLM / specialized model |
 | Complex language synthesis | LLM |
-| Image understanding | Vision model / multimodal model |
+| Image understanding | Vision / multimodal model |
 | Speech recognition | ASR model |
-| Workflow coordination | Orchestrator + tools; model only where reasoning/language is needed |
+| Workflow coordination | Orchestrator + tools; model only where reasoning/language is required |
 
-**Advisor rule:** If a deterministic or narrower technology satisfies the requirement with lower risk and complexity, do not introduce a more general model merely because it is fashionable.
-
-This is a recommendation, not a universal law. Evidence from the actual workload should determine the choice.
+**Advisor rule:** If a narrower technology satisfies the requirement with lower risk and complexity, do not introduce a more general model merely because it is fashionable.
 
 ---
 
@@ -76,7 +82,7 @@ This is a recommendation, not a universal law. Evidence from the actual workload
 
 “Reasoning capability” is too vague for architecture review.
 
-Break the task into measurable capabilities:
+Break the workload into measurable capabilities:
 
 - instruction following
 - extraction
@@ -96,78 +102,47 @@ Break the task into measurable capabilities:
 - consistency
 - calibration, where probabilistic outputs are required
 
-A model may be strong in one dimension and weak in another.
-
-HELM's research demonstrates the value of multi-metric evaluation rather than relying on a single score; its framework evaluates dimensions such as accuracy, calibration, robustness, fairness, bias, toxicity, and efficiency. urlHELM — Holistic Evaluation of Language Modelshttps://arxiv.org/abs/2211.09110
+A model can be strong in one dimension and weak in another. Public evaluation frameworks therefore use multiple dimensions rather than a single universal score. urlArtificial Analysis — Intelligence Benchmarking Methodologyhttps://artificialanalysis.ai/methodology/intelligence-benchmarking
 
 ---
 
-## 30.4 Model Selection Matrix
+## 30.4 Benchmark Freshness Is a First-Class Attribute
 
-A practical enterprise matrix should look like this:
+For any external benchmark used in a decision, record at least:
 
-| Dimension | Weight | Model A | Model B | Model C |
-|---|---:|---:|---:|---:|
-| Task quality | 25% | 4 | 5 | 4 |
-| Reliability / consistency | 15% | 5 | 4 | 4 |
-| Security / data boundary | 15% | 5 | 3 | 4 |
-| Latency | 10% | 4 | 3 | 5 |
-| Cost / useful result | 10% | 4 | 2 | 5 |
-| Deployment fit | 10% | 5 | 3 | 4 |
-| Integration / tool support | 5% | 4 | 5 | 3 |
-| Vendor / exit risk | 10% | 5 | 2 | 4 |
-| **Weighted result** | **100%** | **4.55** | **3.45** | **4.15** |
+- benchmark name and version;
+- model name and exact version/variant;
+- provider;
+- evaluation date;
+- benchmark publication/update date;
+- inference configuration where disclosed;
+- tools available;
+- context conditions;
+- metric definition;
+- test-set status;
+- source and methodology.
 
-**Important:** The numbers above are illustrative assumptions, not evidence.
+A benchmark result without a date and model identifier is weak evidence for a rapidly changing market.
 
-Weights must come from the workload and risk profile. A regulated high-impact workflow may rationally assign more weight to security, reliability, auditability, and deployment control than to raw capability.
+### Validity window
 
-Do not allow a weighted score to hide a hard constraint.
+Do not define a universal number of days for benchmark validity. Instead classify evidence as:
 
----
+- **Current:** still representative of the present model/service landscape for the decision.
+- **Aging:** useful background evidence, but should not drive a current ranking without revalidation.
+- **Historical:** useful for understanding technology trajectory, not for current procurement ranking.
 
-## 30.5 Hard Constraints vs Preferences
-
-Separate requirements into two categories.
-
-### Hard constraints
-
-Failure means the candidate is rejected.
-
-Examples:
-
-- prohibited data boundary
-- unacceptable jurisdiction
-- missing required deployment mode
-- unsupported identity integration
-- insufficient output reliability
-- latency above a contractual threshold
-- inability to satisfy required audit controls
-- unacceptable failure mode
-
-### Preferences
-
-These influence ranking but do not automatically reject a candidate.
-
-Examples:
-
-- lower price
-- larger context window
-- better developer ergonomics
-- broader modality support
-- easier migration
-
-This prevents a model from winning because it scores highly overall while violating a critical architectural constraint.
+This avoids the false precision of declaring that every benchmark expires after a fixed number of months.
 
 ---
 
-## 30.6 Public Benchmark ≠ Production Performance
+## 30.5 Public Benchmark ≠ Production Performance
 
 A benchmark measures performance under a defined evaluation condition. It does not automatically establish production performance.
 
-NIST AI 800-3 distinguishes **benchmark accuracy** from **generalized accuracy** and emphasizes that evaluation results depend on the measurement target and assumptions about how test items represent the intended population. urlNIST AI 800-3 — Expanding the AI Evaluation Toolbox with Statistical Modelshttps://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models
+NIST distinguishes benchmark accuracy from generalized accuracy and emphasizes that evaluation results depend on the measurement target and assumptions about how test items represent the intended population. urlNIST AI 800-3 — Expanding the AI Evaluation Toolbox with Statistical Modelshttps://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models
 
-Therefore ask:
+Ask:
 
 1. What task does the benchmark measure?
 2. Is that task representative of ours?
@@ -175,259 +150,384 @@ Therefore ask:
 4. Is the prompt/scaffolding comparable?
 5. Are tools available in both evaluations?
 6. Is context length comparable?
-7. Are sampling parameters comparable?
+7. Are inference parameters comparable?
 8. Is the metric aligned with business impact?
 9. What uncertainty surrounds the result?
-10. Could the benchmark have been contaminated or exposed to the model?
+10. Could contamination or benchmark exposure affect the result?
 
 A benchmark leaderboard is evidence. It is not a deployment decision.
 
 ---
 
-## 30.7 Build a Task-Specific Evaluation Set
+## 30.6 Current Model Comparisons: Use a Snapshot, Not a Ranking
 
-For consequential enterprise workloads, create an evaluation set from the actual task.
+When a decision genuinely requires current model comparison, use a **dated snapshot**.
 
-A useful evaluation set should contain:
+For example:
 
-- representative normal cases
-- difficult cases
-- edge cases
-- ambiguous cases
-- adversarial cases
-- outdated/incorrect inputs
-- contradictory evidence
-- missing information
-- authorization-sensitive cases
-- multilingual cases where relevant
-- production-format inputs
-- expected outputs or evaluation criteria
+```text
+Evaluation date: 2026-09-XX
+Workload: enterprise financial-document analysis
+Candidates: [exact model identifiers]
+Quality: [task-specific metric]
+Latency: [p50/p95]
+Cost: [defined workload cost]
+Reliability: [failure metric]
+Security/data boundary: [verified service condition]
+Business outcome: [defined useful-result metric]
+```
 
-Keep evaluation data separated from tuning where practical.
+Do not write:
 
-Record:
+> Model A is the best model.
 
-- dataset version
-- provenance
-- inclusion criteria
-- exclusion criteria
-- labels / ground truth
-- evaluator methodology
-- model version
-- prompt version
-- tool configuration
-- sampling parameters
-- evaluation date
+Prefer:
 
-NIST emphasizes that accuracy measurements should use clearly defined and realistic test sets and document the test methodology. urlNIST AI RMF Core — Measure 2.5 and related characteristicshttps://airc.nist.gov/airmf-resources/airmf/3-sec-characteristics/
+> On the specified workload and evaluation date, Model A produced the strongest measured result among the tested candidates under the stated conditions.
+
+This distinction is essential because model rankings can change quickly.
+
+Artificial Analysis is useful as one independent comparative source because it benchmarks both proprietary and open-weight models and measures not only intelligence but also price and end-to-end inference performance. Its methodology explicitly defines cost per task and customer-experienced latency. urlArtificial Analysis — Benchmarking Methodologyhttps://artificialanalysis.ai/methodology
+
+It remains a benchmark source, not a substitute for organizational evaluation.
 
 ---
 
-## 30.8 Evaluate the Whole System, Not Only the Base Model
+## 30.7 Free vs Paid Access Is Not the Same as Model Quality
+
+“Free versus paid” is frequently used as a proxy for model comparison, but the categories are architecturally ambiguous.
+
+A free consumer tier, paid consumer subscription, developer API, enterprise service, dedicated deployment, and self-hosted model can expose materially different:
+
+- model availability;
+- rate limits;
+- context/tool capabilities;
+- data-handling terms;
+- administrative controls;
+- support;
+- reliability commitments;
+- auditability;
+- integration options;
+- cost structure.
+
+Therefore do not conclude:
+
+> Paid = better model.
+
+The correct comparison is:
+
+> **Which service tier and deployment arrangement provides the required capability, controls, reliability, economics, and contractual protections for this workload?**
+
+For enterprise architecture, consumer free/paid plans should normally be treated as **access products**, not as the architecture decision itself.
+
+Current plan features and prices are volatile and should be verified from the provider at the time of procurement rather than embedded as timeless book facts.
+
+---
+
+## 30.8 Capability vs Performance vs Business Value
+
+A model comparison should distinguish at least four levels:
+
+```text
+Model Capability
+       ↓
+Task Performance
+       ↓
+System Performance
+       ↓
+Business / Decision Value
+```
+
+### Model capability
+
+What the model can demonstrate under controlled evaluation conditions.
+
+### Task performance
+
+How well it performs the organization's defined task.
+
+### System performance
+
+How the complete architecture performs after retrieval, tools, orchestration, security controls, validation, and human workflow are included.
+
+### Business / decision value
+
+Whether the system improves the intended outcome sufficiently to justify its total cost and risk.
+
+A higher benchmark score does not establish a higher business value.
+
+Stanford's 2026 economic evidence illustrates this distinction: productivity gains are strongest in structured, measurable work, while evidence for broader economic effects remains more mixed. urlStanford AI Index 2026 — Economyhttps://hai.stanford.edu/ai-index/2026-ai-index-report/economy
+
+---
+
+## 30.9 Model Selection Matrix
+
+A practical enterprise matrix should include both technical and economic dimensions:
+
+| Dimension | Type | Example |
+|---|---|---|
+| Task quality | Hard/weighted | critical-field accuracy |
+| Reliability | Hard/weighted | critical failure rate |
+| Security/data boundary | Hard | approved boundary |
+| Latency | Hard/weighted | p95 |
+| Cost per useful result | Weighted | $ / accepted result |
+| Deployment fit | Hard/weighted | API/private/self-hosted |
+| Tool/integration support | Hard/weighted | required interfaces |
+| Vendor/exit risk | Weighted | reversibility |
+| Business value | Weighted | measurable workflow improvement |
+| Evidence confidence | Gate | strength of supporting evidence |
+
+Do not allow a weighted score to hide a hard constraint.
+
+Illustrative scores are assumptions, not evidence.
+
+---
+
+## 30.10 Hard Constraints vs Preferences
+
+### Hard constraints
+
+Failure means the candidate is rejected or escalated.
+
+Examples:
+
+- prohibited data boundary;
+- unacceptable jurisdiction;
+- missing required deployment mode;
+- unsupported identity integration;
+- insufficient output reliability;
+- unacceptable latency;
+- inability to satisfy required audit controls;
+- unacceptable failure mode.
+
+### Preferences
+
+These influence ranking but do not automatically reject a candidate:
+
+- lower price;
+- larger context window;
+- better developer ergonomics;
+- broader modality support;
+- easier migration;
+- higher general benchmark score.
+
+---
+
+## 30.11 Build a Task-Specific Evaluation Set
+
+For consequential workloads, create an evaluation set from the actual task.
+
+Include where relevant:
+
+- representative normal cases;
+- difficult cases;
+- edge cases;
+- ambiguous cases;
+- adversarial cases;
+- outdated/incorrect inputs;
+- contradictory evidence;
+- missing information;
+- authorization-sensitive cases;
+- multilingual cases;
+- production-format inputs;
+- cases where the correct answer is “insufficient evidence.”
+
+Record:
+
+- dataset version;
+- provenance;
+- inclusion/exclusion criteria;
+- labels or reference answers;
+- evaluator methodology;
+- model version;
+- prompt version;
+- tool configuration;
+- inference parameters;
+- evaluation date.
+
+---
+
+## 30.12 Evaluate the Whole System, Not Only the Base Model
 
 For enterprise AI, the effective system is often:
 
 **Model + prompt + context + retrieval + tools + orchestration + policies + post-processing + human workflow**
 
-A model that performs poorly without retrieval may perform well with authoritative enterprise context. Conversely, a strong base model can produce an unacceptable system if retrieval, authorization, tool access, or output validation is weak.
+A strong base model can produce an unacceptable system if retrieval, authorization, tool access, or output validation is weak.
 
-Therefore maintain at least two evaluation layers:
+For AI-IDSS, system evaluation should include:
 
-1. **Model evaluation** — intrinsic capability under controlled conditions.
-2. **System evaluation** — actual application architecture under realistic workload conditions.
-
-For AI-IDSS, system evaluation should include evidence retrieval, source authority, contradiction handling, authorization, recommendation quality, human interaction, and degraded behavior.
+- evidence retrieval;
+- source authority;
+- contradiction handling;
+- authorization;
+- recommendation quality;
+- human interaction;
+- degraded behavior;
+- auditability.
 
 ---
 
-## 30.9 Capability Is Not Reliability
-
-A model can produce an excellent answer on average and still be operationally unsuitable.
+## 30.13 Capability Is Not Reliability
 
 Evaluate:
 
-- run-to-run consistency
-- structured-output validity
-- refusal behavior
-- tool-call correctness
-- citation correctness
-- hallucination/confabulation rate
-- failure severity
-- sensitivity to prompt variation
-- sensitivity to context variation
-- long-context degradation
-- recovery behavior
+- run-to-run consistency;
+- structured-output validity;
+- refusal behavior;
+- tool-call correctness;
+- citation correctness;
+- unsupported-claim rate;
+- failure severity;
+- sensitivity to prompt variation;
+- long-context degradation;
+- recovery behavior.
 
-For high-impact tasks, evaluate the **distribution of failures**, not merely the mean score.
-
-A 95% average success rate can mean very different things if the remaining 5% consists of harmless formatting errors versus dangerous false recommendations.
+For high-impact tasks, evaluate the **distribution and severity of failures**, not merely the mean score.
 
 ---
 
-## 30.10 Latency and Throughput
+## 30.14 Latency, Throughput, and Service Behavior
 
-Model choice must be tested under the target workload.
+Measure under the target workload:
 
-Measure at least:
+- time to first token, where relevant;
+- time to complete response;
+- p50/p95/p99 latency;
+- throughput;
+- concurrency;
+- queueing delay;
+- rate-limit behavior;
+- tool latency;
+- retrieval latency;
+- end-to-end latency;
+- provider degradation behavior.
 
-- time to first token, when relevant
-- time to complete response
-- p50 latency
-- p95 latency
-- p99 latency
-- throughput
-- concurrency
-- queueing delay
-- rate-limit behavior
-- tool latency
-- retrieval latency
-- end-to-end latency
-
-Do not compare model latency using isolated vendor demonstrations if production includes retrieval, tool calls, orchestration, network hops, and post-processing.
-
-See Chapter 17 for the broader scalability and performance framework.
+A provider's isolated model-speed demonstration is not equivalent to production end-to-end latency.
 
 ---
 
-## 30.11 Cost: Measure Cost per Useful Outcome
+## 30.15 Cost: Measure Cost per Useful Outcome
 
-Model price is not the same as system cost.
+Model price is not system cost.
 
-A better measure is:
-
-> **Cost per accepted / useful result**
-
-Conceptually:
+A useful measure is:
 
 ```text
-Total Cost of System
-────────────────────
-Number of Accepted Useful Results
+Cost per Useful Result
+=
+Total System Cost
+───────────────────
+Accepted Useful Results
 ```
 
-Total cost may include:
+Include where material:
 
-- inference
-- input/output tokens
-- embeddings
-- retrieval
-- storage
-- compute
-- network
-- orchestration
-- evaluation
-- observability
-- human review
-- retries
-- failed calls
-- engineering and operations
-- vendor minimum commitments
+- inference;
+- input/output tokens;
+- reasoning tokens where billed;
+- embeddings;
+- retrieval;
+- storage;
+- compute;
+- network;
+- orchestration;
+- evaluation;
+- observability;
+- human review;
+- retries;
+- failed calls;
+- engineering and operations;
+- vendor commitments.
 
-A cheaper model that requires substantially more retries or human correction may be more expensive at system level.
+A cheaper model that produces more corrections may be more expensive at system level.
 
 ---
 
-## 30.12 Data Boundary Is a Model-Selection Criterion
+## 30.16 Data Boundary Is a Model-Selection Criterion
 
 For each candidate, document:
 
-- where input data is processed
-- whether data is retained
-- retention duration
-- whether prompts/outputs are used for provider improvement or training under the applicable service terms
-- subprocessors
-- geographic processing/storage
-- encryption controls
-- tenant isolation
-- deletion behavior
-- logging/telemetry
-- administrative access
-- contractual commitments
-- incident notification
+- processing location;
+- retention;
+- whether inputs/outputs may be used for provider improvement or training under applicable terms;
+- subprocessors;
+- geographic processing/storage;
+- encryption controls;
+- tenant isolation;
+- deletion behavior;
+- logging/telemetry;
+- administrative access;
+- contractual commitments;
+- incident notification.
 
 Do not reduce this to “cloud vs on-premise.”
 
-The relevant architecture question is:
+The relevant question is:
 
 > What data crosses which trust boundary, under whose control, for how long, and with what enforceable protections?
 
-See Chapters 19–21.
+---
+
+## 30.17 Deployment Model and Operational Responsibility
+
+Candidate deployment patterns include:
+
+- third-party API;
+- enterprise-managed model platform;
+- dedicated/private managed deployment;
+- self-hosted open-weight model;
+- on-premises deployment;
+- hybrid model strategy;
+- multiple providers.
+
+A self-hosted model may increase deployment control while also increasing responsibility for compute, capacity, serving, patching, security, upgrades, evaluation, availability, incident response, and lifecycle management.
+
+**Self-hosted is not synonymous with safer, cheaper, or independent.** Those are propositions to test.
 
 ---
 
-## 30.13 Deployment Model
-
-Candidate models may be consumed through different deployment patterns:
-
-- third-party API
-- enterprise-managed model platform
-- self-hosted open-weight model
-- dedicated/private managed deployment
-- on-premises deployment
-- hybrid model strategy
-- multiple providers
-
-Selection must account for the operational burden introduced by the deployment model.
-
-A self-hosted model may improve control over a data boundary while increasing responsibilities for:
-
-- compute
-- capacity planning
-- patching
-- model serving
-- security
-- upgrades
-- evaluation
-- availability
-- incident response
-- model lifecycle
-
-“Self-hosted” is therefore not synonymous with “safer” or “cheaper.” Those are hypotheses to test.
-
----
-
-## 30.14 Model Versioning and Change Risk
+## 30.18 Model Versioning and Change Risk
 
 Treat a model version as a dependency.
 
 Record:
 
-- provider
-- model family
-- exact version / identifier
-- release date
-- deprecation date, if known
-- serving configuration
-- system prompt
-- tool definitions
-- evaluation version
-- known limitations
-- change-management policy
+- provider;
+- model family;
+- exact version/identifier;
+- release date;
+- deprecation date, if known;
+- serving configuration;
+- prompt and tool configuration;
+- evaluation version;
+- known limitations;
+- provider change policy.
 
-A provider changing the model behind a stable API can change application behavior even if the API contract remains unchanged.
+A stable API contract does not necessarily mean stable model behavior.
 
-Therefore ask vendors:
+Ask:
 
-> What exactly is immutable about the model identifier, and what can change behind that identifier?
+> What exactly is immutable about the model identifier, and what can change behind it?
 
-If the answer is unclear, model reproducibility is uncertain.
+If the answer is unclear, reproducibility is uncertain.
 
 ---
 
-## 30.15 Model Routing
+## 30.19 Model Routing and Model Portfolios
 
 A single model does not have to serve every task.
 
-A routing architecture may use:
+A model portfolio may use:
 
 ```mermaid
 flowchart TD
     A[Incoming Task] --> B[Task Classification]
     B --> C{Policy / Constraints}
-    C -->|Simple extraction| D[Small / Specialized Model]
-    C -->|Routine generation| E[Efficient General Model]
-    C -->|Complex reasoning| F[High-Capability Model]
-    C -->|Sensitive data| G[Approved Private Boundary]
+    C -->|Simple / narrow| D[Efficient Model]
+    C -->|Complex reasoning| E[High-Capability Model]
+    C -->|Sensitive workload| F[Approved Private Boundary]
+    C -->|Specialized task| G[Specialized Model]
     D --> H[Validation]
     E --> H
     F --> H
@@ -435,80 +535,33 @@ flowchart TD
     H --> I[Human / Workflow Decision]
 ```
 
-Routing can optimize cost and latency, but introduces additional complexity:
+Routing can improve economics and resilience, but introduces:
 
-- classifier errors
-- policy errors
-- routing drift
-- inconsistent behavior
-- evaluation complexity
-- observability requirements
-- multiple vendor dependencies
+- classifier errors;
+- policy errors;
+- routing drift;
+- inconsistent behavior;
+- evaluation complexity;
+- multiple dependencies.
 
-Do not introduce routing unless its benefit is demonstrated.
-
----
-
-## 30.16 Fallback Models
-
-Fallback is not automatically safe.
-
-A fallback model may differ in:
-
-- capability
-- context handling
-- safety behavior
-- tool support
-- output format
-- refusal behavior
-- factual reliability
-- latency
-
-Therefore define whether fallback is:
-
-1. semantically equivalent,
-2. lower-capability but acceptable,
-3. read-only / degraded mode, or
-4. unavailable for the task.
-
-For consequential workflows, a fallback must not silently change the meaning of the decision-support output.
+Use model diversity only when its measured benefit justifies the additional architecture.
 
 ---
 
-## 30.17 Structured Output and Tool Use
+## 30.20 Context Window Is Not Automatically Useful Capacity
 
-For enterprise workflows, model capability should include interface behavior, not just language quality.
-
-Evaluate:
-
-- schema adherence
-- malformed-output rate
-- enum correctness
-- missing-field rate
-- tool selection
-- tool argument correctness
-- tool-call sequencing
-- recovery from tool errors
-- refusal when authorization is absent
-
-A model that writes beautiful prose but cannot reliably produce the required machine-readable contract may be the wrong model for the architecture.
-
----
-
-## 30.18 Context Window Is Not Automatically Useful Capacity
-
-A larger advertised context window does not establish that the model will use all provided information effectively.
+A larger advertised context window does not establish that the model will use all information effectively.
 
 Test:
 
-- retrieval precision
-- relevant information recall
-- performance as context grows
-- distractor sensitivity
-- instruction placement
-- long-document extraction
-- contradiction handling
-- latency/cost impact
+- relevant-information recall;
+- distractor sensitivity;
+- instruction placement;
+- long-document extraction;
+- contradiction handling;
+- latency;
+- cost;
+- degradation as context grows.
 
 The useful question is not:
 
@@ -520,349 +573,131 @@ It is:
 
 ---
 
-## 30.19 Model Documentation and Due Diligence
+## 30.21 Model Documentation and Due Diligence
 
 Request evidence from the provider or model owner where available:
 
-- model documentation
-- intended use
-- limitations
-- evaluation methodology
-- benchmark results
-- safety evaluations
-- known failure modes
-- training-data information where disclosed
-- versioning policy
-- service-level commitments
-- data handling terms
-- security documentation
-- incident process
-- deprecation policy
+- model documentation;
+- intended use;
+- limitations;
+- evaluation methodology;
+- benchmark results;
+- safety evaluations;
+- known failure modes;
+- training-data information where disclosed;
+- versioning policy;
+- service-level commitments;
+- data-handling terms;
+- security documentation;
+- incident process;
+- deprecation policy.
 
-Do not assume that missing documentation means the model is unsafe. But do treat lack of evidence as uncertainty that may affect the decision.
-
----
-
-## 30.20 Benchmark Interpretation Rules
-
-When someone says:
-
-> “Model A is 5% better than Model B.”
-
-Ask:
-
-- Better on what metric?
-- On which dataset?
-- With what prompt?
-- Under what inference configuration?
-- Is the difference statistically or practically meaningful?
-- Is it within measurement uncertainty?
-- Does the task resemble production?
-- Does the result generalize?
-- Does the difference survive our own evaluation?
-
-NIST's 2026 evaluation work specifically warns that benchmark analyses can rely on implicit assumptions, conflate performance concepts, or quantify uncertainty incorrectly. urlNIST AI 800-3https://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models
+Missing documentation does not prove that a model is unsafe. It does increase uncertainty.
 
 ---
 
-## 30.21 Model Selection Evidence Hierarchy
+## 30.22 Evidence Hierarchy for Current Model Selection
 
-Prefer evidence in roughly this order for the specific decision:
+For a current decision, prefer evidence that is both **relevant and fresh**.
 
-1. production evidence on the target workload
-2. controlled evaluation using representative organizational data
-3. independent evaluation with comparable tasks
-4. reproducible public benchmarks
-5. vendor benchmark results with methodology disclosed
-6. vendor marketing claims
-7. anecdotal user reports
+A practical hierarchy is:
 
-This is an advisor recommendation, not a universal scientific hierarchy.
+1. controlled evaluation on the target workload;
+2. production evidence on the target workload;
+3. independent evaluation using comparable tasks;
+4. current reproducible public benchmarks;
+5. provider benchmark results with methodology disclosed;
+6. vendor marketing claims;
+7. anecdotal reports.
 
-Evidence quality depends on how well the evaluation answers the actual decision question.
+This is an advisor recommendation, not a universal scientific ranking.
 
----
-
-## 30.22 Selection Process
-
-Use this sequence:
-
-```mermaid
-flowchart TD
-    A[Define Business / Technical Task] --> B[Define Risk and Constraints]
-    B --> C[Select Technology Class]
-    C --> D[Shortlist Candidate Models]
-    D --> E[Collect Documentation and External Evidence]
-    E --> F[Build Representative Evaluation Set]
-    F --> G[Evaluate Capability]
-    G --> H[Evaluate Reliability / Safety / Security]
-    H --> I[Evaluate Latency / Throughput / Cost]
-    I --> J[Evaluate Data Boundary / Deployment / Dependency]
-    J --> K[System-Level Evaluation]
-    K --> L{Pass Hard Constraints?}
-    L -->|No| M[Reject / Rework]
-    L -->|Yes| N[Compare Trade-offs]
-    N --> O[Architecture Decision Record]
-    O --> P[Production Pilot]
-    P --> Q[Post-Deployment Monitoring]
-```
-
-The output is not merely “Model X.”
-
-The output should be:
-
-> **Model X for workload Y, under constraints Z, because evidence E demonstrates acceptable capability, reliability, risk, cost, and operational fit.**
+Freshness cannot rescue irrelevant evidence, and relevance cannot make stale model-specific rankings current.
 
 ---
 
-## 30.23 AI-IDSS Model Selection
+## 30.23 Comparative Evidence Record
 
-For the AI-IDSS architecture, do not ask for one universal model.
+Every serious model comparison should produce a compact evidence record:
 
-Different stages may have different requirements:
-
-| AI-IDSS function | Potential model requirement |
+| Field | Required |
 |---|---|
-| Document extraction | structured output, high extraction accuracy |
-| Evidence classification | consistency, precision/recall |
-| Retrieval assistance | query understanding, semantic robustness |
-| Evidence synthesis | context use, citation discipline |
-| Scenario analysis | reasoning capability + explicit uncertainty |
-| Investment-risk signal | calibrated statistical/ML model where probability is required |
-| Executive summary | language quality + factual grounding |
-| Tool orchestration | reliable tool selection and arguments |
-| Natural-language interface | interaction quality + authorization-aware architecture |
+| Decision | What are we deciding? |
+| Workload | What exactly will the model do? |
+| Candidates | Exact model/version/provider |
+| Evaluation date | When was evidence collected? |
+| Quality | Task-specific results |
+| Reliability | Failure/severity results |
+| Latency | p50/p95/p99 where relevant |
+| Cost | Cost for the defined workload |
+| Data boundary | Verified processing/retention conditions |
+| Business value | Measured or explicitly estimated |
+| Evidence source | Primary/independent/organizational |
+| Uncertainty | Known limitations |
+| Expiry trigger | What would make this comparison stale? |
 
-**Critical distinction:** the LLM should not automatically become the model for every analytical task.
-
-For example, a calibrated deterioration probability may be better produced by a statistical or ML model, while an LLM explains the evidence and summarizes the result. See Chapter 27.
-
----
-
-## 30.24 Anti-Patterns
-
-### Anti-pattern 1 — “Pick the benchmark winner”
-
-Why it fails: benchmark performance may not represent the workload.
-
-### Anti-pattern 2 — “Use the largest model”
-
-Why it fails: capability may exceed requirements while cost, latency, and operational burden increase.
-
-### Anti-pattern 3 — “Use the cheapest model”
-
-Why it fails: lower inference cost can be offset by lower quality, retries, human review, or business errors.
-
-### Anti-pattern 4 — “Use one model everywhere”
-
-Why it fails: different workloads have different capability and risk requirements.
-
-### Anti-pattern 5 — “Use an LLM because the task contains language”
-
-Why it fails: search, rules, statistical models, or specialized models may be more appropriate.
-
-### Anti-pattern 6 — “The context window is huge, so RAG is unnecessary”
-
-Why it fails: context capacity does not establish retrieval quality, authorization, freshness, or reliable use of all information.
-
-### Anti-pattern 7 — “Open-weight means no vendor dependency”
-
-Why it fails: dependency can move to hardware, serving software, model maintainers, specialized infrastructure, or operational expertise.
-
-### Anti-pattern 8 — “Private deployment means zero risk”
-
-Why it fails: it changes the threat and control boundary; it does not eliminate security, model, data, or operational risks.
-
-### Anti-pattern 9 — “A benchmark difference of 2% means Model A is better”
-
-Why it fails: measurement uncertainty and task relevance may make the difference immaterial.
-
-### Anti-pattern 10 — “Model choice is permanent”
-
-Why it fails: model capabilities, pricing, deployment options, threats, and vendor terms change.
+This record should travel with the architecture decision record.
 
 ---
 
-## 30.25 Advisor Challenge Questions
+## 30.24 What Would Change Our Mind?
 
-### To Head of AI
+The advisor should revise a model recommendation if:
 
-1. What exact workload are we optimizing?
-2. What are the hard rejection criteria?
-3. Which model capabilities are actually required?
-4. Which capabilities are merely desirable?
-5. What is our representative evaluation set?
-6. What evidence supports the selected model?
-7. Which failures matter most?
-8. What happens when the model is unavailable?
-9. What happens when model behavior changes after an upgrade?
-10. What is our exit or replacement strategy?
-
-### To CTO
-
-1. What deployment boundary is acceptable?
-2. What operational capability do we have to run the model?
-3. What are the latency and availability requirements?
-4. What are the total system costs at target volume?
-5. What vendor dependency are we accepting?
-6. Can the architecture support model replacement without redesigning the application?
-
-### To Vendor
-
-1. What exact model/version is being evaluated?
-2. What changes without customer action?
-3. How is customer data handled?
-4. What is retained and for how long?
-5. What subprocessors are involved?
-6. What evaluation methodology produced your benchmark numbers?
-7. Which production workloads are represented?
-8. What known failure modes exist?
-9. What are the rate limits and capacity guarantees?
-10. What is the deprecation and migration policy?
+- a newer model materially changes the capability/cost frontier;
+- the current benchmark becomes saturated or unreliable;
+- task-specific evaluation contradicts the public benchmark;
+- a cheaper model reaches all decision-critical thresholds;
+- a more capable model creates meaningful business value that justifies its incremental cost;
+- provider terms materially change the data or risk boundary;
+- reliability differs materially under production workload;
+- an alternative architecture reduces dependency without unacceptable cost or complexity.
 
 ---
 
-## 30.26 Selection Checklist
+## 30.25 Technical Challenge Questions
 
-### Workload
-
-- [ ] Task explicitly defined
-- [ ] Inputs defined
-- [ ] Outputs defined
-- [ ] Error tolerance defined
-- [ ] Failure impact defined
-- [ ] Volume/concurrency defined
-
-### Capability
-
-- [ ] Required capabilities decomposed
-- [ ] Technology class challenged
-- [ ] Domain fit evaluated
-- [ ] Structured output tested where relevant
-- [ ] Tool use tested where relevant
-
-### Evaluation
-
-- [ ] Representative evaluation set exists
-- [ ] Ground truth/evaluation criteria documented
-- [ ] Benchmark evidence separated from production evidence
-- [ ] Uncertainty considered
-- [ ] Failure severity measured
-- [ ] System-level evaluation completed
-
-### Architecture
-
-- [ ] Data boundary approved
-- [ ] Deployment model evaluated
-- [ ] Identity/security controls compatible
-- [ ] Latency/throughput acceptable
-- [ ] Availability/fallback behavior defined
-- [ ] Version/change policy understood
-
-### Economics
-
-- [ ] Inference cost calculated
-- [ ] Total system cost calculated
-- [ ] Human-review cost considered
-- [ ] Retry/failure cost considered
-- [ ] Capacity assumptions documented
-
-### Dependency
-
-- [ ] Vendor dependency identified
-- [ ] Exit strategy documented
-- [ ] Model replacement path evaluated
-- [ ] Portability assumptions tested
+1. What exact workload are we selecting for?
+2. Which capability actually differentiates the candidates?
+3. What is the evaluation date?
+4. What exact model/version was tested?
+5. Is the benchmark still current enough to inform this decision?
+6. Does the benchmark resemble our workload?
+7. What happens on our own representative evaluation set?
+8. What is the cost per useful result?
+9. What is the end-to-end latency?
+10. What are the critical failure modes?
+11. Are the data-boundary claims contractual and technically verified?
+12. What happens if the provider changes the model?
+13. What happens if the provider is unavailable?
+14. What happens if a cheaper model becomes sufficient?
+15. What evidence would justify self-hosting?
+16. What evidence would justify using a third-party model?
+17. What evidence would justify using multiple models?
+18. Where does the business value actually come from?
+19. Which assumption could reverse the recommendation?
+20. When will this comparison need to be revalidated?
 
 ---
 
-## 30.27 Evidence Discipline
+## 30.26 Evidence Discipline
 
-### Claim
-Model selection should be based on workload-specific evidence rather than a single universal benchmark.
+**Fact:** Frontier-model performance and the model landscape can change rapidly; Stanford's 2026 AI Index documents rapid benchmark saturation and convergence among leading models. urlStanford AI Index 2026 — Technical Performancehttps://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
 
-### Evidence
-NIST AI RMF emphasizes valid/reliable AI, realistic test sets, documented methodology, and context-specific tradeoffs. NIST AI 800-3 further distinguishes benchmark accuracy from generalized accuracy and addresses uncertainty in benchmark evaluation. urlNIST AI RMFhttps://www.nist.gov/itl/ai-risk-management-framework urlNIST AI 800-3https://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models
+**Technical evidence:** Current independent benchmark methodology can compare proprietary and open-weight models across capability, price, and customer-experienced performance, but remains an evaluation instrument with scope and methodological limitations. urlArtificial Analysis — Benchmarking Methodologyhttps://artificialanalysis.ai/methodology
 
-### Industry / research evidence
-HELM demonstrates multidimensional model evaluation rather than relying solely on one score. urlStanford CRFM HELMhttps://crfm.stanford.edu/helm/latest/
+**Inference:** A current model ranking should be treated as a dated measurement rather than a durable architectural truth.
 
-### Recommendation
-For consequential enterprise workloads, combine public evidence with controlled, representative, system-level evaluation.
+**Recommendation:** Use current public benchmarks for candidate discovery and comparative context, but use workload-specific evaluation for consequential architecture decisions.
 
-### Assumption
-The organization can construct or obtain a sufficiently representative evaluation set.
-
-### Uncertainty
-No finite evaluation set proves future production behavior. Generalization from evaluation to production remains an empirical question.
+**Assumption:** The model landscape will continue to change faster than the book can be updated. This assumption is therefore a reason to document evaluation dates and expiry triggers rather than a reason to omit comparative evidence.
 
 ---
 
-## 30.28 Falsifiability
+## 30.27 Field Rule
 
-The model-selection recommendation should be revisable.
+> **Do not ask which model is best. Ask which model is sufficiently capable, economically justified, operationally controllable, and evidenced for this workload at this point in time.**
 
-Record what evidence would change the decision.
+And remember:
 
-Examples:
-
-- Model B exceeds Model A on the target workload by a material margin.
-- Model A's failure rate exceeds the approved threshold.
-- Provider changes data-retention terms.
-- Model A's latency becomes unacceptable at target concurrency.
-- Model B achieves equivalent quality at materially lower total cost.
-- A new deployment option materially changes the data-boundary constraint.
-- A critical model failure mode is discovered.
-
-A strong architecture decision is not:
-
-> “We selected Model A.”
-
-It is:
-
-> “We selected Model A because the current evidence and constraints favor it, and we know what evidence would cause us to revisit the decision.”
-
----
-
-## 30.29 Executive Recommendation
-
-For enterprise AI, model selection should be treated as a **controlled architecture decision** rather than a product comparison exercise.
-
-The advisor should require the proposing team to demonstrate:
-
-1. a clearly defined workload,
-2. explicit hard constraints,
-3. appropriate technology-class selection,
-4. representative evaluation evidence,
-5. model and system-level performance,
-6. reliability and failure analysis,
-7. security and data-boundary fit,
-8. latency and capacity fit,
-9. total economic impact,
-10. vendor/dependency implications, and
-11. a credible replacement and re-evaluation path.
-
-The recommended model is therefore not necessarily the strongest model, the cheapest model, or the most popular model.
-
-It is the model whose **demonstrated fitness for the intended workload** best satisfies the organization's technical, operational, security, economic, and strategic constraints.
-
----
-
-## 30.30 Field Rule
-
-> **Never ask “Which model is best?” without first asking “Best for which workload, under which constraints, measured by which evidence?”**
-
----
-
-## Evidence / primary references
-
-- NIST AI Risk Management Framework 1.0: https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
-- NIST AI RMF: https://www.nist.gov/itl/ai-risk-management-framework
-- NIST AI RMF Core: https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
-- NIST AI RMF trustworthiness characteristics: https://airc.nist.gov/airmf-resources/airmf/3-sec-characteristics/
-- NIST AI 800-3, *Expanding the AI Evaluation Toolbox with Statistical Models*: https://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models
-- NIST AI Measurement and Evaluation: https://www.nist.gov/ai-measurement-and-evaluation
-- Stanford CRFM, HELM: https://crfm.stanford.edu/helm/latest/
-- Liang et al., *Holistic Evaluation of Language Models*: https://arxiv.org/abs/2211.09110
-
-> **Version note:** NIST AI RMF 1.0 is currently being revised. This chapter uses AI RMF 1.0 as a referenced framework while treating current NIST pages and newer evaluation guidance as version-aware evidence.
+> **Benchmark capability is evidence. Task performance is stronger evidence. System performance is stronger still. Business value is the decision outcome.**
