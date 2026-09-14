@@ -2,38 +2,41 @@
 
 ## Review Status
 
-**Three-pass review completed.**
+**Three-pass review completed and refreshed against current 2026 evidence.**
 
-### Pass 1 — Architecture review
+### Pass 1 — Architecture Review
 
-The chapter was reviewed as an architecture decision framework rather than a collection of cost-saving tips. It distinguishes:
+The chapter is treated as an architecture decision framework rather than a collection of cost-saving tips. It distinguishes:
 
 - workload definition;
-- quality constraints;
+- quality and evidence constraints;
 - latency and throughput;
 - infrastructure utilization;
 - model and retrieval economics;
 - human correction cost;
 - security and reliability constraints;
 - experimentation and measurement;
-- lifecycle optimization.
+- lifecycle optimization;
+- benchmark economics versus enterprise economics.
 
-### Pass 2 — Evidence review
+### Pass 2 — Current Evidence Review
 
-Primary/established industry sources reviewed include:
+The refreshed review uses:
 
-1. AWS Well-Architected Framework — performance trade-offs and cost-aware architecture decisions.
-2. AWS Well-Architected Machine Learning Lens — optimization across the ML lifecycle.
-3. FinOps Foundation — AI unit economics and AI infrastructure strategy.
+1. **FinOps Foundation** — current AI tooling, use-case economics, cost attribution, infrastructure strategy, model selection, caching, agent cost controls, and continuous measurement.
+2. **Stanford AI Index 2026** — current evidence on rapid capability progress, model convergence, benchmark saturation/reliability concerns, and the growing importance of cost, reliability, and domain performance.
+3. **Artificial Analysis** — current methodology for comparing model/endpoint quality, price, latency, token usage, and cost per benchmark task.
+4. Existing cloud architecture guidance where relevant to trade-offs, workload measurement, right-sizing, and experimentation.
 
-These sources support the general architectural proposition that cost and performance should be evaluated against workload requirements and business outcomes rather than optimized independently.
+These sources support the architectural proposition that cost/performance optimization should be workload-specific, evidence-driven, and constrained by quality, reliability, security, and business value.
 
-### Pass 3 — Semantic/adversarial review
+### Pass 3 — Semantic / Adversarial Review
 
-The chapter was checked for overclaiming. In particular, it does **not** claim that:
+The chapter was checked for overclaiming. It does **not** claim that:
 
 - the cheapest model is always best;
-- larger accelerators are always faster or more economical;
+- lower token price means lower cost per useful result;
+- larger accelerators are always better;
 - caching is always beneficial;
 - batching always reduces cost;
 - autoscaling always reduces cost;
@@ -41,97 +44,144 @@ The chapter was checked for overclaiming. In particular, it does **not** claim t
 - managed services are always cheaper;
 - self-hosting is always cheaper;
 - model routing is always beneficial;
+- public benchmarks predict enterprise economics;
+- benchmark leadership proves production suitability;
 - infrastructure cost is equivalent to total AI cost.
 
-Those propositions are workload-dependent and are treated as hypotheses to evaluate.
+These are treated as workload-dependent propositions requiring measurement.
 
 ## Evidence Classification
 
 ### Fact / Technical Evidence
 
-AWS Well-Architected guidance recommends factoring cost into architectural decisions and evaluating performance improvements through workload requirements, experimentation, and trade-offs. It explicitly warns against assuming that every performance improvement should be implemented without considering its impact and trade-offs.
+FinOps defines unit economics as a way to connect technology spending and usage with business context. Its current AI guidance emphasizes use-case economics rather than raw token or infrastructure measures and recommends continuous measurement because model, serving, retrieval, and tooling changes can alter cost per outcome. urlFinOps Unit Economicshttps://www.finops.org/framework/capabilities/unit-economics/ urlFinOps for AI — Tools & Services Considerationshttps://www.finops.org/wg/finops-for-ai-tools-services-considerations/
 
 ### Industry Evidence
 
-AWS's Machine Learning Lens identifies resource optimization, inference optimization, appropriate compute sizing, lifecycle cost optimization, and cost-aware ML architecture as recurring concerns across the ML lifecycle.
+Current FinOps material identifies optimization levers across model selection, caching, serving, retrieval, orchestration, agent loops, utilization, cost attribution, and infrastructure strategy. These are industry guidance and should not be interpreted as proof that a particular optimization will work for every workload. citeturn1view0turn0search9
 
-FinOps guidance identifies AI unit economics, cost attribution, time to business value, and infrastructure-model selection as important aspects of managing AI economics.
+### Independent / Research Evidence
 
-### Recommendation
+Stanford's 2026 AI Index reports rapid AI capability gains and convergence among leading models while documenting concerns about benchmark reliability, contamination, gaming, and real-world generalization. This supports treating benchmark results as evidence rather than as a permanent optimization target. citeturn0search0turn0search48
 
-The chapter's principal recommendation is:
+Artificial Analysis publishes a methodology that measures model, endpoint, and system performance and includes price, latency, token consumption, and cost per task. These measurements are useful comparative evidence, but their benchmark workload is not automatically equivalent to an organization's production workload. citeturn0search1turn0search3
 
-> Optimize the complete AI system for the lowest justified cost of delivering the required quality, evidence, security, reliability, and performance.
+## Key Claims and Boundaries
 
-This is an **advisor recommendation**, not a universal industry standard.
+### 1. Cost per useful result
 
-### Inference
+**Classification:** Recommendation / analytical construct.
 
-The concept of **cost per useful result** extends conventional infrastructure metrics by incorporating whether an output is actually accepted and useful. This is a reasoning framework intended to prevent infrastructure optimization from hiding downstream correction and failure costs.
+The metric extends unit economics by defining the denominator as an accepted useful outcome. It is intentionally not presented as an accounting standard.
 
-### Assumption
+### 2. Model price-performance changes
 
-The organization can measure or reasonably estimate enough of the downstream workflow to distinguish generated outputs from accepted useful results. Where that cannot be measured reliably, technical unit metrics should be used with explicit uncertainty.
+**Classification:** Fact + inference.
 
-## Important Evidence Boundaries
+Provider prices, model capabilities, token usage, and serving characteristics can change. Therefore a model-selection or optimization decision should record the evidence date and be revalidated when material inputs change.
 
-### 1. Optimization is workload-specific
+### 3. Benchmark cost versus enterprise cost
 
-No single model, accelerator, serving architecture, cache strategy, or scaling strategy is universally optimal.
+**Classification:** Inference.
 
-### 2. Performance is multi-dimensional
+A benchmark cost per task is measured under the benchmark's own workload and methodology. Enterprise economics include the organization's retrieval, orchestration, data, security, review, failure, and operational costs.
 
-Latency, throughput, concurrency, utilization, availability, and quality answer different questions. One metric cannot substitute for the others.
+### 4. Optimization must preserve semantics
 
-### 3. Cost is broader than inference price
+**Classification:** Architectural recommendation.
 
-Inference is only one potential component. Retrieval, storage, networking, observability, security, engineering, operations, and human review may materially affect total economics.
+Caching, context reduction, fallback models, routing, and batching can alter freshness, authorization, evidence coverage, latency, or behavior. They therefore require evaluation rather than being treated as universally safe optimizations.
 
-### 4. Lower cost can increase total cost
+### 5. Agentic cost multiplication
 
-An optimization that lowers infrastructure spending but increases errors, human review, incident exposure, or decision losses may be economically inferior.
+**Classification:** Technical/industry evidence.
 
-### 5. Optimization can change semantics
-
-Caching, context reduction, fallback models, batching, and model routing can change the behavior or freshness of the system. They therefore require evaluation, not merely implementation.
+Agentic workflows can generate multiple model and tool calls for one user interaction. Cost controls therefore need trace-level visibility, bounded execution, and attribution at the workflow/run level. FinOps explicitly highlights this problem. citeturn1view0
 
 ## AI-IDSS Evidence Standard
 
-For AI-IDSS, a proposed optimization should demonstrate:
+A proposed optimization should demonstrate, where relevant:
 
 1. baseline cost;
 2. baseline quality;
-3. baseline latency/reliability where relevant;
+3. baseline latency and reliability;
 4. explicit optimization hypothesis;
-5. representative workload test;
+5. representative workload;
 6. cost impact;
 7. quality impact;
-8. security impact;
-9. reliability impact;
-10. human-review impact;
-11. operational complexity introduced;
-12. rollback path.
+8. evidence coverage impact;
+9. security/authorization impact;
+10. reliability impact;
+11. human-review impact;
+12. operational complexity introduced;
+13. rollback path;
+14. evidence date and revalidation trigger.
 
-The optimization should be rejected or redesigned if a hard requirement is violated, regardless of the nominal infrastructure saving.
+The optimization should be rejected or redesigned if a hard requirement is violated, regardless of nominal infrastructure savings.
+
+## Important Evidence Boundaries
+
+### Optimization is workload-specific
+
+No single model, accelerator, serving architecture, cache strategy, or scaling strategy is universally optimal.
+
+### Performance is multi-dimensional
+
+Latency, throughput, concurrency, utilization, availability, quality, and cost answer different questions. One metric cannot substitute for the others.
+
+### Cost is broader than inference price
+
+Inference is only one component. Retrieval, storage, networking, observability, security, engineering, operations, human review, and failure costs can materially affect economics.
+
+### Lower visible cost can increase total cost
+
+An optimization that lowers infrastructure spending but increases errors, human review, incidents, or decision losses may be economically inferior.
+
+### Benchmarks are not production truth
+
+Benchmark results are useful comparative evidence but may suffer from saturation, contamination, construction problems, gaming, or limited generalization. Representative task evaluation remains necessary. citeturn0search0turn0search48
+
+## Evidence Freshness
+
+For volatile variables, the architecture record should include:
+
+- model/provider;
+- endpoint or deployment mode;
+- price source;
+- benchmark/evaluation source;
+- evaluation date;
+- workload definition;
+- assumptions;
+- decision date;
+- revalidation trigger.
+
+Revalidation should be considered when there is a material model release, provider pricing change, serving architecture change, workload change, or production-quality regression.
 
 ## What Would Change the Recommendation?
 
 The recommendation should change when production or controlled-evaluation evidence demonstrates that:
 
-- the expected savings do not materialize;
+- expected savings do not materialize;
 - quality materially deteriorates;
 - evidence coverage becomes insufficient;
 - security or authorization boundaries weaken;
 - reliability falls below the approved threshold;
 - human correction effort increases materially;
-- the optimization introduces disproportionate complexity;
-- workload characteristics materially change.
+- operational complexity exceeds demonstrated benefit;
+- workload characteristics materially change;
+- a newer model or infrastructure option changes the relevant price-performance frontier.
 
 ## Sources
 
-- AWS Well-Architected Framework — Evaluate trade-offs and customer/workload impact: https://docs.aws.amazon.com/wellarchitected/latest/framework/perf_architecture_evaluate_trade_offs.html
-- AWS Well-Architected Framework — Factor cost into architectural decisions: https://docs.aws.amazon.com/wellarchitected/latest/framework/perf_architecture_factor_cost_into_architectural_decisions.html
-- AWS Machine Learning Lens — Cost Optimization: https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/cost-optimization.html
-- AWS Machine Learning Lens — Design Principles: https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/design-principles.html
 - FinOps Foundation — Unit Economics: https://www.finops.org/framework/capabilities/unit-economics/
+- FinOps Foundation — FinOps for AI: Tools & Services Considerations: https://www.finops.org/wg/finops-for-ai-tools-services-considerations/
 - FinOps Foundation — Choosing an AI Approach and Infrastructure Strategy: https://www.finops.org/wg/choosing-an-ai-approach-and-infrastructure-strategy/
+- Stanford HAI — 2026 AI Index, Technical Performance: https://hai.stanford.edu/ai-index/2026-ai-index-report/technical-performance
+- Artificial Analysis — Benchmarking Methodology: https://artificialanalysis.ai/methodology
+- Artificial Analysis — Model comparisons: https://artificialanalysis.ai/models
+
+## Bottom Line
+
+The strongest defensible conclusion is not that one optimization technique is best. It is that AI cost/performance optimization should be treated as a continuously measured architecture decision: define the workload, identify the dominant constraint, test a controlled hypothesis, measure quality and economics together, preserve hard security and reliability requirements, and revalidate when the underlying technology or workload changes.
+
+**Advisor principle:** Optimize the complete system for economically sustainable useful outcomes—not for the lowest visible infrastructure metric.
