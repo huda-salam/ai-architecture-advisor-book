@@ -69,6 +69,7 @@ export default withMermaid(defineConfig({
           { text: '35. Cost / Performance Optimization', link: '/chapters/35-cost-performance-optimization' },
           { text: '36. Vendor Dependency & Exit Strategy', link: '/chapters/36-vendor-dependency-exit-strategy' },
           { text: '37. AI Risk Framework', link: '/chapters/37-ai-risk-framework' },
+          { text: '38. Technical Due Diligence', link: '/chapters/38-technical-due-diligence' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -95,7 +96,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 34', link: '/chapters/34-evidence-review' },
           { text: 'Evidence Review — Chapter 35', link: '/chapters/35-evidence-review' },
           { text: 'Evidence Review — Chapter 36', link: '/chapters/36-evidence-review' },
-          { text: 'Evidence Review — Chapter 37', link: '/chapters/37-evidence-review' }
+          { text: 'Evidence Review — Chapter 37', link: '/chapters/37-evidence-review' },
+          { text: 'Evidence Review — Chapter 38', link: '/chapters/38-evidence-review' }
         ]
       }
     ],
