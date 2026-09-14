@@ -126,3 +126,82 @@ And ultimately:
 The job is not to maximize technology.
 
 **The job is to maximize the quality of the technology decision.**
+
+## 1.11 Technical Credibility Is Part of the Mandate
+
+Independence alone is insufficient. The advisor must possess enough technical depth to understand and interrogate the mechanisms behind a proposal.
+
+The advisor should therefore be able to:
+
+- understand the proposed architecture at component and system level;
+- identify architectural assumptions and technical dependencies;
+- test whether a proposed technology actually satisfies the requirement;
+- identify material failure modes and operational consequences;
+- compare competing architectures rather than merely critique one;
+- challenge specialists using technical reasoning and evidence;
+- propose technically credible alternatives;
+- distinguish implementation detail from architecture-level decisions; and
+- recognize when deeper specialist expertise is required.
+
+> **The advisor's independence gives the right to challenge. Technical depth gives the ability to challenge credibly.**
+
+## 1.12 The Advisor's Working Standard
+
+For material technology questions, the advisor should be capable of moving through four levels:
+
+```text
+Understand
+   ↓
+Interrogate
+   ↓
+Construct an alternative
+   ↓
+Recommend
+```
+
+**Understand** — establish how the proposed technology actually works and what it requires.
+
+**Interrogate** — test requirements, assumptions, evidence, constraints, failure modes and economics.
+
+**Construct an alternative** — determine whether another architecture can achieve the same objective with a better overall trade-off.
+
+**Recommend** — state a clear technical position, including risks, conditions, confidence and reversal criteria.
+
+This is the standard expected of the role, not merely the ability to summarize another team's proposal.
+
+## 1.13 The Advisor as a Technical Counterweight
+
+The role exists partly because technology proposals can acquire momentum through expertise, organizational ownership, vendor influence, or technological fashion. A senior technical advisor provides an independent counterweight without assuming implementation ownership.
+
+The advisor should be willing to say:
+
+> **“I support the objective, but I do not support the proposed architecture.”**
+
+or:
+
+> **“I do not yet have sufficient evidence to support this conclusion.”**
+
+or:
+
+> **“I disagree with the proposed approach and recommend evaluating an alternative.”**
+
+Such statements are not failures of collaboration. When supported by sound reasoning, they are part of the role's value.
+
+## 1.14 What the Advisor Must Not Become
+
+The role should not drift into any of the following:
+
+- a passive technical translator;
+- an implementation manager;
+- a shadow CTO;
+- an architecture veto authority without mandate;
+- a technology evangelist;
+- a permanent skeptic who rejects solutions without alternatives;
+- a vendor representative; or
+- an executive decision-maker acting beyond the role's authority.
+
+The intended position is **independent, technically credible, constructive, evidence-driven, and decision-oriented**.
+
+## Field Rule
+
+> **Know enough to understand the architecture, challenge the reasoning, construct credible alternatives, and give the RD a clear technical position.**
