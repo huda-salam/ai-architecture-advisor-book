@@ -1,111 +1,171 @@
-# Evidence Review — Chapter 44
+# Evidence Review — Chapter 44: Third-Party LLM vs Proprietary Model Cases
 
-## Scope
+## Review Objective
 
-Chapter 44 compares third-party foundation models, enterprise AI platforms, self-hosted open-weight models, and proprietary foundation-model development. The review focuses on documented industry practice and authoritative risk/architecture evidence. It does not attempt to establish a universal build-versus-buy rule.
+This review evaluates the chapter's central question: where should an enterprise place architectural ownership when choosing between third-party foundation models, enterprise model platforms, self-hosted open-weight models, and proprietary foundation-model development?
 
-## Industry Evidence
+The review deliberately separates **industry evidence**, **supervisory evidence**, **research evidence**, **inference**, and **advisor recommendation**. No case is treated as proof of universal optimality.
 
-### Morgan Stanley
+## 1. Core Architectural Claim
 
-Morgan Stanley publicly announced a strategic relationship with OpenAI in 2023 to build an internal capability using OpenAI technology and Morgan Stanley's own intellectual capital. The firm subsequently described AI @ Morgan Stanley Assistant and Debrief as OpenAI-powered tools, with evaluation, retrieval refinement, regression testing, and human review in the workflow. [Industry Evidence]
+**Claim:** Model ownership and system ownership are different decisions.
 
-Sources:
-- Morgan Stanley, “Key Milestone in Innovation Journey with OpenAI,” March 14, 2023.
-- Morgan Stanley, “AI @ Morgan Stanley Debrief,” June 26, 2024.
-- OpenAI, “Morgan Stanley uses AI evals to shape the future of financial services,” current publication.
+**Evidence:** Documented financial-services implementations show organizations using externally supplied model capability while retaining substantial control over enterprise data, workflow, evaluation, access, and governance. Other documented work demonstrates that proprietary/domain-specific model development is technically possible and can be strategically justified under particular conditions.
 
-Interpretation: strong evidence that a major financial institution has used a third-party frontier model inside a firm-specific architecture. It does not prove that the same contractual, security, cost, or model arrangement is optimal for another institution.
+**Classification:** Industry evidence + architectural inference.
 
-### JPMorganChase
+**Important limitation:** Public case studies rarely disclose complete contracts, security controls, staffing, TCO, or migration experience.
 
-JPMorganChase publicly describes LLM Suite as a proprietary enterprise generative-AI platform. Its 2024 annual report states that LLM Suite was launched to more than 200,000 colleagues and provides controlled access to leading generative-AI capabilities while protecting customer and company data. McKinsey's 2025 interview with JPMorganChase's Chief Analytics Officer describes LLM Suite as a proprietary platform powered by leading third-party LLMs. [Industry Evidence]
+## 2. Morgan Stanley
 
-Sources:
-- JPMorganChase 2024 Annual Report.
-- McKinsey, “JPMorgan Chase’s Derek Waldron on building an AI-first bank culture,” October 29, 2025.
-- JPMorganChase, “LLM Suite named 2025 Innovation of the Year.”
+Morgan Stanley publicly describes its collaboration with OpenAI and the evolution of AI @ Morgan Stanley Assistant and Debrief. Current OpenAI case material reports evaluation against real-world use cases, expert feedback, retrieval refinement, regression testing, and human review. It reports more than 98% adoption among advisor teams. urlOpenAI — Morgan Stanley AI casehttps://openai.com/index/morgan-stanley/
 
-Interpretation: this is especially useful evidence against the false binary of “own model versus external model.” The organization can own the enterprise AI platform, controls, workflows, and data boundary while consuming multiple external models.
+**Classification:** Industry evidence.
 
-### BloombergGPT
+**What it supports:** A major financial institution can place third-party frontier-model capability inside a firm-specific architecture.
 
-Bloomberg's research paper describes BloombergGPT, a 50-billion-parameter model trained on a mixture of large financial and general-purpose datasets. The paper reports evaluation on general, open financial, and internal benchmarks and reports strong financial-task performance relative to similarly sized models. [Industry/Research Evidence]
+**What it does not prove:** That the same provider, contract, security model, economics, or architecture is optimal elsewhere.
 
-Source:
-- Wu et al., “BloombergGPT: A Large Language Model for Finance,” arXiv:2303.17564, revised December 2023.
+## 3. JPMorganChase
 
-Interpretation: strong evidence that a proprietary/domain-specific foundation model can be technically justified when an organization has distinctive domain data, model requirements, and the capability to undertake substantial model development. It is not evidence that sensitivity of data alone justifies proprietary foundation-model development.
+JPMorganChase's LLM Suite is an internally developed enterprise AI platform. Public reporting describes it as providing controlled access to generative-AI capabilities and using leading external models underneath the platform.
 
-## Authoritative Risk Evidence
+**Classification:** Industry evidence.
 
-### NIST Generative AI Profile
+**What it supports:** The build-versus-buy boundary can be placed above the foundation model. Enterprise ownership can focus on identity, controls, data, workflows, evaluation, and model access.
 
-NIST AI 600-1 explicitly discusses organizations acquiring, embedding, incorporating, or using open-source or proprietary third-party GAI models and systems. It identifies potential intellectual-property, privacy, and information-security risks and suggests controls such as procurement due diligence, SLAs, SBOMs, and attestation mechanisms. [Technical/Standards Evidence]
+**Limitation:** The bank's scale, engineering resources, procurement leverage, and organizational maturity are not representative of every enterprise.
 
-The NIST profile therefore supports treating third-party model use as a risk-management and procurement question rather than assuming either safety or danger by default.
+## 4. BloombergGPT
 
-### BIS / Financial-Sector Evidence
+The BloombergGPT research paper describes a 50-billion-parameter model trained on a mixture of financial and general-purpose data, including a substantial proprietary financial-data component. It reports evaluation across general, financial, and internal benchmarks. urlBloombergGPT research paperhttps://arxiv.org/abs/2303.17564
 
-BIS identifies third-party dependencies, provider concentration, data quality, privacy, security, and operational resilience as important considerations for AI adoption in financial services. BIS also notes that reliance on common AI, cloud, hardware, and data providers can create concentration and operational-resilience risks. [Supervisory Evidence]
+**Classification:** Research evidence + industry evidence.
 
-Sources:
-- BIS FSI Insight 73, “In data we trust? Emerging policy and supervisory approaches to AI data use in financial services,” March 26, 2026.
-- BIS Executive Summary, “Financial stability implications of artificial intelligence.”
-- BIS FSI Executive Summary, “Sound management of third-party risk,” March 25, 2026.
+**What it supports:** Proprietary/domain-specific model development can be technically justified when distinctive data, domain requirements, and model-development capability converge.
 
-Interpretation: these sources provide independent sector context for the vendor-dependency analysis. They do not prescribe a specific model architecture.
+**Limitation:** Bloomberg's conditions are unusually demanding and therefore have limited direct transferability to a typical enterprise.
 
-## Evidence Classification
+## 5. Current Financial-Services AI Offerings
+
+OpenAI's September 2026 financial-services offering combines frontier-model reasoning with financial data providers and granular citations and reports design partnerships with Morgan Stanley and Evercore. urlOpenAI — ChatGPT for Financial Serviceshttps://openai.com/index/introducing-chatgpt-financial-services/
+
+Google Cloud's 2026 financial-services offering similarly emphasizes governed AI platforms, enterprise connectors, provenance, multiple agents, and an ecosystem intended to support multiple model/agent choices. urlGoogle Cloud — Gemini Enterprise for Financial Serviceshttps://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-financial-services
+
+**Classification:** Vendor-reported industry evidence.
+
+**Interpretation:** These offerings are evidence of current market direction toward combining model capability with data, workflow, connectors, provenance, and governance.
+
+**Caution:** Vendor product claims are not independent proof of superior security, economics, or architecture.
+
+## 6. Third-Party Dependency and Concentration
+
+BIS FSI Insight 73 states that third-party dependencies can amplify AI data-related risks, including privacy, quality, security, provenance, and compliance challenges. It also highlights concentration among major providers. urlBIS FSI Insight 73https://www.bis.org/publications/fsi-insight-73-data-we-trust-emerging-policy-and-supervisory-approaches-ai-data-use-financial-services
+
+BIS also notes that AI systems often depend on specialized hardware, cloud services, external data providers, and pretrained models concentrated among a relatively small number of providers. urlBIS — Financial stability implications of AIhttps://www.bis.org/publications/fsi-summary-financial-stability-implications-artificial-intelligence-executive-summary
+
+**Classification:** Supervisory evidence.
+
+**Interpretation:** Third-party dependency is a real architectural risk in financial services. The evidence does not imply that self-hosting is automatically safer or more resilient.
+
+## 7. Self-Hosting Does Not Eliminate Dependency
+
+**Claim:** Self-hosting changes the dependency graph rather than eliminating dependency.
+
+**Basis:** A self-hosted model still depends on model weights/publishers, runtimes, hardware or cloud infrastructure, networking, security tooling, specialist talent, updates, and supporting software.
+
+**Classification:** Architectural inference.
+
+**Required caution:** The relative concentration and controllability of these dependencies must be measured for the specific architecture.
+
+## 8. Proprietary Does Not Mean More Secure
+
+**Claim:** Proprietary model ownership is not a security property by itself.
+
+**Basis:** Security depends on deployment architecture, identity, authorization, data controls, supply chain, monitoring, patching, evaluation, and operational processes.
+
+**Classification:** Technical/architectural principle.
+
+NIST AI 600-1 addresses risks associated with third-party GAI systems and discusses procurement due diligence, contractual controls, SLAs, software/component transparency, and attestation. urlNIST AI RMF Generative AI Profilehttps://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
+
+## 9. Data Sensitivity Does Not Determine Model Ownership
+
+**Claim:** Sensitive data alone does not logically imply that an organization must build its own foundation model.
+
+**Classification:** Architectural inference.
+
+**Rationale:** Data requirements can potentially be addressed through multiple control patterns, including enterprise-managed APIs, private connectivity, preprocessing, access control, contractual restrictions, controlled retrieval, self-hosted models, or proprietary infrastructure.
+
+**Required evidence for a real decision:** Actual residency, retention, training-use, authorization, encryption, audit, jurisdiction, and contractual requirements.
+
+## 10. Economics
+
+The chapter does not claim that third-party models or proprietary models are universally cheaper.
+
+The comparison must include:
+
+- model/inference cost;
+- infrastructure;
+- engineering;
+- security;
+- operations;
+- evaluation;
+- reliability;
+- compliance;
+- vendor management;
+- transition and exit;
+- opportunity cost;
+- expected technology obsolescence.
+
+**Classification:** Architecture/TCO framework.
+
+Chapter 34 provides the detailed TCO treatment.
+
+## 11. Model Capability and Obsolescence
+
+**Claim:** Proprietary model investments carry technological-obsolescence risk, while third-party dependence carries provider-optionality risk.
+
+**Classification:** Inference.
+
+**Reasoning:** External model capabilities and economics can improve after an internal investment is made; conversely, external providers can change prices, terms, access, or capabilities.
+
+**Required evidence:** Current representative workload evaluations, current commercial terms, internal operating cost, and realistic migration assumptions.
+
+## 12. Evidence Classification Summary
 
 | Claim | Evidence class | Strength | Limitation |
 |---|---|---|---|
-| Third-party frontier models can be used in major financial institutions | Industry Evidence | Strong | Public details are incomplete |
-| A firm can own an AI platform while consuming third-party models | Industry Evidence | Strong | Based on documented examples |
-| Proprietary/domain-specific models can be technically justified | Industry + Research Evidence | Strong | Relevant conditions are unusually demanding |
-| Third-party providers introduce dependency/concentration risk | Supervisory Evidence | Strong | Risk magnitude is context-dependent |
-| Self-hosting eliminates dependency | Unsupported / rejected | — | Self-hosting creates a different dependency graph |
-| Proprietary model = more secure | Unsupported / rejected | — | Security depends on controls and architecture |
-| Third-party model = less secure | Unsupported / rejected | — | Security is architecture- and contract-dependent |
-| Third-party models are always cheaper | Unsupported / rejected | — | TCO depends on workload and lifecycle |
-| Proprietary models are always more differentiated | Unsupported / rejected | — | Differentiation may reside in data, workflow, or distribution |
+| Financial institutions can deploy third-party model capability inside firm-specific architectures | Industry evidence | Strong | Public technical details incomplete |
+| An enterprise can own an AI platform while consuming external models | Industry evidence | Strong | Examples are large institutions |
+| Proprietary/domain-specific models can be justified | Research + industry evidence | Strong | Conditions are unusually demanding |
+| Third-party dependency and concentration are material financial-sector risks | Supervisory evidence | Strong | Magnitude is context-dependent |
+| Self-hosting eliminates dependency | Unsupported / rejected | — | It creates a different dependency graph |
+| Proprietary model means more secure | Unsupported / rejected | — | Security depends on architecture and controls |
+| Third-party model means less secure | Unsupported / rejected | — | Security and contracts are context-dependent |
+| Third-party models are always cheaper | Unsupported / rejected | — | TCO is workload- and lifecycle-dependent |
+| Proprietary models are always more differentiated | Unsupported / rejected | — | Differentiation can reside in data, workflow, or distribution |
 
-## Important Evidence Distinction
+## 13. Transferability to AI-IDSS
 
-The chapter deliberately distinguishes **model ownership** from **system ownership**.
+### Morgan Stanley pattern
 
-An organization may own:
+**Transferability:** High at the architectural-pattern level.
 
-- identity;
-- access policy;
-- data architecture;
-- retrieval;
-- evaluation;
-- orchestration;
-- workflow;
-- audit;
-- tool authorization;
-- model routing;
+Useful lesson: combine proprietary knowledge, permissions, retrieval, evaluation, workflow, and human oversight with externally supplied model capability where appropriate.
 
-without owning the foundation model itself.
+### JPMorganChase pattern
 
-This distinction is an architectural inference supported by the industry cases above; it is not a universal rule.
+**Transferability:** High at the architecture-pattern level.
 
-## Transferability Analysis
+Useful lesson: an enterprise model-access/platform layer can provide control and optionality without requiring ownership of every foundation model.
 
-### Morgan Stanley → AI-IDSS
+### BloombergGPT pattern
 
-Transferability is conceptually high for the pattern of combining proprietary knowledge, retrieval, evaluation, controls, and a third-party frontier model. Exact provider controls, contracts, workloads, and data classifications must be evaluated independently.
+**Transferability:** Lower for the specific decision to train a proprietary foundation model.
 
-### JPMorganChase → AI-IDSS
+Useful lesson: proprietary model development becomes more defensible when model capability itself is strategically differentiated by proprietary data, domain requirements, economics, and internal capability.
 
-Transferability is high for the architectural pattern of an enterprise AI platform decoupled from individual model providers. The scale, engineering resources, and organizational maturity are materially different from many organizations.
-
-### BloombergGPT → AI-IDSS
-
-Transferability is lower for the specific decision to train a proprietary foundation model because Bloomberg's data assets and model-development capabilities are unusually strong. The general lesson—proprietary models become more defensible when model capability itself is strategically differentiated—is more transferable.
-
-## Evidence Gaps
+## 14. Evidence Gaps
 
 Public evidence remains weak on:
 
@@ -115,21 +175,36 @@ Public evidence remains weak on:
 4. long-term provider migration;
 5. failed model migrations;
 6. comparative performance under identical enterprise workloads;
-7. internal operational staffing costs;
-8. the degree to which proprietary model investments remain economically justified after frontier-model capability improves.
+7. internal operating staffing costs;
+8. long-term economics of proprietary model investment;
+9. actual concentration exposure across multiple vendors.
 
-These gaps are important. The advisor should not infer absence of a control or failure merely because it is not publicly disclosed.
+These gaps matter. The advisor should not infer absence of a control or failure merely because it is not publicly disclosed.
 
-## What Would Change Our Mind?
+## 15. What Would Change Our Mind?
 
-The recommendation toward a third-party model boundary should be weakened if repeated evidence shows that required controls cannot be obtained, provider concentration becomes materially unacceptable, or proprietary/self-hosted alternatives demonstrate a durable advantage in required capabilities and economics.
+A recommendation favoring a third-party model boundary should be weakened if:
 
-The recommendation toward proprietary foundation-model development should be weakened if external models close the relevant capability gap, internal operating costs become disproportionate, or model ownership fails to create meaningful strategic differentiation.
+- required controls cannot be obtained;
+- provider concentration becomes materially unacceptable;
+- migration cannot be made credible;
+- external models show a durable and material performance gap on the organization's representative workload;
+- self-hosted alternatives demonstrate a durable advantage in required economics or control.
+
+A recommendation favoring proprietary foundation-model development should be weakened if:
+
+- external models close the relevant capability gap;
+- internal operating cost becomes disproportionate;
+- external model improvement materially outpaces internal development;
+- model ownership fails to create meaningful strategic differentiation;
+- the lifecycle cannot be sustainably funded.
 
 ## Bottom Line
 
-The strongest industry evidence does not support a simple “third-party versus proprietary” answer. It supports a more nuanced architecture pattern:
+The evidence does not support a simple “third-party versus proprietary” answer.
+
+It supports a more useful architectural proposition:
 
 > **Organizations can own the enterprise AI boundary while consuming external model capability, and they can selectively own model capability where the model itself creates strategic value.**
 
-The advisor should therefore locate the control boundary and strategic moat before deciding where model ownership belongs.
+The advisor should therefore locate the **control boundary**, **strategic moat**, **dependency concentration**, **economic break-even**, and **exit path** before deciding where model ownership belongs.
