@@ -6,13 +6,25 @@
 
 AI cost is not the same as an API price, GPU-hour, or cloud invoice.
 
-**Total Cost of Ownership (TCO)** is a lifecycle view of the costs required to acquire, build, operate, maintain, govern, change, and eventually retire a technology capability. FinOps defines TCO as a comprehensive assessment of IT costs across enterprise boundaries over time, including acquisition, management, support, communications, labor, downtime opportunity cost, training, and productivity losses. urlFinOps terminology — Total Cost of Ownershiphttps://framework.finops.org/assets/terminology/
+**Total Cost of Ownership (TCO)** is a lifecycle view of the costs required to acquire, build, operate, maintain, govern, change, and eventually retire a technology capability. FinOps defines TCO as a comprehensive assessment of IT costs across enterprise boundaries over time, including acquisition, management, support, communications, labor, downtime opportunity cost, training, and productivity losses. [FinOps Foundation — Total Cost of Ownership](https://framework.finops.org/assets/terminology/)
 
 For AI, this matters because cost is distributed across model inference, data, infrastructure, engineering, security, evaluation, human review, vendor commitments, and operational support.
 
 A useful architecture principle is:
 
 > **Do not optimize the cheapest component. Optimize the lowest sustainable cost of producing the required useful outcome.**
+
+## ADVISOR LENS — AI ECONOMICS ARE MOVING TARGETS
+
+AI economics are unusually dynamic. Model capability, inference efficiency, provider pricing, context requirements, accelerator economics, and workload design can all change materially during the useful life of an architecture.
+
+The Stanford AI Index has documented rapid improvement in AI performance and declining inference costs over time. Its 2025 analysis, for example, reported a large historical reduction in the cost of obtaining GPT-3.5-level performance on MMLU between late 2022 and late 2024. This is evidence of rapid price-performance improvement, not a forecast of future prices. [Stanford AI Index 2025 — Research and Development](https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development)
+
+The implication for an advisor is important:
+
+> **A TCO model is a time-stamped decision model, not a permanent property of an architecture.**
+
+Record the pricing date, model/version, workload assumptions, utilization assumptions, staffing assumptions, and evaluation evidence. Revalidate the economics when material technology or workload conditions change.
 
 ---
 
@@ -125,6 +137,7 @@ Typical drivers include:
 - request volume;
 - input tokens;
 - output tokens;
+- reasoning or hidden computation where separately metered;
 - context length;
 - model size;
 - inference concurrency;
@@ -142,7 +155,9 @@ Typical drivers include:
 - data retention;
 - engineering effort.
 
-FinOps identifies AI as a distinct cost-management scope because AI spending can cross cloud, data-center, SaaS, model vendors, and other technology categories and can be difficult to forecast. citeturn0search0turn0search26
+AI cost models should distinguish **price** from **resource consumption**. A provider may charge by tokens while the system's real cost is driven by context size, reasoning effort, retrieval/tool calls, concurrency, latency requirements, or other workload characteristics.
+
+Independent model-benchmarking services increasingly expose cost per task rather than token price alone. Artificial Analysis, for example, calculates benchmark cost per task from actual token consumption and provider pricing; its methodology explicitly notes that longer answers or greater reasoning-token use can increase cost even when nominal token prices are identical. This is useful comparative evidence, but it remains benchmark-specific rather than a universal enterprise cost measure. [Artificial Analysis — Benchmarking Methodology](https://artificialanalysis.ai/methodology)
 
 ---
 
@@ -165,6 +180,8 @@ Example assumptions:
 These numbers are **Assumptions**, not facts.
 
 The model should make each assumption visible so it can be replaced by measured production data later.
+
+Also record the **measurement date**. A cost model without a date can silently become obsolete when model pricing, model behavior, workload volume, or infrastructure economics change.
 
 ---
 
@@ -201,13 +218,15 @@ TCO(T)
 
 This is an analytical model, not an accounting standard. The organization should align the final treatment with its finance/accounting policies.
 
+For investment decisions, it can also be useful to distinguish **cash cost**, **allocated internal cost**, and **economic opportunity cost** rather than combining them into one number without explanation.
+
 ---
 
 ## 34.7 Cost Per Useful Outcome
 
 Raw infrastructure cost is often too far from the decision.
 
-FinOps recommends unit economics that connect technology spending to measurable business or workload outcomes; for AI, examples include cost per API call and cost per useful business outcome. citeturn0search1turn0search6
+FinOps promotes unit economics that connect technology spending to measurable business or workload outcomes. The specific unit should reflect the workload rather than forcing every AI system into token economics. [FinOps Framework — Unit Economics](https://framework.finops.org/framework/capabilities/unit-economics/)
 
 For AI-IDSS, useful units might include:
 
@@ -228,6 +247,16 @@ Accepted Useful Results
 ```
 
 The denominator must be defined carefully. A generated answer is not necessarily a useful result.
+
+A stronger formulation for consequential workloads is to make the acceptance rule explicit:
+
+```text
+Useful Result
+= Output that satisfies the defined quality,
+  evidence, authorization, and human-acceptance criteria
+```
+
+The criteria should be measurable where practical. Otherwise the denominator becomes subjective and the resulting unit economics can be misleading.
 
 ---
 
@@ -254,6 +283,26 @@ Here A remains cheaper under this simplified metric.
 But if rejected outputs require expensive human correction, the result can reverse.
 
 Therefore include downstream cost, not only acceptance rate.
+
+**TECHNICAL DEEP DIVE — Price-performance is multidimensional.**
+
+Current independent benchmarking demonstrates why token price alone is insufficient: benchmark cost per task can vary with actual token consumption, reasoning effort, caching, tool use, and provider behavior. Artificial Analysis currently publishes cost-per-task alongside intelligence, speed, latency, token use, and other dimensions. These measurements are useful evidence for comparison, but they describe particular benchmark workloads and should not be substituted for the organization's own workload economics. [Artificial Analysis — Models and Cost](https://artificialanalysis.ai/models/)
+
+This yields a practical hierarchy:
+
+```text
+Token price
+    ↓
+Cost per inference
+    ↓
+Cost per completed workload
+    ↓
+Cost per accepted useful result
+    ↓
+Cost per business / decision outcome
+```
+
+Each step requires more organizational context and usually provides more decision relevance.
 
 ---
 
@@ -308,6 +357,8 @@ Cost per Failure
 
 For consequential systems, a simple expected-value calculation may be insufficient because rare failures can have asymmetric consequences. Record the limitations of the economic model.
 
+Where failure consequences are highly asymmetric, use scenario analysis or stress testing in addition to expected-value calculations. Do not hide tail risk inside a single average cost.
+
 ---
 
 ## 34.11 Reliability Has an Economic Cost
@@ -351,6 +402,8 @@ RAG adds costs beyond model inference:
 Do not conclude that RAG is expensive or cheap in general.
 
 Compare its lifecycle cost against the alternatives for the actual knowledge workload.
+
+An important economic question is not merely **how much retrieval costs**, but whether retrieval reduces other costs such as model context, hallucination correction, manual research, or knowledge-maintenance effort while meeting the required quality and authorization controls.
 
 ---
 
@@ -402,6 +455,8 @@ Self-hosting can be economically attractive at some utilization levels and workl
 
 Neither is universally cheaper.
 
+**Architecture warning:** A low managed-service price can hide contractual or migration exposure; a low self-hosted marginal compute cost can hide idle capacity and operational responsibility. Compare the full dependency graph, not one invoice line.
+
 ---
 
 ## 34.15 Utilization and Break-Even
@@ -424,13 +479,24 @@ At sufficiently high and predictable utilization, fixed infrastructure can becom
 
 The break-even point must be calculated from actual assumptions rather than inferred from hardware price alone.
 
+For a break-even analysis, model at least:
+
+```text
+Fixed Cost
++ Variable Cost × Volume
++ Operational Cost
++ Risk / Transition Cost
+```
+
+for each alternative. Then identify the volume or utilization range in which the preferred option changes.
+
+Do not assume that a single break-even point remains valid after a model, provider price, hardware generation, or workload mix changes.
+
 ---
 
 ## 34.16 Forecasting AI Cost
 
 AI cost forecasts are uncertain because workload, model behavior, pricing, and architecture can change.
-
-FinOps notes that AI forecasting can be harder because of volatile usage, heterogeneous pricing, token-based billing, and rapidly evolving tools. citeturn0search0
 
 Use scenarios rather than one false-precision number:
 
@@ -443,6 +509,8 @@ Use scenarios rather than one false-precision number:
 **X/Y/Z are outputs of the organization's model, not universal benchmarks.**
 
 Expose sensitivity to the variables that matter most.
+
+For a live architecture decision, attach the current provider price sheet or contract assumptions to the decision record rather than embedding volatile prices into the book.
 
 ---
 
@@ -469,6 +537,8 @@ Test sensitivity to:
 
 If a recommendation changes when one uncertain assumption moves slightly, the recommendation should explicitly disclose that sensitivity.
 
+A useful extension is to test **technology substitution**: what happens if a cheaper or more capable model becomes available and migration is feasible? This prevents today's architecture from being evaluated as if model capability and pricing were static.
+
 ---
 
 ## 34.18 Vendor Pricing and Contract Risk
@@ -492,13 +562,15 @@ Review:
 
 For current vendor pricing, use current primary pricing and contractual documents rather than relying on static numbers in an architecture book.
 
+**Evidence discipline:** Current list price is a time-sensitive fact. A benchmark's cost-per-task is also time- and workload-dependent. Neither should be converted into a timeless claim such as “Model X is cheaper.”
+
 ---
 
 ## 34.19 Cost Allocation and Accountability
 
 Shared AI infrastructure creates an attribution problem.
 
-FinOps recommends explicit allocation strategies using accounts, tags, labels, hierarchies, and documented treatment of shared costs. citeturn0search4
+FinOps recommends explicit allocation strategies using accounts, tags, labels, hierarchies, and documented treatment of shared costs. [FinOps Framework](https://framework.finops.org/)
 
 For an enterprise AI platform, allocate where practical by:
 
@@ -534,11 +606,37 @@ Use it when deciding:
 - build vs buy;
 - vendor selection.
 
-FinOps explicitly positions unit economics as useful in build-vs-buy, architecture, workload-placement, migration, sourcing, and related decisions. citeturn0search1
+Unit economics can support build-vs-buy, workload placement, sourcing, migration, and architecture decisions. [FinOps Framework — Unit Economics](https://framework.finops.org/framework/capabilities/unit-economics/)
 
 ---
 
-## 34.21 TCO for AI-IDSS
+## 34.21 Business Value Is Not the Same as Cost Reduction
+
+An economically successful AI system does not necessarily minimize technology spending.
+
+The business question is whether the system produces sufficient value relative to its lifecycle cost and risk.
+
+Recent enterprise surveys provide evidence that organizations report productivity, decision-support, cost, and revenue benefits from AI, but the magnitude and timing of those benefits vary substantially. Stanford's 2026 AI Index reports broad organizational adoption while emphasizing that reported economic effects remain uneven and are based in part on self-reported survey evidence. Deloitte's 2026 State of AI in the Enterprise similarly reports gains across productivity, decision-making, cost reduction, and revenue, while noting that many organizations have not yet fundamentally redesigned how they operate around AI.
+
+These are **Industry Evidence**, not universal ROI assumptions. They should not be inserted into an organization's TCO model as guaranteed benefits.
+
+A defensible business-value model therefore separates:
+
+```text
+Technology Cost
+        ↓
+Operational Effect
+        ↓
+Measured Business Outcome
+        ↓
+Economic Value
+```
+
+Do not jump directly from “the model is cheaper” to “the architecture has better ROI.”
+
+---
+
+## 34.22 TCO for AI-IDSS
 
 For the AI-IDSS, a practical cost chain is:
 
@@ -569,9 +667,11 @@ It is:
 
 > **Produce sufficiently reliable decision support at an economically justified lifecycle cost.**
 
+For AI-IDSS, cost-per-useful-result should be evaluated together with evidence quality, authorization correctness, human-review burden, latency, reliability, and decision consequences. A cheap unsupported recommendation is not an economically successful result.
+
 ---
 
-## 34.22 Common TCO Anti-Patterns
+## 34.23 Common TCO Anti-Patterns
 
 ### Anti-pattern 1 — Compare API price only
 
@@ -591,7 +691,7 @@ It is:
 
 ### Anti-pattern 5 — False precision
 
-**Problem:** produces a $1,237,482 forecast from uncertain assumptions.
+**Problem:** produces a precise forecast from uncertain assumptions.
 
 ### Anti-pattern 6 — Optimize tokens instead of outcomes
 
@@ -605,9 +705,17 @@ It is:
 
 **Problem:** architecture decisions have already locked in expensive dependencies.
 
+### Anti-pattern 9 — Freeze today's economics
+
+**Problem:** treats model pricing, capability, hardware economics, and workload behavior as permanent.
+
+### Anti-pattern 10 — Import benchmark economics directly into enterprise economics
+
+**Problem:** benchmark cost per task is evidence about a defined workload, not a substitute for production workload measurement.
+
 ---
 
-## 34.23 Technical Challenge Questions
+## 34.24 Technical Challenge Questions
 
 When reviewing AI economics, ask:
 
@@ -617,19 +725,23 @@ When reviewing AI economics, ask:
 4. What are the workload drivers?
 5. Which assumptions are measured and which are estimates?
 6. What is the cost per useful outcome?
-7. What is the human-review cost?
-8. What is the expected failure cost?
-9. How does utilization affect the result?
-10. What happens under 2× or 5× workload?
-11. What happens if model pricing changes?
-12. What happens if the model must be replaced?
-13. What is the cost of security and governance?
-14. What costs are excluded, and why?
-15. Which assumption could reverse the recommendation?
+7. What exactly makes a result “useful” or “accepted”?
+8. What is the human-review cost?
+9. What is the expected failure cost and what tail scenarios are excluded?
+10. How does utilization affect the result?
+11. What happens under 2× or 5× workload?
+12. What happens if model pricing changes?
+13. What happens if a materially better model becomes available?
+14. What happens if the model must be replaced?
+15. What is the cost of security and governance?
+16. What costs are excluded, and why?
+17. Which business outcome is expected to change?
+18. Which assumption could reverse the recommendation?
+19. When should the TCO model be revalidated?
 
 ---
 
-## 34.24 Evidence Discipline
+## 34.25 Evidence Discipline
 
 Every TCO model should distinguish:
 
@@ -638,9 +750,21 @@ Every TCO model should distinguish:
 - **Estimate** — calculated value based on assumptions;
 - **Scenario** — deliberately constructed future case;
 - **Sensitivity** — effect of changing an assumption;
+- **Industry Evidence** — reported outcomes from other organizations;
 - **Recommendation** — advisor conclusion based on the model.
 
 Never present an estimated TCO as a known fact.
+
+For volatile inputs, record:
+
+- source;
+- date observed;
+- model/provider/version;
+- pricing basis;
+- workload definition;
+- benchmark or production status;
+- assumptions;
+- expiry/revalidation trigger.
 
 A cost model is only as defensible as:
 
@@ -648,7 +772,7 @@ A cost model is only as defensible as:
 
 ---
 
-## 34.25 What Would Change Our Mind?
+## 34.26 What Would Change Our Mind?
 
 An advisor should state in advance what evidence could reverse the recommendation.
 
@@ -661,13 +785,15 @@ Examples:
 - engineering staffing is already available;
 - security requirements make one architecture unacceptable;
 - a new model materially reduces inference cost at equivalent quality;
-- migration cost is higher than estimated.
+- migration cost is higher than estimated;
+- measured business value is lower than the assumed value;
+- the operational burden of a supposedly cheaper architecture is higher than forecast.
 
 This converts TCO from a static spreadsheet into a decision model.
 
 ---
 
-## 34.26 Field Rule
+## 34.27 Field Rule
 
 > **Do not ask, “Which AI architecture is cheapest?” Ask, “Which architecture produces the required outcome at the lowest defensible lifecycle cost, under the security, reliability, quality, and strategic constraints that actually matter?”**
 
