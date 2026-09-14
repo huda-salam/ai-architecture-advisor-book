@@ -65,6 +65,7 @@ export default withMermaid(defineConfig({
           { text: '31. Model Evaluation', link: '/chapters/31-model-evaluation' },
           { text: '32. Fine-Tuning vs RAG vs Prompting', link: '/chapters/32-fine-tuning-vs-rag-vs-prompting' },
           { text: '33. Model Lifecycle', link: '/chapters/33-model-lifecycle' },
+          { text: '34. AI Total Cost of Ownership', link: '/chapters/34-ai-tco' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -87,7 +88,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 30', link: '/chapters/30-evidence-review' },
           { text: 'Evidence Review — Chapter 31', link: '/chapters/31-evidence-review' },
           { text: 'Evidence Review — Chapter 32', link: '/chapters/32-evidence-review' },
-          { text: 'Evidence Review — Chapter 33', link: '/chapters/33-evidence-review' }
+          { text: 'Evidence Review — Chapter 33', link: '/chapters/33-evidence-review' },
+          { text: 'Evidence Review — Chapter 34', link: '/chapters/34-evidence-review' }
         ]
       }
     ],
