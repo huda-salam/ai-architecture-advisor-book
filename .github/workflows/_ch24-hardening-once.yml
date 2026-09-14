@@ -1,0 +1,41 @@
+name: Chapter 24 editorial hardening (one-time)
+
+on:
+  push:
+    paths:
+      - .github/workflows/_ch24-hardening-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  harden:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Apply editorial corrections
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('docs/chapters/24-api-architecture.md')
+          s = p.read_text()
+          s = s.replace('The current specification family includes version 3.2.0.', 'The current published specification is OpenAPI 3.2.1 (10 September 2026). OpenAPI patch releases address errors and clarifications rather than introducing a new feature set.')
+          s = s.replace('cite not permanent', '')
+          s = s.replace('citeturn0search2turn0search9', '')
+          s = s.replace('citeturn0search1', '')
+          s = s.replace('citeturn0search0turn0search1', '')
+          s = s.replace('citeturn0search7', '')
+          p.write_text(s)
+          PY
+      - name: Remove one-time workflow
+        run: rm .github/workflows/_ch24-hardening-once.yml
+      - name: Commit corrections
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/chapters/24-api-architecture.md .github/workflows/_ch24-hardening-once.yml
+          git commit -m 'Finalize Chapter 24 editorial evidence hardening'
+          git push
