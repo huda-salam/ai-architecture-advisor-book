@@ -2,22 +2,47 @@
 
 ## 1. Review Objective
 
-This review tests Chapter 22 against primary AI-security and risk-management sources. It deliberately separates established threat terminology from architecture recommendations and systems-security inference.
+This review tests Chapter 22 against primary AI-security and risk-management sources. It separates established threat terminology from architecture recommendations, systems-security inference, and current industry evidence.
+
+The chapter is deliberately **consequence-oriented**: the existence of an AI attack does not by itself establish its likelihood, impact, or mitigation effectiveness in a particular deployment.
 
 ## 2. Primary Sources
 
 - [NIST AI 100-2 E2025 — Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations](https://csrc.nist.gov/pubs/ai/100/2/e2025/final)
+- [NIST AI 100-2 E2025 errata / potential updates](https://csrc.nist.gov/files/pubs/ai/100/2/e2025/final/docs/nist.ai.100-2e2025_potential_updates.pdf)
 - [NIST AI 100-2 E2023 — Adversarial Machine Learning](https://csrc.nist.gov/pubs/ai/100/2/e2023/final)
 - [NIST AI RMF 1.0](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10)
 - [NIST AI RMF Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence)
 - [NIST AI RMF Resources](https://www.nist.gov/itl/ai-risk-management-framework/ai-risk-management-framework-resources)
 - [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+- [OWASP Top 10 for Agentic Applications 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [OWASP GenAI Exploit Round-up Q1 2026](https://genai.owasp.org/2026/04/14/owasp-genai-exploit-round-up-report-q1-2026/)
 
-## 3. Claim Classification
+## 3. Source-Scope and Version Discipline
+
+### NIST AI 100-2 E2025
+
+**Status:** Final report, published March 24, 2025.
+
+NIST describes AI 100-2 E2025 as a taxonomy and terminology report for adversarial machine learning and states that it is intended to evolve as new developments emerge. NIST has also published a document listing potential corrections; those proposed corrections are not themselves official changes to the final report. Therefore the book should cite the final report as the authoritative taxonomy while avoiding unnecessary dependence on individual index identifiers that may be affected by errata.
+
+### OWASP Agentic Applications 2026
+
+**Status:** Industry/community security reference, not a formal NIST or ISO standard.
+
+OWASP describes its 2026 Agentic Applications Top 10 as a globally peer-reviewed framework developed with industry experts. It is useful evidence for agent-specific threat categories such as behavior hijacking, tool misuse, and identity/privilege abuse, but should not be presented as a universal regulatory or standards requirement.
+
+### OWASP Exploit Round-up
+
+**Status:** Industry incident evidence, not prevalence statistics.
+
+The Q1 2026 report describes selected major AI-related incidents and exploit disclosures. It explicitly is not intended to be exhaustive. Therefore incidents can demonstrate that a class of failure or attack has occurred; they do not establish its probability in the user's architecture.
+
+## 4. Claim Classification
 
 ### AI Attack Taxonomy
 
-**Claim:** NIST's adversarial-ML taxonomy covers attacks by lifecycle stage, attacker capability, objectives, and consequences, including evasion, poisoning, privacy, and misuse for generative AI.
+**Claim:** NIST's adversarial-ML taxonomy classifies attacks in relation to AI system type, lifecycle stage, attacker goals/objectives, attacker capabilities, and knowledge, covering attacks such as evasion, poisoning, privacy, and misuse across predictive and generative AI.
 
 **Status:** Fact.
 
@@ -25,11 +50,11 @@ This review tests Chapter 22 against primary AI-security and risk-management sou
 
 ### Prompt Injection
 
-**Claim:** Prompt injection and indirect prompt injection are recognized attack classes for generative AI systems.
+**Claim:** Prompt injection and indirect prompt injection are recognized attack patterns for generative AI systems.
 
 **Status:** Fact.
 
-**Basis:** NIST AI 100-2 E2023/E2025 taxonomy.
+**Basis:** NIST AI 100-2 taxonomy.
 
 ### Data Poisoning
 
@@ -55,11 +80,25 @@ This review tests Chapter 22 against primary AI-security and risk-management sou
 
 **Basis:** NIST AI RMF and NIST AI 100-2.
 
-## 4. Architecture Recommendations
+## 5. Threat Existence, Likelihood, Impact, and Control Effectiveness
+
+These are separate propositions:
+
+1. **Threat existence:** Has the attack class been demonstrated or recognized?
+2. **Exposure:** Is the relevant attack surface present in this architecture?
+3. **Likelihood:** How plausible is successful exploitation under the defined threat model?
+4. **Impact:** What business consequence follows if exploitation succeeds?
+5. **Control effectiveness:** Does the proposed control actually reduce likelihood, impact, or both?
+
+Evidence for one proposition must not silently be used as evidence for another.
+
+For example, an industry incident can demonstrate that agent privilege abuse has occurred. It does not establish that the same attack has a high probability against a particular AI-IDSS deployment.
+
+## 6. Architecture Recommendations
 
 ### Model Is Not the Security Boundary
 
-**Claim:** Authorization and consequential authority should be enforced by deterministic system controls rather than relying only on model instructions.
+**Claim:** Authorization and consequential authority should be enforced by system controls rather than relying only on model instructions.
 
 **Status:** Architecture recommendation.
 
@@ -67,19 +106,19 @@ This review tests Chapter 22 against primary AI-security and risk-management sou
 
 ### Treat Retrieved Content as Potentially Untrusted
 
-**Claim:** RAG content should be treated as potentially untrusted input unless its authority and integrity are established.
+**Claim:** RAG content should be treated according to its established authority and integrity; content that has not earned trust should not automatically become trusted instructions.
 
 **Status:** Architecture recommendation / security inference.
 
-**Reasoning:** Retrieved content can contain instructions or manipulated information, and NIST's adversarial-ML taxonomy identifies indirect prompt injection as a relevant attack pattern.
+**Reasoning:** Retrieved content can contain instructions or manipulated information, and indirect prompt injection is recognized in adversarial-ML taxonomy work.
 
 ### Constrain Agent Authority
 
-**Claim:** Agent permissions should be limited to the minimum authority necessary for the task, with stronger controls for consequential or irreversible actions.
+**Claim:** Agent permissions should be limited to the authority required for the task, with stronger controls for consequential, destructive, financial, or difficult-to-reverse actions.
 
 **Status:** Architecture recommendation.
 
-**Reasoning:** The consequence of model manipulation increases when model-controlled actions can change enterprise state.
+**Reasoning:** Model manipulation has greater consequence when model-controlled actions can change enterprise state. OWASP's 2026 agentic security work explicitly addresses tool misuse and identity/privilege abuse. This does not establish one universal approval mechanism; the appropriate control depends on consequence and threat model.
 
 ### Test Attack Paths
 
@@ -87,7 +126,43 @@ This review tests Chapter 22 against primary AI-security and risk-management sou
 
 **Status:** Architecture recommendation grounded in NIST AI RMF's measurement/evaluation orientation.
 
-## 5. Important Non-Claims
+### Separate Preventive Controls From Recovery
+
+**Claim:** AI security architecture should consider prevention, detection, containment, and recovery rather than assuming prevention will always succeed.
+
+**Status:** Architecture recommendation.
+
+**Reasoning:** NIST's adversarial-ML work discusses both attacks and mitigations and recognizes limitations of existing mitigations. The exact control layers depend on the threat model.
+
+## 7. AI-IDSS Attack-Path Model
+
+For AI-IDSS, threat analysis should follow:
+
+**Untrusted Input → Retrieval/Processing → Model Influence → Orchestration → Authorization → Tool → Enterprise System → Output → Human Decision**
+
+The advisor should identify at each boundary:
+
+- what can be influenced;
+- what is trusted;
+- which identity is acting;
+- what authority is available;
+- what validation occurs;
+- what consequence follows from failure;
+- which control prevents, detects, contains, or recovers from the failure.
+
+This deliberately connects Chapter 22 to Chapters 19–21 without redefining their subjects.
+
+## 8. Agentic Threat Boundary
+
+OWASP's Agentic Applications 2026 work provides useful industry vocabulary for risks involving autonomous or semi-autonomous agents, including tool misuse and identity/privilege abuse. The chapter therefore treats agent security as an architectural extension of the identity, authorization, data-protection, and tool boundaries established earlier.
+
+The key distinction is:
+
+> **An agent is not dangerous merely because it is autonomous; risk increases when autonomy is combined with authority, sensitive data, external connectivity, and consequential actions.**
+
+This is an architectural inference, not a universal quantitative law.
+
+## 9. Important Non-Claims
 
 The chapter deliberately does not claim that:
 
@@ -100,27 +175,27 @@ The chapter deliberately does not claim that:
 - an internal model is inherently trustworthy;
 - a particular vendor, model, framework, or security product eliminates AI risk;
 - one threat taxonomy is exhaustive for every deployment;
-- AI-specific threats replace ordinary application, infrastructure, identity, and supply-chain threats.
+- an observed incident establishes attack probability for this organization;
+- an OWASP ranking establishes regulatory priority;
+- AI-specific threats replace ordinary application, infrastructure, identity, and supply-chain threats;
+- every agent action requires the same approval workflow;
+- every AI system needs an agent-specific security architecture.
 
-## 6. AI-IDSS-Specific Reasoning
+## 10. AI-IDSS-Specific Reasoning
 
 For AI-IDSS, threat analysis should prioritize consequences such as:
 
 - cross-portfolio information disclosure;
 - manipulated investment evidence;
-- unsupported risk alerts;
+- unsupported or materially misleading risk alerts;
 - unauthorized tool access;
 - incorrect or premature recommendations;
 - denial of service during critical decision windows;
 - compromise of model or data supply chains.
 
-The advisor should evaluate the complete path:
+The advisor should distinguish **model error**, **data compromise**, **authorization failure**, and **agent/tool compromise** even when they produce similar final symptoms.
 
-**Input → Retrieval → Model → Orchestration → Tool → Enterprise System → Output → Human Decision**
-
-The important security question is where an attacker can enter that path and what authority exists after entry.
-
-## 7. Evidence Quality
+## 11. Evidence Quality
 
 | Topic | Evidence quality | Basis |
 |---|---|---|
@@ -129,43 +204,65 @@ The important security question is where an attacker can enter that path and wha
 | Data poisoning | High | NIST AI 100-2 |
 | Confabulation | High | NIST AI RMF GenAI Profile |
 | Lifecycle security | High | NIST AI RMF / AI 100-2 |
-| LLM application threat coverage | High | OWASP 2026 community reference |
+| Agentic threat categories | High for industry reference | OWASP Agentic Applications 2026 |
+| Recent exploit evidence | High as incident evidence | OWASP Q1 2026 report; not prevalence evidence |
 | Model-not-authorization-engine recommendation | High conceptual basis | Architecture synthesis from Chapters 19–20 and security principles |
 | RAG trust-boundary recommendation | Moderate-to-high | Threat taxonomy + architecture reasoning |
-| Agent authority recommendation | Moderate-to-high | Least-privilege/security architecture reasoning |
+| Agent authority recommendation | Moderate-to-high | Least-privilege/security architecture reasoning + agentic threat evidence |
+| Specific mitigation effectiveness | Context-dependent | Must be established by architecture-specific testing |
 
-## 8. Version and Source Discipline
+## 12. Cross-Chapter Consistency Review
 
-AI-security terminology changes quickly. The book should prefer current primary or established sources when discussing current threat rankings or mitigations.
+### Chapter 19 — AI Security Model
 
-The current OWASP reference used in this chapter is the 2026 LLM Top 10, published August 3, 2026. OWASP describes it as a community-driven guide and maps it to other frameworks. It is useful industry evidence, but it is not a formal NIST or ISO standard.
+Chapter 19 establishes that the model is not the security boundary and that security controls remain under explicit system control. Chapter 22 applies that principle to attack paths and consequences.
 
-NIST AI 100-2 E2025 is the current adversarial-ML taxonomy used here. NIST states that the taxonomy is intended to support common terminology and that the work is expected to evolve as the threat landscape changes.
+### Chapter 20 — Identity & Access Control
 
-## 9. Advisor Review Checklist
+Chapter 20 owns identity, authentication, authorization, delegation, and privilege boundaries. Chapter 22 must not redefine those controls; it asks how AI-specific attacks may attempt to cross them.
+
+### Chapter 21 — Data Protection
+
+Chapter 21 owns protection of sensitive data throughout its lifecycle. Chapter 22 identifies attacks that may cause disclosure or manipulation and points back to Chapter 21 for the data-protection controls.
+
+### Chapter 14 — Data Governance & Lineage
+
+Chapter 22 may require provenance or source integrity when analyzing poisoning, but it should not redefine governance, ownership, or lineage models.
+
+## 13. Advisor Review Checklist
 
 Before approving an AI security architecture, verify:
 
-- Are assets and consequences explicit?
+- Are assets and business consequences explicit?
 - Are untrusted inputs identified?
+- Is the relevant attack surface actually present?
+- Are likelihood and impact assessed separately from threat existence?
 - Are RAG and external content treated according to their trust level?
 - Is authorization independent of model instructions?
-- Are agent permissions bounded?
+- Are agent permissions bounded by task and consequence?
 - Are tool outputs validated before becoming new control inputs?
 - Are cross-tenant and cross-portfolio paths tested?
 - Are model, dataset, dependency, and connector supply chains covered?
 - Are resource-exhaustion paths bounded?
-- Are attack scenarios tested after material model/prompt changes?
-- Can the system fail safely if the model behaves maliciously?
+- Are attack scenarios tested after material model/prompt/agent changes?
+- Can the system contain a malicious or compromised model without granting it enterprise authority?
+- Is there a recovery path when preventive controls fail?
 - Is residual risk documented?
 
-## 10. Falsifiability
+## 14. Falsifiability
 
-The recommendations should be revised when controlled testing demonstrates that an assumed attack path is infeasible, a mitigation is ineffective, a simpler control provides equivalent containment, or a change in system authority materially changes the consequence of compromise.
+The recommendations should be revised when controlled testing demonstrates that:
 
-## 11. Bottom Line
+- an assumed attack path is infeasible;
+- a mitigation is ineffective or creates unacceptable new risk;
+- a simpler control provides equivalent containment;
+- a different control placement materially reduces blast radius;
+- a change in system authority changes the consequence of compromise;
+- new evidence materially changes the threat model.
 
-AI-specific security is not a separate security universe. It is the intersection of ordinary enterprise security with new attack surfaces created by learned behavior, probabilistic generation, retrieved context, model dependencies, and tool-mediated authority.
+## 15. Bottom Line
+
+AI-specific security is not a separate security universe. It is the intersection of ordinary enterprise security with attack surfaces created by learned behavior, probabilistic generation, retrieved context, model dependencies, and tool-mediated authority.
 
 For AI-IDSS, the decisive question is:
 
