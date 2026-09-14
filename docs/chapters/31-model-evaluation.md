@@ -791,3 +791,298 @@ The advisor should revise an evaluation architecture if:
 For AI-IDSS:
 
 > **Can we demonstrate — not merely assert — that this system produces sufficiently reliable, grounded, secure, economically justified, and useful outputs under the conditions in which the Regional Director will rely on it?**
+
+---
+
+## 31.34 Evaluate the Evaluation Method
+
+An evaluation result is evidence only to the extent that the evaluation method itself is credible.
+
+This is the missing layer in many AI evaluations. Teams may carefully measure model performance while leaving the measurement instrument largely untested. A score produced by an unstable rubric, a biased judge, a contaminated test set, or a non-reproducible pipeline can create false confidence even when the arithmetic is correct.
+
+Treat the evaluation process as a measurement system with its own quality requirements.
+
+Assess, where applicable:
+
+- **validity** — does the evaluation actually measure the property relevant to the decision?
+- **reliability** — would repeated evaluation under equivalent conditions produce sufficiently consistent results?
+- **sensitivity** — can the evaluation detect meaningful differences between candidates?
+- **specificity** — does it avoid treating irrelevant differences as meaningful failures?
+- **inter-rater agreement** — do qualified evaluators reach sufficiently consistent judgments?
+- **calibration** — do probabilistic or scoring outputs correspond to observed outcomes where such interpretation is intended?
+- **reproducibility** — can another authorized evaluator reconstruct the result from the recorded configuration and evidence?
+- **robustness** — is the result stable under reasonable changes in prompts, ordering, sampling, or operating conditions?
+
+NIST's evaluation work increasingly emphasizes validity, transparency, reproducibility, and structured testing rather than treating automated benchmark output as self-validating. urlNIST AI 800-2 — Automated Benchmark Evaluationshttps://www.nist.gov/publications/towards-best-practices-automated-benchmark-evaluations
+
+**Advisor rule:**
+
+> **Do not ask only, “What did the evaluation score?” Ask, “Why should we trust this evaluation score for this decision?”**
+
+---
+
+## 31.35 AI-as-a-Judge Requires Calibration
+
+LLM-based evaluators can make evaluation scalable, particularly for open-ended outputs. They should not automatically be treated as ground truth.
+
+A defensible judge-based evaluation should establish, at minimum:
+
+1. the evaluation rubric;
+2. the judge model and version;
+3. the prompt and evaluation configuration;
+4. the relationship between judge scores and qualified human judgments;
+5. known judge biases or blind spots;
+6. the rate and handling of ambiguous cases;
+7. the escalation rule for consequential disagreements.
+
+Where practical, create a calibration sample that is independently assessed by qualified human evaluators. Compare the automated judge against that reference set before using the judge at scale.
+
+For pairwise comparisons, randomize or counterbalance candidate order where feasible. For pointwise scoring, test whether scores remain stable when irrelevant presentation details change.
+
+Use different evaluation modes for different purposes:
+
+- **Pointwise scoring** is useful when an explicit rubric and threshold are meaningful.
+- **Pairwise comparison** is useful when choosing between candidates on the same task, especially when absolute scoring is difficult.
+- **Reference-based evaluation** is useful when a defensible reference answer exists.
+- **Human adjudication** remains appropriate for high-consequence, ambiguous, or disputed cases.
+
+Do not infer that an LLM judge is unbiased merely because it is consistent. A consistently biased measurement instrument is still biased.
+
+---
+
+## 31.36 Evaluation Dataset Governance
+
+The evaluation dataset is part of the architecture decision, not merely test data.
+
+Maintain explicit separation between:
+
+```text
+Development Data
+      ↓
+Tuning / Validation Data
+      ↓
+Evaluation Set
+      ↓
+Immutable Holdout / Challenge Set
+      ↓
+Production Evidence
+```
+
+The exact partitioning depends on the evaluation design, but the governing principle is stable: a dataset repeatedly used to optimize the system should not continue to be presented as independent evidence of generalization.
+
+For important evaluation sets, govern:
+
+- ownership;
+- provenance;
+- versioning;
+- sampling methodology;
+- inclusion and exclusion criteria;
+- labeling methodology;
+- sensitive-data handling;
+- contamination checks;
+- change history;
+- access controls;
+- refresh policy;
+- retirement criteria.
+
+Use multiple sets when appropriate:
+
+- a **regression set** for known important behaviors;
+- a **representative set** for expected workload performance;
+- a **challenge set** for difficult or adversarial conditions;
+- a **holdout set** protected from repeated tuning;
+- a **production sample** for detecting divergence between laboratory and real-world behavior.
+
+A “golden set” is valuable only if its governance preserves its evidentiary role.
+
+---
+
+## 31.37 From Offline Evaluation to Production Evidence
+
+Evaluation should form a controlled lifecycle rather than a single pre-release event.
+
+```text
+Offline Component Tests
+        ↓
+Offline System Evaluation
+        ↓
+Pre-Production Validation
+        ↓
+Shadow / Canary / Controlled Release
+        ↓
+Production Monitoring
+        ↓
+Regression Detection
+        ↓
+Re-Evaluation
+        ↺
+```
+
+Use the strongest practical evidence at each stage.
+
+### Offline
+
+Establish baseline quality, critical failures, robustness, and cost under controlled conditions.
+
+### Pre-production
+
+Verify integration effects: retrieval, authorization, tools, latency, rate limits, observability, and failure recovery.
+
+### Controlled production exposure
+
+Where risk and architecture permit, compare candidate behavior under real workload conditions without immediately making the candidate the sole production path.
+
+### Production
+
+Monitor both outcome metrics and leading indicators such as retrieval changes, provider changes, traffic composition, refusal patterns, latency, and cost.
+
+### Re-evaluation
+
+Trigger a new evaluation when the system, workload, data, provider, risk profile, or decision requirement changes materially.
+
+This distinction matters because a passing offline evaluation is evidence about the evaluated conditions. It is not a permanent warranty about future production behavior.
+
+---
+
+## 31.38 Reproducibility and Evaluation Provenance
+
+An evaluation that cannot be reconstructed is weak evidence for an architecture decision.
+
+Record enough information to reproduce or independently audit the result, including where applicable:
+
+- model name and exact version;
+- provider and endpoint;
+- model parameters and inference settings;
+- system and developer instructions;
+- prompt templates;
+- retrieval corpus and index version;
+- embedding model/version;
+- tool definitions and versions;
+- orchestration version;
+- evaluation dataset version;
+- rubric and reference answers;
+- evaluator model/version;
+- code or pipeline version;
+- random seeds where meaningful;
+- timestamp and environment;
+- latency and load conditions;
+- cost assumptions;
+- exclusions, failed runs, and retries.
+
+Not every evaluation is fully deterministic. Reproducibility therefore does not necessarily mean identical output on every run. It means that the evaluation conditions, transformations, assumptions, and sources of variation are known well enough to interpret differences responsibly.
+
+---
+
+## 31.39 When Evaluation Evidence Is Insufficient
+
+A mature advisor must be willing to return **Insufficient Evidence**, not force a Go/No-Go conclusion from weak data.
+
+Evaluation evidence should be considered insufficient when, for example:
+
+- the test set is materially unrepresentative of the intended workload;
+- the evaluation instrument has not been validated for the claim being made;
+- critical slices are missing;
+- the candidate has been repeatedly tuned against the evaluation set without an independent holdout;
+- security or authorization boundaries were excluded from a consequential workflow evaluation;
+- the result cannot be reproduced or its configuration cannot be established;
+- uncertainty is large enough that the decision-critical difference cannot be distinguished;
+- business value is asserted from capability scores without outcome evidence;
+- the provider or model version tested cannot be mapped confidently to the service that will actually be deployed.
+
+The appropriate response is not to manufacture precision. It is to identify the evidence gap, define the minimum additional evaluation required, and state the decision consequence.
+
+A useful architecture decision record can therefore contain four outcomes:
+
+```text
+GO
+CONDITIONAL GO
+NO-GO
+INSUFFICIENT EVIDENCE
+```
+
+**Insufficient Evidence is not indecision. It is a risk-controlled decision when the evidence threshold has not been met.**
+
+---
+
+## 31.40 The Advisor's Evaluation Stack
+
+For executive review, compress the evaluation into a decision-oriented stack:
+
+```text
+Business Outcome
+      ↓
+Decision Criteria
+      ↓
+Task-Level Quality
+      ↓
+Component Quality
+      ↓
+End-to-End System Behavior
+      ↓
+Safety / Security / Authorization
+      ↓
+Reliability / Latency / Capacity
+      ↓
+Economics
+      ↓
+Production Evidence
+      ↓
+Decision
+```
+
+Each layer answers a different question.
+
+| Layer | Executive question |
+|---|---|
+| Business outcome | What value or risk reduction is expected? |
+| Decision criteria | What must be true for the use case to be acceptable? |
+| Task quality | Does the system perform the intended work correctly? |
+| Component quality | Which component causes success or failure? |
+| System behavior | Does the integrated workflow behave correctly? |
+| Safety/security | Can the system violate a material boundary? |
+| Operations | Can it meet reliability, latency, and capacity requirements? |
+| Economics | Is useful output produced at an acceptable total cost? |
+| Production evidence | Does real-world behavior support the assumptions? |
+| Decision | Is there enough evidence to proceed, constrain, replace, or stop? |
+
+This stack prevents a common architectural error: allowing a high model score to leap directly to a production decision while bypassing system, security, operational, and economic evidence.
+
+---
+
+## 31.41 Bridge to Chapter 32
+
+Evaluation should precede, not merely follow, the choice among prompting, RAG, fine-tuning, or other adaptation techniques.
+
+The correct sequence is:
+
+```text
+Observed Decision Requirement
+        ↓
+Failure / Capability Gap
+        ↓
+Evidence About the Gap
+        ↓
+Candidate Intervention
+        ↓
+Controlled Evaluation
+        ↓
+Economic / Operational Comparison
+        ↓
+Architecture Decision
+```
+
+If the problem is missing authoritative knowledge, RAG may be appropriate. If the problem is behavioral consistency or task-specific adaptation, fine-tuning may be worth considering. If the problem is instruction clarity, prompt and workflow design may be sufficient.
+
+The evaluation should demonstrate the gap before the architecture is optimized to address it. Otherwise the organization risks solving the wrong problem with the most expensive available technique.
+
+Chapter 32 develops this decision further.
+
+---
+
+## 31.42 Final Advisor Rule
+
+> **An evaluation is not credible because it is quantitative, automated, statistically sophisticated, or published by a respected source. It is credible when its method is fit for purpose, its evidence is representative and controlled, its uncertainty and limitations are explicit, and its result is relevant to the decision being made.**
+
+For AI-IDSS:
+
+> **Can we demonstrate — not merely assert — that this system is reliable, grounded, secure, economically justified, operationally viable, and useful under the conditions in which the Regional Director will rely on it?**
