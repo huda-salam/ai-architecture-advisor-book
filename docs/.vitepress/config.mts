@@ -74,6 +74,7 @@ export default withMermaid(defineConfig({
           { text: '40. Production Readiness', link: '/chapters/40-production-readiness' },
           { text: '41. Auditability', link: '/chapters/41-auditability' },
           { text: '42. Successful Enterprise AI Architectures', link: '/chapters/42-successful-enterprise-ai-architectures' },
+          { text: '43. Failed AI Programs', link: '/chapters/43-failed-ai-programs' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -105,7 +106,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 39', link: '/chapters/39-evidence-review' },
           { text: 'Evidence Review — Chapter 40', link: '/chapters/40-evidence-review' },
           { text: 'Evidence Review — Chapter 41', link: '/chapters/41-evidence-review' },
-          { text: 'Evidence Review — Chapter 42', link: '/chapters/42-evidence-review' }
+          { text: 'Evidence Review — Chapter 42', link: '/chapters/42-evidence-review' },
+          { text: 'Evidence Review — Chapter 43', link: '/chapters/43-evidence-review' }
         ]
       }
     ],
