@@ -6,7 +6,7 @@ Chapter 43 examines documented AI and technology-enabled business failures to id
 
 ## 1. Amazon Experimental Recruiting System
 
-Reuters reported in October 2018 that Amazon had developed an experimental machine-learning recruiting system trained on historical resumes and that the system developed gender-biased behavior. The reporting states that most historical applicants were men, that the system penalized some indicators associated with women, and that Amazon ultimately disbanded the team after attempts to neutralize specific terms did not provide sufficient assurance. citeturn2search0
+Reuters reported in October 2018 that Amazon had developed an experimental machine-learning recruiting system trained on historical resumes and that the system developed gender-biased behavior. The reporting states that most historical applicants were men, that the system penalized some indicators associated with women, and that Amazon ultimately disbanded the team after attempts to neutralize specific terms did not provide sufficient assurance. [Reuters, October 10, 2018](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G)
 
 Evidence class: **Industry Evidence / Independent Reporting**.
 
@@ -16,9 +16,9 @@ Architectural inference supported by the case: historical training data can enco
 
 ## 2. Zillow Offers
 
-Zillow's SEC filings provide primary corporate evidence. Zillow stated that Zillow Offers used data science and proprietary algorithms to help value and price homes, while acknowledging that assessments could be inaccurate. In November 2021, the board decided to wind down the business, citing home-price unpredictability, capacity constraints, and other operational challenges. The 2021 filing reported a $407.9 million inventory write-down and additional wind-down/restructuring costs. citeturn1search0turn1search2
+Zillow's SEC filings provide primary corporate evidence. Zillow stated that Zillow Offers used data science and proprietary algorithms to help value and price homes, while acknowledging that assessments could be inaccurate. In November 2021, the board decided to wind down the business, citing home-price unpredictability, capacity constraints, and other operational challenges. The 2021 filing reported a $407.9 million inventory write-down and additional wind-down/restructuring costs. [Zillow Group 2021 Form 10-K, SEC](https://www.sec.gov/Archives/edgar/data/1617640/000161764022000013/z-20211231.htm)
 
-The 2022 annual filing states that the wind-down was completed in the third quarter of 2022 and resulted in approximately a 25% workforce reduction. citeturn1search9
+The 2022 annual filing states that the wind-down was completed in the third quarter of 2022 and resulted in approximately a 25% workforce reduction. [Zillow Group 2022 Form 10-K, SEC](https://www.sec.gov/Archives/edgar/data/1617640/000161764023000010/z-20221231.htm)
 
 Evidence class: **Corporate Disclosure / Industry Evidence**.
 
@@ -26,7 +26,7 @@ Important qualification: this should not be described as proof that an AI model 
 
 ## 3. IBM Watson Health
 
-STAT reported in 2022 that IBM sold core Watson Health data and analytics assets after the business failed to meet its ambitions. The reporting described difficulties integrating acquired health-information companies, data, and organizational cultures into a coherent business, together with missed sales targets. citeturn2search11
+STAT reported in 2022 that IBM sold core Watson Health data and analytics assets after the business failed to meet its ambitions. The reporting described difficulties integrating acquired health-information companies, data, and organizational cultures into a coherent business, together with missed sales targets. [STAT, January 21, 2022](https://www.statnews.com/2022/01/21/ibm-watson-health-sale-equity/)
 
 Evidence class: **Independent Industry Reporting**.
 
@@ -34,7 +34,7 @@ Limitation: the case is not a controlled technical postmortem and should not be 
 
 ## 4. Failure-Mode Research
 
-A 2025 academic article, “Learning from AI Failures: A Critical Analysis of Enterprise AI Implementation,” analyzes an enterprise AI implementation failure and identifies data quality, system integration, and scalability as important failure points. citeturn0search2
+A 2025 academic article, “Learning from AI Failures: A Critical Analysis of Enterprise AI Implementation,” analyzes an enterprise AI implementation failure and identifies data quality, system integration, and scalability as important failure points. [IJSRCSEIT, 2025](https://ijsrcseit.com/index.php/home/article/view/CSEIT251112176)
 
 Evidence class: **Research Evidence**.
 
@@ -42,7 +42,7 @@ Limitation: the article describes a particular case and should not be interprete
 
 ## 5. Financial-Services Sector Evidence
 
-The U.S. Government Accountability Office's 2025 report on AI use and oversight in financial services documents risks including operational and cybersecurity risk, third-party and model risk, data-quality problems, and model underperformance. GAO also reports that an OCC AI-focused review of seven large banks identified observations including risk assessments that did not explicitly capture AI-specific factors and limited information on evaluation of bias and fair-lending issues. citeturn0search5turn0search11
+The U.S. Government Accountability Office's 2025 report on AI use and oversight in financial services documents risks including operational and cybersecurity risk, third-party and model risk, data-quality problems, and model underperformance. GAO also reports that an OCC AI-focused review of seven large banks identified observations including risk assessments that did not explicitly capture AI-specific factors and limited information on evaluation of bias and fair-lending issues. [GAO-25-107197, May 19, 2025](https://www.gao.gov/products/gao-25-107197)
 
 Evidence class: **Government / Supervisory Evidence**.
 
