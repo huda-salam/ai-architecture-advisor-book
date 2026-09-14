@@ -62,6 +62,7 @@ export default withMermaid(defineConfig({
           { text: '28. Explainability & Evidence', link: '/chapters/28-explainability-evidence' },
           { text: '29. Human Decision Boundary', link: '/chapters/29-human-decision-boundary' },
           { text: '30. Model Selection', link: '/chapters/30-model-selection' },
+          { text: '31. Model Evaluation', link: '/chapters/31-model-evaluation' },
           { text: 'Evidence Review — Chapters 8–9', link: '/chapters/08-09-evidence-review' },
           { text: 'Evidence Review — Chapter 12', link: '/chapters/12-evidence-review' },
           { text: 'Evidence Review — Chapter 13', link: '/chapters/13-evidence-review' },
@@ -81,7 +82,8 @@ export default withMermaid(defineConfig({
           { text: 'Evidence Review — Chapter 27', link: '/chapters/27-evidence-review' },
           { text: 'Evidence Review — Chapter 28', link: '/chapters/28-evidence-review' },
           { text: 'Evidence Review — Chapter 29', link: '/chapters/29-evidence-review' },
-          { text: 'Evidence Review — Chapter 30', link: '/chapters/30-evidence-review' }
+          { text: 'Evidence Review — Chapter 30', link: '/chapters/30-evidence-review' },
+          { text: 'Evidence Review — Chapter 31', link: '/chapters/31-evidence-review' }
         ]
       }
     ],
