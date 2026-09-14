@@ -125,7 +125,7 @@ An endpoint called `GET` that triggers a state change is architecturally mislead
 
 ## 24.5 API Contract Description
 
-OpenAPI provides a machine-readable description format for HTTP APIs and supports documentation, tooling, validation, and related lifecycle activities. The current specification family includes version 3.2.0. [OpenAPI Specification](https://spec.openapis.org/oas/)
+OpenAPI provides a machine-readable description format for HTTP APIs and supports documentation, tooling, validation, and related lifecycle activities. The current published specification is OpenAPI 3.2.1 (10 September 2026). OpenAPI patch releases address errors and clarifications rather than introducing a new feature set. [OpenAPI Specification](https://spec.openapis.org/oas/)
 
 A useful contract can describe:
 
@@ -214,7 +214,7 @@ It is:
 
 > “Is this caller authorized to access company 123?”
 
-OWASP identifies Broken Object Level Authorization as API1:2023 and recommends considering object-level authorization checks wherever user-controlled object identifiers access data. OWASP also identifies broken function-level and object-property-level authorization as major API risks. cite not permanent
+OWASP identifies Broken Object Level Authorization as API1:2023 and recommends considering object-level authorization checks wherever user-controlled object identifiers access data. OWASP also identifies broken function-level and object-property-level authorization as major API risks. 
 
 For an investment organization, the equivalent boundary may be:
 
@@ -331,7 +331,7 @@ A consumer should be able to distinguish, where relevant, among:
 - temporary service failure;
 - unexpected server failure.
 
-RFC 9457 defines the HTTP `application/problem+json` representation for machine-readable problem details and is an IETF Standards Track document. citeturn0search2turn0search9
+RFC 9457 defines the HTTP `application/problem+json` representation for machine-readable problem details and is an IETF Standards Track document. 
 
 The advisor should avoid prescribing RFC 9457 as mandatory for every API. The architectural requirement is clearer machine-readable error semantics; RFC 9457 is a standardized option.
 
@@ -497,7 +497,7 @@ Inventory should capture, where relevant:
 - lifecycle status;
 - deprecation date.
 
-OWASP's API Security Top 10 includes Improper Inventory Management as API9:2023, emphasizing the risk created by undocumented hosts, endpoints, versions, and exposed legacy interfaces. cite not permanent
+OWASP's API Security Top 10 includes Improper Inventory Management as API9:2023, emphasizing the risk created by undocumented hosts, endpoints, versions, and exposed legacy interfaces. 
 
 **Field rule:**
 
@@ -532,7 +532,7 @@ But some controls belong elsewhere.
 | Audit | Gateway + service |
 | Transaction integrity | Application/data layer |
 
-NIST's API guidance explicitly discusses multiple implementation options and a risk-based approach. citeturn0search7
+NIST's API guidance explicitly discusses multiple implementation options and a risk-based approach. 
 
 **Advisor challenge:**
 
@@ -558,7 +558,7 @@ Evaluate:
 - failure semantics;
 - vendor exit options.
 
-OWASP explicitly identifies unsafe consumption of APIs as an API security risk because downstream applications may trust third-party responses more than equivalent untrusted input. citeturn0search1
+OWASP explicitly identifies unsafe consumption of APIs as an API security risk because downstream applications may trust third-party responses more than equivalent untrusted input. 
 
 For market-data and intelligence sources, the advisor should additionally distinguish:
 
@@ -603,7 +603,7 @@ Threats include:
 - sensitive data exposure;
 - abuse of sensitive business flows.
 
-OWASP's 2023 API Top 10 provides an industry security taxonomy for these classes of risk. It is useful evidence and awareness material, not a formal standard. citeturn0search0turn0search1
+OWASP's 2023 API Top 10 provides an industry security taxonomy for these classes of risk. It is useful evidence and awareness material, not a formal standard. 
 
 ---
 
