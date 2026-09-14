@@ -8,6 +8,8 @@ The advisor's question is:
 
 A technically excellent technology can still be the wrong choice when it introduces unnecessary cost, complexity, risk, dependency, or irreversibility.
 
+The advisor must be technically capable enough to understand the proposal at the mechanism level, while remaining independent enough to assess it as a decision rather than as an implementation preference.
+
 ## 6.1 The Evaluation Chain
 
 ```text
@@ -25,6 +27,8 @@ Architectural Considerations
         ↓
 Architectural Options
         ↓
+Technical Investigation / Evidence
+        ↓
 Option Evaluation
         ↓
 Trade-offs
@@ -32,6 +36,8 @@ Trade-offs
 Failure Modes & Risks
         ↓
 Economics
+        ↓
+Technical Position
         ↓
 Recommendation
 ```
@@ -82,9 +88,30 @@ Typical assumptions include workload, data quality, model performance, network l
 
 Record material assumptions with evidence, confidence, and impact if wrong.
 
----
+## 6.7 Technical Understanding Before Evaluation
 
-## 6.7 Architectural Considerations
+Before judging a proposal, establish enough technical understanding to reconstruct its major mechanisms.
+
+The advisor should be able to explain:
+
+- the main components;
+- data flows;
+- control flows;
+- trust boundaries;
+- dependencies;
+- scaling mechanism;
+- failure behavior;
+- security enforcement points;
+- operational model;
+- principal cost drivers.
+
+If the advisor cannot explain how the architecture works, a strong dissent may be premature.
+
+The correct response may instead be:
+
+> **“I do not yet have sufficient technical understanding to support or challenge this conclusion. I need the following information before forming an independent assessment.”**
+
+## 6.8 Architectural Considerations
 
 **Architectural considerations are the dimensions against which architecture choices should be evaluated.**
 
@@ -121,7 +148,7 @@ These considerations are **not equally important in every situation**. Their wei
 
 > **The importance of an architectural consideration is itself a function of the use case and risk profile.**
 
-## 6.8 Architectural Options
+## 6.9 Architectural Options
 
 **Architectural options are alternative ways the system could be designed.**
 
@@ -191,7 +218,7 @@ Options may exist at several layers.
 
 A sound architecture can combine different options at different layers.
 
-## 6.9 Considerations vs Options
+## 6.10 Considerations vs Options
 
 These concepts must remain distinct:
 
@@ -209,7 +236,7 @@ Example:
 
 Only after both are explicit should the advisor compare the options.
 
-## 6.10 Evaluate Options Against Considerations
+## 6.11 Evaluate Options Against Considerations
 
 A decision matrix makes trade-offs visible:
 
@@ -224,7 +251,59 @@ A decision matrix makes trade-offs visible:
 
 These are **illustrative dimensions, not universal scores**. Material decisions should use evidence and measurable criteria wherever practical.
 
-## 6.11 Trade-offs
+## 6.12 Technical Challenge Questions
+
+For any material proposal, the advisor should be able to ask:
+
+### Architecture
+
+- Why this architecture?
+- Which requirement drives this component?
+- What alternatives were considered?
+- Which assumptions are architectural dependencies?
+
+### Data
+
+- Where does data originate?
+- Where is it copied?
+- Who can access it?
+- How is freshness maintained?
+- What is the authoritative source?
+
+### AI / model
+
+- What capability requires this model?
+- Why this model class?
+- Why this deployment model?
+- What evidence demonstrates task performance?
+- What happens when model behavior changes?
+
+### Operations
+
+- How is it deployed?
+- How is it monitored?
+- How does it scale?
+- How does it fail?
+- Who operates it?
+
+### Economics
+
+- What are the main cost drivers?
+- What happens at 10× workload?
+- What assumptions drive TCO?
+- What is the cost of migration or exit?
+
+### Security
+
+- Where is authorization enforced?
+- What are the trust boundaries?
+- What data leaves which boundary?
+- What is retained and logged?
+- How are security assumptions tested?
+
+These questions are not a checklist to ask mechanically. They are prompts for technical investigation.
+
+## 6.13 Trade-offs
 
 Typical trade-offs include:
 
@@ -239,7 +318,7 @@ Typical trade-offs include:
 
 > **A recommendation without explicit trade-off analysis is incomplete.**
 
-## 6.12 Failure Modes & Risk
+## 6.14 Failure Modes & Risk
 
 Ask:
 
@@ -249,7 +328,7 @@ For AI-IDSS consider model failure, retrieval failure, stale or incorrect data, 
 
 For each material failure, consider prevention, detection, mitigation, fallback, recovery, and human escalation.
 
-## 6.13 Security and Integration
+## 6.15 Security and Integration
 
 Security is an architectural concern, not merely a final approval gate.
 
@@ -263,7 +342,7 @@ Authentication → Authorization → Data Request / Ingestion
 → Output → Audit / Monitoring
 ```
 
-## 6.14 Technical Economics
+## 6.16 Technical Economics
 
 Evaluate lifecycle cost:
 
@@ -277,7 +356,7 @@ The question is:
 
 > **What is the total cost of operating this capability at the required quality and scale?**
 
-## 6.15 Vendor Dependency and Reversibility
+## 6.17 Vendor Dependency and Reversibility
 
 Ask:
 
@@ -287,13 +366,13 @@ Evaluate data portability, API portability, model portability, proprietary forma
 
 > **Make strategic lock-in deliberate rather than accidental.**
 
-## 6.16 Evidence and Confidence
+## 6.18 Evidence and Confidence
 
 Important claims should identify whether they rely on direct measurement, independent evaluation, documented production evidence, industry evidence, technical documentation, expert judgment, or assumptions.
 
 State confidence when uncertainty is material.
 
-## 6.17 Recommendation
+## 6.19 Recommendation
 
 A decision-oriented recommendation should state:
 
@@ -305,7 +384,7 @@ A decision-oriented recommendation should state:
 - confidence;
 - what would change the recommendation.
 
-## 6.18 Technology Proposal Review Template
+## 6.20 Technology Proposal Review Template
 
 ```text
 OBJECTIVE
@@ -316,6 +395,7 @@ CONSTRAINTS
 ASSUMPTIONS
 ARCHITECTURAL CONSIDERATIONS
 ARCHITECTURAL OPTIONS
+TECHNICAL MECHANISM / DEPENDENCIES
 OPTION EVALUATION
 TRADE-OFFS
 FAILURE MODES / RISKS
@@ -325,25 +405,26 @@ ECONOMICS / TCO
 VENDOR DEPENDENCY
 REVERSIBILITY
 EVIDENCE
+TECHNICAL POSITION
 RECOMMENDATION
 CONFIDENCE
 WHAT WOULD CHANGE OUR MIND?
 ```
 
-## 6.19 Communication of the Assessment
+## 6.21 Communication of the Assessment
 
 Keep analysis and communication distinct.
 
 **Technical thinking:**
 
-> Requirement → Constraint → Assumption → Considerations → Options → Evaluation → Trade-offs → Risk → Cost → Recommendation
+> Requirement → Constraint → Assumption → Technical Mechanism → Considerations → Options → Evaluation → Trade-offs → Risk → Cost → Recommendation
 
 **Executive communication:**
 
-> Context → Assumption → Evidence → Implication → Recommendation
+> Context → Finding → Evidence → Implication → Recommendation → Conditions
 
 The first determines the quality of analysis. The second determines whether the decision maker can use it effectively.
 
 ## Field Rule
 
-> **Considerations tell us what to evaluate. Options tell us what we can choose. Evidence and trade-offs tell us why one option is preferable. The recommendation tells the decision maker what we believe should be done.**
+> **Understand the mechanism. Challenge the assumption. Compare the alternatives. Test the material uncertainty. State the technical position. Then recommend.**
