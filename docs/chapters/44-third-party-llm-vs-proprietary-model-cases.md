@@ -1,6 +1,6 @@
 # 44. Third-Party LLM vs Proprietary Model Cases
 
-> **Purpose:** Examine real enterprise choices between third-party foundation models, enterprise-managed model platforms, open-weight models, and proprietary model development. The objective is not to declare a universal winner, but to improve the advisor's ability to distinguish architectural necessity from organizational preference.
+> **Purpose:** Examine documented enterprise choices between third-party foundation models, enterprise AI platforms, self-hosted open-weight models, and proprietary model development. The objective is not to declare a universal winner, but to determine which architectural layer an organization actually needs to control.
 
 ## 44.1 The Question Is Usually Framed Too Narrowly
 
@@ -8,18 +8,18 @@ A common executive question is:
 
 > **“Should we build our own LLM or use a third-party model?”**
 
-This is usually the wrong first question.
+This is usually too narrow.
 
-The architecture decision should instead ask:
+The architecture decision should first ask:
 
 - What capability does the system require?
-- What data must the model access?
+- What data must it access?
 - What must remain under organizational control?
-- Which capabilities can safely be obtained from a provider?
+- Which controls are mandatory: residency, retention, training exclusion, isolation, auditability, or operational independence?
 - Which capabilities create strategic differentiation?
-- What operational responsibility can the organization realistically carry?
-- What level of provider dependency is acceptable?
-- What would make the decision reversible?
+- What operational responsibility can the organization realistically sustain?
+- What dependency is acceptable?
+- How reversible must the decision be?
 
 The model is only one layer of the system.
 
@@ -27,67 +27,60 @@ The model is only one layer of the system.
 
 > **The strategic question is not “whose model?” It is “which capabilities should we own, which should we consume, and where should the architectural boundary be?”**
 
-## 44.2 Four Different Things Are Often Called “Our Own AI”
+## 44.2 Four Different Architectures Are Often Called “Our Own AI”
 
-The phrase “proprietary AI” can refer to materially different architectures:
-
-| Architecture | What the organization owns | What it still depends on |
+| Architecture | Organization owns | Important dependencies |
 |---|---|---|
-| Application over third-party API | Application, data, workflow, controls | Model provider |
-| Enterprise model platform | Orchestration, access, data boundary, evaluation, routing | One or more model providers |
-| Self-hosted open-weight model | Serving environment and model weights | Model publisher, hardware, engineering ecosystem |
-| Proprietary foundation model | Model training and weights | Hardware, data, talent, software ecosystem |
+| Application over third-party API | Application, workflow, data controls | Model provider |
+| Enterprise model platform | Identity, policy, orchestration, data boundary, evaluation, routing | One or more model providers |
+| Self-hosted open-weight model | Serving environment, deployment, model weights | Model publisher, hardware, runtime, engineering ecosystem |
+| Proprietary foundation model | Training pipeline, model weights, model lifecycle | Hardware, data, talent, software ecosystem |
 
-These should not be evaluated as equivalent alternatives.
+These are materially different investments.
 
-A company can own the **AI application and decision architecture** while consuming third-party foundation-model capability.
+An organization can own its **AI application, data, decision workflow, controls, evaluation, and integration architecture** while consuming foundation-model capability from external providers.
 
 That distinction is central to enterprise architecture.
 
-## 44.3 Case: Morgan Stanley — Third-Party Frontier Model Behind a Firm-Specific Architecture
+## 44.3 Case: Morgan Stanley — Third-Party Model Behind a Firm-Specific Architecture
 
-Morgan Stanley provides one of the clearest financial-services examples of a third-party model being integrated into a proprietary enterprise workflow.
+Morgan Stanley is a useful financial-services example of a third-party frontier model being embedded inside a firm-specific workflow.
 
-The firm announced a strategic relationship with OpenAI in 2023 to build an internal capability using OpenAI technology and Morgan Stanley's intellectual capital. The service was designed around Morgan Stanley's own content, with answers linked to source documents and appropriate controls. citeturn3search3
-
-Morgan Stanley subsequently deployed AI @ Morgan Stanley Assistant and Debrief. Its published material describes evaluation against real-world use cases, expert review, retrieval refinement, regression testing, and human review before generated outputs are finalized. citeturn3search2turn3search5
+Morgan Stanley announced its relationship with OpenAI in 2023 and subsequently described AI @ Morgan Stanley Assistant and Debrief as internal capabilities built around its proprietary knowledge and workflows. Morgan Stanley's current public case material emphasizes use-case evaluation, expert review, retrieval refinement, regression testing, and human review. OpenAI reports that more than 98% of advisor teams actively use the Assistant. urlOpenAI — Morgan Stanley AI casehttps://openai.com/index/morgan-stanley/
 
 **What this demonstrates:**
 
-- a regulated financial institution can place a third-party frontier model behind a firm-specific application boundary;
-- proprietary organizational knowledge can remain an important differentiator even when the base model is externally supplied;
-- evaluation and retrieval architecture can be more important to production adoption than owning the foundation model;
-- human review can remain part of the workflow.
+- a major financial institution can place externally supplied model capability behind a firm-specific application boundary;
+- proprietary knowledge, retrieval, evaluation, workflow integration, and controls can remain part of the enterprise architecture;
+- model ownership is not a prerequisite for enterprise AI adoption.
 
 **What it does not demonstrate:**
 
-- that a third-party model is always appropriate;
-- that Morgan Stanley's contractual/security conditions are transferable;
-- that the same architecture is optimal for every use case.
+- that the same provider, contract, security arrangement, or model is optimal for another institution;
+- that third-party models are appropriate for every workload;
+- that the public description exposes the complete technical architecture.
 
 **ADVISOR LENS**
 
-The interesting architecture is:
+The architectural pattern is:
 
-**Firm knowledge + permissions + retrieval + evaluation + workflow + third-party model**
+**Firm knowledge + permissions + retrieval + evaluation + workflow + external model capability**
 
 not simply:
 
-**Morgan Stanley → OpenAI**.
+**Financial institution → model vendor**.
 
-## 44.4 Case: JPMorganChase — Proprietary Platform, Third-Party Models
+## 44.4 Case: JPMorganChase — Proprietary Enterprise Platform, External Models
 
-JPMorganChase provides an especially useful counterexample to the false binary of “buy versus build.”
+JPMorganChase illustrates a middle architecture between “buy everything” and “build the foundation model.”
 
-The bank's LLM Suite is a proprietary enterprise platform. Public reporting describes it as being powered by leading third-party LLMs. JPMorganChase's annual reporting says LLM Suite was launched to more than 200,000 colleagues in 2024 and provides controlled access to generative-AI capabilities while protecting company and customer data. citeturn3search1turn3search33
+Its LLM Suite is an internally developed enterprise AI platform. Public company reporting and industry material describe the platform as providing controlled access to generative-AI capabilities while protecting company and customer data, with leading third-party models used underneath the platform.
 
-The architectural distinction is important:
+The important architectural distinction is:
 
-**JPMorganChase owns the enterprise AI access/platform layer without necessarily owning every foundation model underneath it.**
+> **An organization can own the enterprise AI access, policy, workflow, data, and governance layers without owning every foundation model underneath them.**
 
-The bank has also described LLM Suite as a vehicle through which employees receive LLM capabilities with guardrails, while its broader AI architecture includes domain-specific applications and data platforms. citeturn3search9
-
-This is a powerful example of a middle architecture:
+The pattern can be represented as:
 
 ```text
 Enterprise Identity
@@ -106,126 +99,129 @@ Enterprise Data / Tools
 Business Workflow
 ```
 
-**So what?**
+This creates an important strategic option: **model substitution can occur behind an enterprise-controlled boundary** when interfaces, evaluations, data contracts, and workflow semantics are sufficiently stable.
 
-An organization does not have to train a foundation model to obtain strategic control over its AI architecture.
+That last condition is an architectural requirement, not a guaranteed property of multi-model platforms.
 
-## 44.5 Case: BloombergGPT — When Owning the Model Can Make Strategic Sense
+## 44.5 Case: BloombergGPT — When Owning Model Capability Can Make Sense
 
-BloombergGPT is a materially different case.
+BloombergGPT is a materially different case. The published research describes a 50-billion-parameter language model trained on a large mixture of financial and general-purpose data, including a substantial proprietary financial-data component. The authors evaluated the model on general benchmarks, financial benchmarks, and internal evaluations and reported strong financial-task performance. urlBloombergGPT research paperhttps://arxiv.org/abs/2303.17564
 
-Bloomberg researchers described a 50-billion-parameter model trained using a large mixture of financial and general-purpose data. The paper reported strong performance on financial tasks while maintaining competitive general-purpose performance. The training corpus included a large proprietary financial-data component. citeturn4academia19
+This provides evidence for a legitimate proprietary-model rationale:
 
-This case is important because it demonstrates a legitimate reason to build a domain-specific model:
+> **Distinctive proprietary data, domain requirements, and model capability can sometimes create enough strategic value to justify owning model capability.**
 
-> **The organization's proprietary data, domain requirements, and product economics can themselves create a sufficiently strong reason to own model capability.**
-
-But this is a very different proposition from:
+But it does **not** support the proposition:
 
 > “Our data is sensitive, therefore we need our own foundation model.”
 
-Bloomberg had an unusually strong combination of:
-
-- large proprietary financial-data assets;
-- long-term data curation capability;
-- specialized NLP/ML expertise;
-- a broad financial product ecosystem;
-- domain-specific model requirements.
-
-Those conditions matter.
+The Bloomberg case involved unusually strong conditions, including large proprietary financial-data assets and substantial model-development capability. Those conditions materially affect transferability.
 
 **ARCHITECTURE WARNING**
 
-> A successful proprietary-model case is evidence that proprietary models can be strategically justified under some conditions. It is not evidence that every enterprise should build one.
+> A successful proprietary-model case demonstrates that proprietary development can be justified under particular conditions. It does not establish that proprietary development is the default enterprise architecture.
 
-## 44.6 The Three Cases Reveal Three Different Ownership Boundaries
+## 44.6 Current Financial-Services Landscape: The Boundary Is Moving Up the Stack
 
-| Organization / case | Owned strongly | Consumed / depended on | Architectural strategy |
+Current industry offerings reinforce an important architectural trend: enterprises can consume frontier model capability while demanding stronger control over data, connectors, workflow, provenance, and governance.
+
+For example, OpenAI's September 2026 financial-services offering combines frontier-model reasoning with financial data providers and granular citations, and describes the product as shaped through design partnerships with Morgan Stanley and Evercore. This is **vendor-reported industry evidence**, not independent proof that the product is optimal. urlOpenAI — ChatGPT for Financial Serviceshttps://openai.com/index/introducing-chatgpt-financial-services/
+
+Google Cloud's 2026 financial-services offering similarly emphasizes a governed platform, multiple agents, enterprise connectors, data provenance, and an ecosystem intended to avoid dependence on a single model or agent. Again, this is vendor-reported evidence and should be treated accordingly. urlGoogle Cloud — Gemini Enterprise for Financial Serviceshttps://cloud.google.com/blog/products/ai-machine-learning/introducing-gemini-enterprise-for-financial-services
+
+The architectural lesson is not “buy these products.” It is:
+
+> **The competitive boundary is increasingly shifting from raw model access toward the controlled combination of models, data, workflow, evaluation, provenance, identity, and governance.**
+
+This is an inference from the documented architecture patterns, not a universal market law.
+
+## 44.7 Three Cases Reveal Three Ownership Boundaries
+
+| Case | Strongly owned | Primarily consumed / depended on | Pattern |
 |---|---|---|---|
-| Morgan Stanley | Application, domain knowledge, retrieval, evaluation, workflow | Frontier model capability | Third-party model behind enterprise controls |
-| JPMorganChase | Enterprise AI platform, controls, workflows, data architecture | Leading third-party models | Proprietary platform + model flexibility |
-| Bloomberg | Model capability + proprietary financial data | Underlying infrastructure/ecosystem | Domain-specific proprietary model |
+| Morgan Stanley | Knowledge, retrieval, evaluation, workflow | Frontier model capability | Third-party model behind enterprise controls |
+| JPMorganChase | Enterprise AI platform, controls, data architecture | Leading external models | Proprietary platform + model flexibility |
+| Bloomberg | Model capability + proprietary financial data | Infrastructure/ecosystem | Domain-specific proprietary model |
 
-The key observation is that **ownership can be placed at different layers**.
+The important observation is that **ownership can be placed at different layers**.
 
-That is more useful than a simple build-versus-buy decision.
+That is more useful than a binary build-versus-buy question.
 
-## 44.7 Proprietary Does Not Mean More Secure by Definition
+## 44.8 Proprietary Does Not Mean More Secure by Definition
 
-Security depends on the architecture and controls around the system.
-
-A proprietary model may provide greater control over some dimensions, such as model weights, deployment environment, or training process. It can simultaneously create additional responsibilities for:
+A proprietary model may increase control over some dimensions, such as model weights, deployment location, or training process. It also creates responsibilities for:
 
 - infrastructure security;
 - model supply chain;
 - patching;
 - evaluation;
-- model lifecycle management;
+- lifecycle management;
 - access control;
 - monitoring;
 - incident response;
 - specialist staffing.
 
-Conversely, a third-party model may reduce some operational responsibilities while increasing dependency and concentration risk.
+Third-party models can reduce some operational responsibilities while increasing provider, contractual, and concentration dependencies.
 
-NIST's Generative AI Profile explicitly discusses risks associated with third-party GAI systems and recommends considering controls such as procurement due diligence, SLAs, SBOMs, and attestation mechanisms. citeturn5search29
+NIST's Generative AI Profile treats third-party GAI as a procurement and risk-management issue and discusses due diligence, contractual controls, SLAs, software/component transparency, and attestation. urlNIST AI RMF Generative AI Profilehttps://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence
 
 **FIELD RULE**
 
 > **Do not compare “vendor risk” with “self-hosting risk.” Compare the complete risk transferred to the vendor with the complete risk retained by the organization.**
 
-## 44.8 Data Sensitivity Does Not Determine Model Ownership by Itself
+## 44.9 Data Sensitivity Does Not Determine Model Ownership by Itself
 
-A sensitive-data requirement may be satisfied through multiple architectures:
+Sensitive-data requirements can potentially be addressed through multiple architectures:
 
 - controlled enterprise API;
-- private endpoint;
-- data preprocessing;
-- tokenization or masking;
+- private connectivity or endpoint controls;
+- preprocessing, masking, or tokenization;
 - retrieval inside a controlled environment;
-- self-hosted open-weight model;
-- fully proprietary model infrastructure.
+- contractual training/retention restrictions;
+- self-hosted open-weight models;
+- proprietary model infrastructure.
 
 Therefore:
 
 > **“The data is sensitive” is a constraint. It is not, by itself, an architecture decision.**
 
-The advisor must ask what control is actually required:
+The advisor should first identify the actual control requirement:
 
-- residency?
-- retention?
-- training exclusion?
-- encryption?
-- access isolation?
-- contractual control?
-- auditability?
-- latency?
-- operational independence?
+- residency;
+- retention;
+- training exclusion;
+- encryption;
+- isolation;
+- authorization;
+- auditability;
+- latency;
+- operational independence;
+- exit capability.
 
 Only then should model ownership be considered.
 
-## 44.9 Third-Party Dependency Is a Real Architectural Risk
+## 44.10 Third-Party Dependency Is a Real Architectural Risk
 
-The argument for third-party models should not become naive vendor advocacy.
+The argument for third-party models must not become naive vendor advocacy.
 
-BIS identifies third-party dependencies and concentration among AI, cloud, data, and infrastructure providers as material risks for financial institutions. Shared dependencies can create operational and systemic concentration risks. citeturn5search0turn5search2turn5search4
+BIS identifies third-party dependencies, concentration, data quality, privacy, security, and operational resilience as important AI risks for financial institutions. Its 2026 analysis specifically notes that dependence on third parties can amplify AI data-related risks and that concentration among major AI, cloud, and data providers complicates dependency management. citeturn0search6turn0search8
+
+BIS also notes that AI systems often depend on specialized hardware, cloud services, external data providers, and pretrained models concentrated among a relatively small number of providers. citeturn0search8
 
 Therefore a third-party architecture should explicitly address:
 
 - provider outage;
 - model retirement;
-- material model behavior change;
+- behavior changes;
 - pricing changes;
 - rate limits;
 - contractual changes;
 - data-access changes;
 - jurisdictional changes;
 - provider concentration;
-- exit feasibility.
+- migration and exit feasibility.
 
-This connects directly to Chapter 36.
-
-## 44.10 But Self-Hosting Creates a Different Dependency Graph
+## 44.11 Self-Hosting Creates a Different Dependency Graph
 
 Self-hosting does not eliminate dependency.
 
@@ -255,7 +251,9 @@ The dependency graph changes; it does not disappear.
 
 > **“Self-hosted” should never be treated as synonymous with “independent.”**
 
-## 44.11 The Economics of Ownership
+The advisor should therefore compare **dependency concentration**, not simply whether an API call exists.
+
+## 44.12 The Economics of Ownership
 
 The relevant comparison is not:
 
@@ -279,52 +277,61 @@ Model / inference cost
 + transition / exit cost
 ```
 
-The same reasoning applies to organizational capacity.
+A proprietary model can be attractive at high utilization yet uneconomic after accounting for engineering, capacity, model improvement, security, and opportunity cost.
 
-A proprietary model may appear cheaper at high inference volume while being uneconomic after accounting for engineering, capacity, model improvement, security, and opportunity costs.
+A third-party model can have a high visible unit price yet be economically superior if it avoids large fixed costs and accelerates useful deployment.
 
-A third-party model may appear expensive per token while being economically superior if it eliminates substantial fixed costs and accelerates useful deployment.
+Chapter 34 provides the TCO framework. The important principle here is:
 
-No universal break-even point should be assumed.
+> **Model ownership is an economic investment, not merely a security posture.**
 
-## 44.12 Model Capability Is Also an Economic Variable
+## 44.13 Model Capability Is an Economic Variable
 
-Frontier model capability changes rapidly.
+Frontier-model capability and price-performance change rapidly. A proprietary model investment therefore has technological-obsolescence risk: a capability that required substantial internal investment may later become commercially available.
 
-A proprietary model investment has an implicit technological-obsolescence risk: a capability that required substantial internal investment may become commercially available from a provider later.
+The opposite risk also exists. A third-party dependency can create strategic-optionality risk if a provider changes pricing, access, capabilities, or terms.
 
-Conversely, a third-party dependency creates a strategic-optionality risk: the provider may change pricing, access, capabilities, or terms.
+A useful decision framing is:
 
-Therefore the advisor should evaluate:
+```text
+Build value
+− build cost
+− operating cost
+− obsolescence risk
+− transition risk
 
-**Build value − build cost − obsolescence risk**
+versus
 
-against:
-
-**Buy value − provider dependency cost − transition risk**.
+Buy value
+− provider dependency cost
+− contractual risk
+− migration risk
+```
 
 This is a decision framework, not a financial valuation formula.
 
-## 44.13 A Better Decision Matrix
+The evidence must be refreshed because the frontier can move faster than the architecture lifecycle.
+
+## 44.14 A Better Decision Matrix
 
 | Dimension | Third-party model | Enterprise platform + multiple models | Self-hosted open-weight | Proprietary foundation model |
 |---|---|---|---|---|
-| Frontier capability access | Usually strong | Strong | Variable | Depends on investment |
+| Frontier capability access | Often strong | Often strong | Variable | Depends on investment |
 | Control over weights | Low | Low/variable | High | High |
 | Operational burden | Lower | Medium | High | Very high |
-| Provider dependency | High | Lower if multi-provider | Model/ecosystem dependency | Lower at model-provider layer |
+| Provider dependency | High | Potentially lower | Model/ecosystem dependency | Lower at model-provider layer, but other dependencies remain |
 | Infrastructure responsibility | Lower | Medium | High | Very high |
-| Model differentiation | Low | Medium through routing/data/workflow | Medium | Potentially high |
+| Model differentiation | Usually limited | Medium through data/workflow/routing | Potentially medium | Potentially high |
 | Data control | Architecture-dependent | Architecture-dependent | High deployment control | High deployment control |
 | Time to deploy | Usually faster | Medium | Medium/high | Slow |
-| Specialized talent required | Lower | Medium/high | High | Very high |
-| Exit complexity | Contract/model migration | Potentially lower | Model/runtime migration | Internal transition complexity |
+| Specialized talent | Lower | Medium/high | High | Very high |
+| Exit complexity | Contract/model migration | Potentially lower if interfaces are portable | Model/runtime migration | Internal transition complexity |
 
-These are qualitative architectural tendencies, not universal measurements.
+These are qualitative tendencies, not universal measurements.
 
-## 44.14 A More Defensible Enterprise Pattern: Own the Boundary
+## 44.15 A More Defensible Enterprise Pattern: Own the Boundary
 
-For many enterprise AI systems, a useful default architecture is:
+For many enterprise AI systems, a useful architecture to test first is:
 
 ```text
                     Enterprise AI Boundary
@@ -338,6 +345,7 @@ For many enterprise AI systems, a useful default architecture is:
 │ Tool authorization                               │
 │ Model routing                                    │
 │ Cost controls                                    │
+│ Portability / exit mechanisms                    │
 └──────────────────────────────────────────────────┘
                  ↓              ↓
              Model A        Model B
@@ -346,39 +354,41 @@ For many enterprise AI systems, a useful default architecture is:
 
 The organization owns the **decision-support boundary** while treating foundation models as replaceable capabilities where practical.
 
-This is not always the correct architecture. It becomes less attractive when a specific model capability itself is a strategic differentiator that cannot reasonably be obtained externally.
+This pattern becomes less attractive when the model capability itself is the strategic differentiator or when external providers cannot satisfy mandatory constraints.
 
-## 44.15 When Proprietary Model Development Becomes More Justifiable
+## 44.16 When Proprietary Model Development Becomes More Justifiable
 
 A proprietary model becomes more defensible when several conditions converge, such as:
 
-1. **Distinctive proprietary data** provides meaningful model advantage.
-2. **Domain-specific capability** materially exceeds what general models can provide.
-3. **Inference volume** is sufficiently large to justify infrastructure and engineering investment.
-4. **Model behavior or deployment constraints** cannot reasonably be satisfied by available providers.
+1. **Distinctive proprietary data** provides measurable model advantage.
+2. **Domain-specific capability** materially exceeds credible external alternatives on representative workloads.
+3. **Inference volume and utilization** can justify the fixed investment.
+4. **Deployment or model-behavior requirements** cannot reasonably be satisfied by available providers.
 5. **Strategic differentiation** depends directly on model capability.
 6. **Internal technical capability** is strong enough to operate the lifecycle.
-7. **The organization can sustain continuous investment**, not merely build a one-time model.
+7. **Continuous investment** can be sustained rather than treating model development as a one-time project.
+8. **Evidence remains durable** after accounting for the expected pace of external model improvement.
 
 These are decision criteria, not necessary-and-sufficient conditions.
 
-## 44.16 When Third-Party Models Become More Justifiable
+## 44.17 When Third-Party Models Become More Justifiable
 
 Third-party models become more attractive when:
 
 - frontier capability matters;
 - model technology is changing rapidly;
 - the use case does not require proprietary model weights;
-- enterprise security controls can satisfy the actual data requirements;
+- enterprise controls can satisfy the actual data requirements;
 - time-to-value matters;
 - internal model engineering capacity is limited;
-- model differentiation is not itself the competitive moat;
-- multiple providers can provide credible alternatives;
-- the organization can establish a realistic exit strategy.
+- model capability is not itself the competitive moat;
+- credible providers can be evaluated through representative tests;
+- multiple providers or open-weight alternatives provide credible exit options;
+- the organization can establish contractual and technical exit mechanisms.
 
-Again, these are architectural decision criteria rather than universal rules.
+These are architectural decision criteria rather than universal rules.
 
-## 44.17 The Most Important Question: Where Is the Moat?
+## 44.18 The Most Important Question: Where Is the Moat?
 
 Ask:
 
@@ -399,15 +409,15 @@ then owning the foundation model may not be the primary source of strategic diff
 
 If the answer is:
 
-> “The model itself performs a capability that competitors cannot obtain elsewhere,”
+> **“The model itself performs a capability that competitors cannot obtain elsewhere.”**
 
 then model ownership deserves deeper consideration.
 
 **ADVISOR LENS**
 
-> **Own the layer that creates strategic differentiation; buy or consume layers where differentiation is weak and the market can supply them efficiently—subject to security, resilience, and exit constraints.**
+> **Own the layer that creates strategic differentiation; consume layers where differentiation is weak and the market can supply them efficiently—subject to security, resilience, economics, and exit constraints.**
 
-## 44.18 What Would Change Our Mind?
+## 44.19 What Would Change Our Mind?
 
 For a recommendation favoring third-party models, evidence that could change the decision includes:
 
@@ -416,18 +426,20 @@ For a recommendation favoring third-party models, evidence that could change the
 - inability to satisfy required data controls;
 - persistent model-performance gaps on proprietary tasks;
 - unacceptable concentration risk;
-- credible evidence that a self-hosted model materially improves economics or control.
+- inability to establish a credible exit path;
+- credible evidence that self-hosting materially improves required economics or control.
 
 For a recommendation favoring proprietary development, evidence that could change the decision includes:
 
-- frontier providers closing the capability gap;
-- materially lower third-party cost;
+- frontier providers closing the relevant capability gap;
+- materially lower third-party cost at equivalent quality;
 - improved enterprise controls from providers;
 - insufficient internal engineering capacity;
 - faster external model improvement than internal development;
-- evidence that model ownership does not produce meaningful differentiation.
+- evidence that model ownership does not produce meaningful differentiation;
+- inability to sustain the model lifecycle economically.
 
-## 44.19 Advisor Decision Template
+## 44.20 Advisor Decision Template
 
 When evaluating “build our own LLM,” the advisor should produce:
 
@@ -435,17 +447,48 @@ When evaluating “build our own LLM,” the advisor should produce:
 |---|---|
 | Required capability | What must the model actually do? |
 | Data constraint | What data must be protected and how? |
-| Model requirement | What capability is unavailable externally? |
+| Control requirement | Which controls are mandatory? |
+| Model gap | What required capability is unavailable externally? |
 | Architecture alternatives | Which credible options exist? |
-| Industry evidence | Who has used each pattern? |
+| Industry evidence | Who has implemented each pattern? |
 | Technical evidence | What supports feasibility? |
 | Economics | What is the complete lifecycle cost? |
 | Dependency | What dependency does each option create? |
 | Exit | How can the organization change course? |
+| Evaluation | How will alternatives be compared on representative workloads? |
 | Recommendation | Which option is justified and why? |
 | Confidence | How strong is the evidence? |
+| Revalidation trigger | What changes require the decision to be revisited? |
 | What would change our mind? | Which measurable conditions would reverse the recommendation? |
 
-## 44.20 Field Rule
+## 44.21 Evidence Discipline
 
-> **Do not build a foundation model merely because you can. Do not buy one merely because it is available. Decide which architectural layer the organization must control, which layer the market can efficiently provide, and how the boundary remains secure, economically justified, and reversible.**
+### Fact
+
+Documented industry cases show that major financial institutions can deploy enterprise AI using externally supplied model capability, while proprietary/domain-specific model development is also technically possible.
+
+### Industry Evidence
+
+Morgan Stanley, JPMorganChase, Bloomberg, and current financial-services AI offerings provide examples of different ownership boundaries. These cases demonstrate implementation patterns, not universal optimality.
+
+### Supervisory Evidence
+
+BIS identifies third-party dependency, concentration, data, cyber, and operational-resilience considerations relevant to financial-sector AI architectures. urlBIS FSI Insight 73 — AI data use in financial serviceshttps://www.bis.org/publications/fsi-insight-73-data-we-trust-emerging-policy-and-supervisory-approaches-ai-data-use-financial-services
+
+### Recommendation
+
+For many enterprise AI use cases, test an architecture in which the organization owns the enterprise decision-support boundary while keeping foundation models replaceable where practical.
+
+This is an advisor recommendation, not an industry standard.
+
+### Assumption
+
+Model interfaces, evaluation methods, data contracts, and workflow semantics can be designed sufficiently well to permit model substitution. If that assumption is false, apparent portability may be largely illusory.
+
+### Uncertainty
+
+Public evidence is weak on detailed contracts, complete security architectures, long-term migration costs, and comparative TCO under identical enterprise workloads. Do not infer their absence from public silence.
+
+## 44.22 Field Rule
+
+> **Do not build a foundation model merely because you can. Do not buy one merely because it is available. Decide which architectural layer the organization must control, which layer the market can efficiently provide, and how the boundary remains secure, economically justified, evaluated, and reversible.**
