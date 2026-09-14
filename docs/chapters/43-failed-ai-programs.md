@@ -50,7 +50,7 @@ The advisor should keep asking:
 
 ## 43.3 Case: Amazon Experimental Recruiting System
 
-Reuters reported in 2018 that Amazon had developed an experimental machine-learning recruiting system trained on historical resumes. The system learned patterns from a predominantly male applicant pool and reportedly penalized indicators associated with women, including references to women's organizations and graduates of two women's colleges. Amazon attempted to neutralize specific terms, but the team reportedly concluded that this did not provide sufficient assurance against other discriminatory patterns and the project was ultimately abandoned. citeturn2search0
+Reuters reported in 2018 that Amazon had developed an experimental machine-learning recruiting system trained on historical resumes. The system learned patterns from a predominantly male applicant pool and reportedly penalized indicators associated with women, including references to women's organizations and graduates of two women's colleges. Amazon attempted to neutralize specific terms, but the team reportedly concluded that this did not provide sufficient assurance against other discriminatory patterns and the project was ultimately abandoned. [Reuters, October 10, 2018](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G)
 
 This is **Industry Evidence**, but the underlying reporting was based substantially on people familiar with the project rather than a public technical postmortem.
 
@@ -76,9 +76,9 @@ This directly supports the architecture principle that training-data provenance,
 
 Zillow Group's public SEC filings provide unusually strong evidence of a technology-enabled business failure because the company disclosed both the operational decision and its financial consequences.
 
-In November 2021, Zillow's board decided to wind down Zillow Offers. The company cited home-price unpredictability, capacity constraints, and other operational challenges. Its 2021 annual filing states that the business used data science and proprietary algorithms to help value and price homes, while acknowledging that those assessments could be inaccurate. The filing reported a $407.9 million inventory write-down and additional wind-down and restructuring costs. citeturn1search0turn1search2
+In November 2021, Zillow's board decided to wind down Zillow Offers. The company cited home-price unpredictability, capacity constraints, and other operational challenges. Its 2021 annual filing states that the business used data science and proprietary algorithms to help value and price homes, while acknowledging that those assessments could be inaccurate. The filing reported a $407.9 million inventory write-down and additional wind-down and restructuring costs. [Zillow Group 2021 Form 10-K, SEC](https://www.sec.gov/Archives/edgar/data/1617640/000161764022000013/z-20211231.htm)
 
-The program was ultimately completed in 2022 and resulted in approximately a 25% workforce reduction. citeturn1search9
+The program was ultimately completed in 2022 and resulted in approximately a 25% workforce reduction. [Zillow Group 2022 Form 10-K, SEC](https://www.sec.gov/Archives/edgar/data/1617640/000161764023000010/z-20221231.htm)
 
 This is not a pure “AI failure” case. Zillow's own disclosures attribute the outcome to a combination of prediction uncertainty, market conditions, operational capacity, and business-model considerations.
 
@@ -104,7 +104,7 @@ For an AI-IDSS, the equivalent question is:
 
 ## 43.5 Case: IBM Watson Health — Integration and Business-System Complexity
 
-STAT reported in 2022 that IBM sold core data and analytics assets from Watson Health after the business struggled to meet its ambitions. The reporting described difficulties integrating acquired health-information businesses and their data and organizational cultures into a coherent business, alongside missed sales targets. citeturn2search11
+STAT reported in 2022 that IBM sold core data and analytics assets from Watson Health after the business struggled to meet its ambitions. The reporting described difficulties integrating acquired health-information businesses and their data and organizational cultures into a coherent business, alongside missed sales targets. [STAT, January 21, 2022](https://www.statnews.com/2022/01/21/ibm-watson-health-sale-equity/)
 
 This is best classified as **Industry/Independent Evidence**, not as a clean model-failure case.
 
