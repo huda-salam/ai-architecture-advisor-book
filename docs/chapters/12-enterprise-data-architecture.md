@@ -1,6 +1,6 @@
 # 12. Enterprise Data Architecture
 
-> **Advisor question:** Can the organization produce the data needed for a decision, with sufficient quality, provenance, timeliness, authorization, and repeatability?
+> **Advisor question:** Can the organization produce the data needed for a decision, with sufficient quality, provenance, timeliness, authorization, semantic consistency, and repeatability?
 
 Enterprise AI is downstream of enterprise data architecture. An LLM cannot compensate for an unavailable source, an ambiguous business definition, stale data, broken lineage, or an authorization model that permits the wrong data to enter a decision workflow.
 
@@ -8,7 +8,7 @@ This chapter therefore treats data architecture as a system of capabilities and 
 
 ## 12.1 What Enterprise Data Architecture Is
 
-**Fact / Technical evidence.** NIST's Big Data Reference Architecture is a vendor-neutral, technology- and infrastructure-agnostic conceptual model. It identifies architectural roles, functional components, activities, and cross-cutting management and security/privacy fabrics rather than prescribing a particular product. See [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture).
+**Fact / Technical evidence.** NIST's Big Data Reference Architecture is a vendor-neutral, technology- and infrastructure-agnostic conceptual model. It describes architectural roles, functional components, activities, and management and security/privacy fabrics rather than prescribing a particular product. See [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture).
 
 For this manual, enterprise data architecture means the design of:
 
@@ -17,7 +17,7 @@ For this manual, enterprise data architecture means the design of:
 - storage and processing layers;
 - semantic models and data products;
 - metadata, lineage, and provenance;
-- quality controls;
+- data-quality controls;
 - ownership and stewardship;
 - authorization and isolation;
 - retention and disposition;
@@ -59,24 +59,24 @@ flowchart LR
     M -.-> P
 ```
 
-The arrows represent data movement and dependency. Governance and metadata are cross-cutting architectural capabilities, not merely documentation added after implementation.
+Governance and metadata are cross-cutting capabilities, not documentation added after implementation.
 
-**Inference:** A mature AI architecture should make it possible to answer, for an important output, at least these questions:
+**Inference:** For an important output, a mature architecture should make it possible to answer at least:
 
 1. Where did the underlying data originate?
-2. Which version of the data was used?
+2. Which version or snapshot was used?
 3. What transformations occurred?
 4. Which business definitions were applied?
-5. Who was authorized to access it?
-6. When was it last refreshed?
-7. What quality checks passed or failed?
+5. Which authorization decision permitted access?
+6. When was the data last refreshed?
+7. Which quality checks passed or failed?
 8. Which model, analytical method, or rule consumed it?
 
-If the architecture cannot answer these questions, the organization may still have an AI demo, but it does not yet have a strong decision-support data foundation.
+If the architecture cannot answer these questions, the organization may still have an AI demonstration, but it does not yet have a strong decision-support data foundation.
 
 ## 12.3 Source Systems and Systems of Record
 
-A **system of record (SoR)** should be understood as an organizational designation: for a defined business fact or transaction, the organization identifies a particular source as authoritative.
+A **system of record (SoR)** is an organizational designation: for a defined business fact or transaction, the organization identifies a particular source as authoritative.
 
 Examples may include:
 
@@ -89,17 +89,17 @@ Examples may include:
 | Employee identity | Identity / HR system |
 | Approved investment memo | Controlled document repository |
 
-These are examples, not universal assignments. The organization must explicitly define which source is authoritative for each critical business fact.
+These are examples, not universal assignments. The organization must explicitly define authority for each critical business fact.
 
-**Architectural principle:** do not create an AI database and quietly allow it to become the authoritative source for facts that belong to an operational system.
+**Architectural principle:** do not create an AI database and quietly allow it to become authoritative for facts that belong to an operational source.
 
-An AI platform may create **derived data**—embeddings, extracted entities, classifications, summaries, scores, features, or recommendations—but those outputs should have explicitly defined authority and lifecycle. A derived artifact may be designated authoritative for a particular purpose only through an explicit governance decision.
+An AI platform may create **derived data**—embeddings, extracted entities, classifications, summaries, scores, features, or recommendations—but those outputs require an explicit authority and lifecycle definition. Storage does not make a derived artifact authoritative.
 
 ### 12.3.1 Authoritative vs derived data
 
 | Data type | Authority question |
 |---|---|
-| Source transaction | Which operational system owns the transaction? |
+| Source transaction | Which system owns the transaction? |
 | Replicated copy | Is it synchronized and traceable to the source? |
 | Cleaned dataset | What transformations were applied? |
 | Feature | Which definition and version produced it? |
@@ -107,7 +107,7 @@ An AI platform may create **derived data**—embeddings, extracted entities, cla
 | LLM summary | Is it a derived interpretation rather than a source fact? |
 | AI recommendation | Who is accountable for accepting or rejecting it? |
 
-This distinction becomes critical in AI-IDSS. The system should not turn a generated summary into an apparently authoritative fact merely because it is stored in a database.
+This distinction is central to AI-IDSS. A generated summary must not become an apparently authoritative fact merely because it is stored in a database.
 
 ## 12.4 Operational Data vs Analytical Data
 
@@ -123,13 +123,11 @@ They may therefore have different:
 - access patterns;
 - workloads.
 
-**Recommendation:** do not assume that an operational ERP database should become the direct query engine for every AI workload. Likewise, do not copy every operational field into a central analytical platform without a defined purpose, ownership, and retention rationale.
+**Recommendation:** do not assume that an operational ERP database should become the direct query engine for every AI workload. Likewise, do not copy every operational field into a central analytical platform without a defined purpose, owner, retention rationale, and access model.
 
 The right architecture depends on the workload.
 
 ## 12.5 Data Ingestion Patterns
-
-Data ingestion moves information from producers to a consuming data environment.
 
 Common patterns include:
 
@@ -137,7 +135,7 @@ Common patterns include:
 |---|---|---|
 | Full batch | Periodic snapshots | Simple but potentially stale and expensive |
 | Incremental batch | Changed records since last load | More efficient; requires reliable change detection |
-| CDC | Transactional change propagation | Near-real-time detail; operational complexity |
+| CDC | Transactional change propagation | Detailed changes; operational complexity |
 | Event streaming | Event-driven workloads | Low latency; greater operational requirements |
 | API pull | External systems | Controlled integration; rate limits and availability matter |
 | File exchange | Statements, reports, documents | Simple boundary; parsing and freshness challenges |
@@ -146,15 +144,13 @@ There is no universal requirement that enterprise AI use streaming data.
 
 **Advisor rule:** latency should be derived from the decision requirement, not from technology fashion.
 
-If an investment-risk review is performed once per week, a sub-second streaming architecture may have little decision value. If an exposure threshold can change materially within minutes, the architecture may require a different freshness target.
+If an investment-risk review is performed weekly, sub-second streaming may have little decision value. If an exposure threshold can change materially within minutes, a different freshness target may be justified.
 
 ## 12.6 Batch vs Streaming
 
-The choice should be expressed as a requirement:
+Express the choice as a requirement:
 
 > **Required freshness = maximum acceptable age of information for the decision.**
-
-Then compare that requirement against the cost and complexity of candidate ingestion patterns.
 
 For each critical dataset, document:
 
@@ -172,7 +168,7 @@ For each critical dataset, document:
 
 ## 12.7 Storage Architecture
 
-Storage should be selected from workload requirements, not from fashionable terminology.
+Storage should be selected from workload requirements, not fashionable terminology.
 
 Potential architectural roles include:
 
@@ -181,33 +177,33 @@ Potential architectural roles include:
 - analytical warehouses;
 - lakehouses;
 - search indexes;
-- vector stores;
+- vector-capable retrieval systems;
 - document stores;
 - time-series stores;
 - caches.
 
-A single organization can legitimately use several of these. The architectural responsibility is to define why each exists and how data moves between them.
+A single organization can legitimately use several. The architectural responsibility is to define why each exists and how data moves between them.
 
 ## 12.8 Data Lake, Warehouse, and Lakehouse
 
-These terms describe architectural patterns, not universal quality levels. NIST and ISO reference-architecture work likewise focuses on architectural concepts and views rather than prescribing one storage product or topology; see [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture) and [ISO/IEC 20547-3:2020](https://www.iso.org/standard/71277.html).
+These terms describe architectural patterns, not universal quality levels. NIST and ISO reference-architecture work focuses on architectural concepts rather than prescribing one storage topology; see [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture) and [ISO/IEC 20547-3:2020](https://www.iso.org/standard/71277.html).
 
-A data lake is commonly used for scalable storage of heterogeneous data. A data warehouse is optimized for structured analytical workloads. A lakehouse is an implementation pattern intended to combine capabilities associated with lake and warehouse approaches. Exact capabilities and boundaries vary by platform.
+A data lake is commonly used for scalable storage of heterogeneous data. A data warehouse is commonly optimized for structured analytical workloads. A lakehouse is an implementation pattern intended to combine capabilities associated with lake and warehouse approaches. Exact capabilities vary by platform.
 
 A useful decision frame is:
 
-| Requirement | Likely architectural fit |
+| Requirement | Possible architectural fit |
 |---|---|
-| Highly structured BI and SQL reporting | Warehouse |
+| Structured BI and SQL reporting | Warehouse |
 | Large heterogeneous raw datasets | Lake / lake-oriented storage |
 | Data engineering + analytics + ML across mixed formats | Lakehouse may fit |
 | Transaction processing | Operational database |
 | Semantic/full-text retrieval | Search system |
 | Similarity retrieval for embeddings | Vector-capable retrieval system |
 
-**Important:** the table is a starting hypothesis, not a product-selection rule.
+This table is a starting hypothesis, not a product-selection rule.
 
-Do not infer that a lake, warehouse, or lakehouse is inherently more secure, more governed, or better for AI. Those properties depend on architecture, implementation, configuration, controls, and operating practices.
+**Architecture warning:** do not infer that a lake, warehouse, or lakehouse is inherently more secure, more governed, or better for AI. Those properties depend on architecture, implementation, configuration, controls, and operating practices.
 
 ## 12.9 Transformation and Validation
 
@@ -229,7 +225,7 @@ A transformation pipeline may need to perform:
 
 Every material transformation should have a documented semantic purpose.
 
-### Example
+### Example: currency normalization
 
 Suppose one portfolio company reports EBITDA in USD and another in EUR. Converting EUR to USD is not merely a technical transformation. The architecture must define:
 
@@ -240,6 +236,21 @@ Suppose one portfolio company reports EBITDA in USD and another in EUR. Converti
 - how the conversion is reproduced later.
 
 A technically successful pipeline can therefore still produce a business-invalid result if the semantic rule is wrong.
+
+### Semantic correctness
+
+A data pipeline can be syntactically correct while being semantically wrong.
+
+Examples include:
+
+- mixing gross and net revenue;
+- mixing fiscal and calendar periods;
+- treating nominal and real values as equivalent;
+- applying the wrong currency date;
+- joining two entities with similar names but different identities;
+- interpreting a covenant ratio with the wrong denominator.
+
+**Advisor lens:** the question is not only “Did the pipeline run?” It is also “Did the resulting data mean what the decision process thinks it means?”
 
 ## 12.10 Data Products and Semantic Models
 
@@ -257,7 +268,9 @@ For the advisor, the important property is not the label “data product” but 
 - lineage;
 - versioning;
 - consumers;
-- support/escalation path.
+- support and escalation path.
+
+A data product is therefore **not automatically** a guarantee of quality, governance, or correctness. Those properties must be evidenced by controls and operation.
 
 A semantic model provides consistent meanings for concepts such as:
 
@@ -270,31 +283,17 @@ A semantic model provides consistent meanings for concepts such as:
 - liquidity;
 - covenant headroom.
 
-**Inference:** semantic consistency may matter more to AI-IDSS than simply increasing the volume of available data. If two systems use different definitions of “revenue,” combining them without resolving the semantic conflict can create a highly sophisticated but incorrect analysis.
+**Inference:** semantic consistency may matter more to AI-IDSS than simply increasing the volume of available data. If two systems use different definitions of “revenue,” combining them without resolving the conflict can produce a sophisticated but incorrect analysis.
 
 ## 12.11 Master and Reference Data
 
-Master data identifies relatively stable business entities such as:
+Master data identifies relatively stable business entities such as companies, legal entities, funds, securities, currencies, business units, and counterparties.
 
-- companies;
-- legal entities;
-- funds;
-- securities;
-- currencies;
-- business units;
-- counterparties.
-
-Reference data provides controlled values used to interpret other information, such as:
-
-- currency codes;
-- country codes;
-- industry classifications;
-- accounting categories;
-- risk ratings.
+Reference data provides controlled values used to interpret other information, such as currency codes, country codes, industry classifications, accounting categories, and risk ratings.
 
 The architecture should define how entities are identified across systems.
 
-For AI-IDSS, this is particularly important because the same portfolio company may appear under:
+For AI-IDSS, the same company may appear under:
 
 - legal name;
 - trading name;
@@ -307,9 +306,7 @@ Entity resolution should be deterministic where authoritative identifiers exist 
 
 ## 12.12 Data Quality
 
-**Fact / Technical evidence.** [ISO 8000-1:2022](https://www.iso.org/standard/81745.html) establishes principles and an overview for data quality. Related ISO 8000 parts address measurement/concepts, data rules and profiling, completeness, and provenance-related requirements.
-
-For this manual, data quality should be evaluated against the intended use rather than treated as one universal number. ISO 8000-140, for example, makes clear that completeness requirements depend on the data, context, and use.
+**Fact / Technical evidence.** [ISO 8000-1:2022](https://www.iso.org/standard/81745.html) establishes principles and an overview for the ISO 8000 data-quality series. [ISO 8000-140:2016](https://www.iso.org/standard/62395.html) explicitly notes that requirements for completeness depend on the data, its use, industry, and the needs of the parties involved; it does not prescribe one universal completeness threshold.
 
 Useful dimensions include:
 
@@ -326,30 +323,47 @@ Useful dimensions include:
 
 > **A dataset can be technically valid and still be unsuitable for a particular decision.**
 
-For example, a financial statement may be complete but too old for a liquidity-monitoring decision.
+A financial statement can be complete yet too old for a liquidity-monitoring decision. A dataset can be accurate at source but semantically incompatible with the metric required by an AI-IDSS workflow.
+
+### The evaluation hierarchy
+
+Data quality should be connected to the same hierarchy used elsewhere in this manual:
+
+```text
+Data quality
+     ↓
+Task performance
+     ↓
+System performance
+     ↓
+Business / decision value
+```
+
+High data-quality scores do not prove that a task will be performed correctly. Likewise, a model can perform well on a benchmark while the system produces poor decisions because the input data is stale, incomplete, unauthorized, or semantically wrong.
 
 For every critical AI-IDSS dataset, define:
 
 | Control | Example question |
 |---|---|
-| Freshness | How old may the data be? |
-| Completeness | Which fields are mandatory? |
+| Freshness | How old may the data be for this decision? |
+| Completeness | Which fields are mandatory for this task? |
 | Validity | Which values are permitted? |
 | Reconciliation | What independent source can verify totals? |
+| Semantic consistency | Do definitions and units match the decision requirement? |
 | Anomaly detection | What unexpected changes trigger review? |
 | Quality threshold | When must downstream processing stop? |
+
+The threshold is a **fitness-for-purpose requirement**, not a universal property of the dataset.
 
 ## 12.13 Data Quality Gates
 
 Quality should not only be measured; it should influence system behavior.
 
-Example:
-
 ```mermaid
 flowchart TD
     A[Incoming Data] --> B[Schema Check]
-    B --> C[Quality Validation]
-    C --> D{Quality Threshold Met?}
+    B --> C[Quality & Semantic Validation]
+    C --> D{Decision Fitness Threshold Met?}
     D -->|Yes| E[Publish / Update Data Product]
     D -->|No| F[Quarantine / Exception Queue]
     F --> G[Human or Data Steward Review]
@@ -364,7 +378,7 @@ The exact thresholds are domain-specific and should be treated as explicit assum
 
 Data architecture is partly organizational architecture.
 
-**Fact / Technical evidence.** ISO 8000-150 addresses roles and responsibilities associated with data-quality management. The advisor should therefore require explicit accountability for critical data rather than assuming that platform ownership equals business ownership.
+**Fact / Technical evidence.** ISO 8000-150 addresses roles and responsibilities associated with data-quality management. The advisor should require explicit accountability for critical data rather than assuming that platform ownership equals business ownership.
 
 At minimum, critical data should have clearly assigned responsibility for:
 
@@ -404,21 +418,24 @@ Useful metadata includes:
 - version;
 - access policy.
 
-For AI systems, metadata should also describe derived artifacts where material:
+For AI systems, metadata should also describe material derived artifacts:
 
 - embedding model/version;
 - extraction model/version;
 - document parser/version;
 - feature definition/version;
-- model input contract.
+- model input contract;
+- evaluation dataset/version where relevant.
+
+**Architecture warning:** metadata can describe an authorization policy, but metadata by itself is not authorization. Runtime access must be enforced by the relevant identity and policy mechanisms.
 
 ## 12.16 Data Lineage and Provenance
 
-**Lineage** describes how data moves and transforms through systems. **Provenance** records information about origin and history associated with data or other artifacts. NIST defines provenance in terms of the chronology of origin, development, ownership, location, and changes associated with systems or data; see the [NIST provenance glossary](https://csrc.nist.gov/glossary/term/provenance).
+**Fact / Technical evidence.** NIST defines provenance as the chronology of origin, development, ownership, location, and changes associated with a system or system component and associated data; see the [NIST provenance glossary](https://csrc.nist.gov/glossary/term/provenance).
 
-**Critical precision:** provenance is not proof that the data is accurate. A perfectly documented chain can still originate from an incorrect source or contain an incorrect transformation.
+**Critical precision:** lineage and provenance are evidence about origin and transformation, not proof that the data is true or accurate. A perfectly documented chain can still originate from an incorrect source or contain an incorrect transformation.
 
-For an AI-IDSS recommendation, the desired chain is approximately:
+For an AI-IDSS recommendation, a useful evidence chain is approximately:
 
 ```text
 Source document / transaction
@@ -438,9 +455,9 @@ Evidence / conclusion
 Recommendation presented to RD
 ```
 
-This is not merely an audit feature. It supports debugging, reconciliation, model evaluation, incident investigation, and executive challenge.
+This supports debugging, reconciliation, evaluation, incident investigation, and executive challenge.
 
-Not every intermediate artifact must be retained forever. Retention should be determined by auditability, reproducibility, privacy, regulatory requirements, security, operational value, and cost.
+Not every intermediate artifact must be retained forever. Retention should be determined by auditability, reproducibility, privacy, applicable requirements, security, operational value, and cost.
 
 ## 12.17 Data Contracts
 
@@ -459,291 +476,163 @@ A useful contract can specify:
 - security classification;
 - incident behavior.
 
-**Recommendation:** use data contracts for critical cross-system interfaces rather than relying solely on informal knowledge between teams.
+A contract should distinguish **transport correctness** from **semantic correctness**. Receiving a valid JSON object does not prove that the business meaning is correct.
+
+**Recommendation:** use explicit data contracts for critical cross-system interfaces rather than relying solely on informal knowledge between teams.
 
 ## 12.18 Access Control and Data Isolation
 
 Authorization must be enforced before data becomes available to downstream AI components.
 
-NIST defines authorization as the decision to permit or deny a subject's access to a system resource. NIST's Big Data Reference Architecture also places authentication, authorization, and audit within the security/privacy architecture rather than treating them as prompt-level behavior. See the [NIST authorization glossary](https://csrc.nist.gov/glossary/term/authorization) and [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture).
+NIST defines authorization as the decision to permit or deny a subject's access to a system resource. The relevant access decision belongs at the system/security boundary; it should not depend on an LLM correctly following an instruction such as “do not disclose data from another portfolio company.”
 
-For a portfolio environment, the architecture should answer:
+For multi-entity environments, the architecture should explicitly model:
 
-> Can the AI retrieve Company A's confidential information while processing Company B's request?
+- subject identity;
+- resource identity;
+- tenant/entity boundary;
+- permitted actions;
+- purpose or context where relevant;
+- policy decision point and enforcement point;
+- audit evidence.
 
-This requires more than a prompt instruction such as “do not reveal confidential information.” Controls should exist in the data-access path.
+**Advisor rule:** if a security requirement can be stated as “the model should know not to show this data,” the requirement is probably expressed at the wrong layer.
 
-Potential controls include:
+Isolation may be implemented through separate stores, logical partitions, row/column controls, application-level policy enforcement, separate credentials, or combinations of these. The correct mechanism is workload- and threat-model-dependent.
 
-- identity-aware access;
-- role-based or attribute-based authorization;
-- tenant/company boundaries;
-- row/column/document-level policies where appropriate;
-- separate credentials or service identities;
-- policy-enforced retrieval;
-- audit logs.
+## 12.19 Freshness, Staleness, and Evaluation
 
-**Field rule:** authorization is a data-plane control, not merely an LLM instruction.
+Freshness is not merely an ingestion metric. It is part of whether the system is fit for its decision purpose.
 
-## 12.19 Data Architecture for RAG
+For each critical dataset, define:
 
-RAG introduces an additional requirement: retrieved context must preserve the relationship between content and authorization.
+- expected update interval;
+- maximum tolerated age;
+- measurement point for age;
+- behavior when the source is late;
+- behavior when the pipeline is delayed;
+- whether stale data may be displayed;
+- whether stale data may trigger an alert or recommendation.
 
-A safe conceptual flow is:
+**Critical connection to Chapter 31:** freshness assumptions should appear in evaluation datasets and production monitoring. If a model is evaluated only on current data but operates on materially stale data in production, the evaluation evidence does not establish production fitness.
+
+A useful control is to make freshness visible in the decision-support output itself:
+
+```text
+Alert: Material deterioration risk
+Data freshness: 19 hours
+Required maximum age: 24 hours
+Freshness status: within threshold
+```
+
+If freshness is outside the permitted boundary, the system may need to downgrade confidence, mark the output stale, require review, or withhold the recommendation. The correct response is a decision requirement, not a universal rule.
+
+## 12.20 Failure Semantics and Reconciliation
+
+Data architecture must define what happens when delivery is imperfect.
+
+Important cases include:
+
+- duplicate records;
+- missing records;
+- out-of-order events;
+- partial batch completion;
+- source corrections;
+- late-arriving data;
+- schema changes;
+- failed transformations;
+- inconsistent replicas.
+
+For each critical flow, define whether the consumer should:
+
+- retry;
+- ignore a duplicate;
+- quarantine the record;
+- replay from an authoritative source;
+- reconcile against totals;
+- roll back or supersede a derived artifact;
+- stop downstream decision processing.
+
+**Architecture warning:** successful transport is not equivalent to successful integration. A message can arrive exactly once and still contain the wrong business meaning; a message can arrive twice and still be safely processed if idempotency is designed correctly.
+
+## 12.21 Data Architecture for AI-IDSS
+
+The AI-IDSS data path should preserve authority, semantics, authorization, quality, and evidence:
 
 ```mermaid
 flowchart LR
-    Q[User Query] --> I[Identity / Policy]
-    I --> R[Authorized Retrieval]
-    R --> E[Evidence + Metadata]
-    E --> L[LLM]
-    L --> O[Grounded Output]
+    S[Authoritative Sources] --> I[Controlled Ingestion]
+    I --> V[Validation & Reconciliation]
+    V --> Q{Decision-Fitness Gate}
+    Q -->|Pass| D[Curated / Semantic Data]
+    Q -->|Fail| X[Quarantine / Review]
+    D --> Z[Authorized Retrieval / Feature Access]
+    Z --> M[Model / Analytics / LLM]
+    M --> E[Evidence & Evaluation Metadata]
+    E --> R[AI-IDSS Recommendation]
+    R --> H[Human Decision Boundary]
 ```
 
-The architecture should avoid the pattern:
+The architecture should make the following chain defensible:
 
-```text
-All documents → unrestricted vector index → LLM
-```
+> **Authoritative source → controlled ingestion → validated and semantically correct representation → authorized access → analytical/model processing → evaluated output → evidence-backed recommendation → human decision.**
 
-because retrieval itself can become a confidentiality boundary failure.
+This is the data-side equivalent of the broader architecture spine used throughout this manual.
 
-The vector representation should not be treated as magically detached from the access rights of the underlying source. A vector database is a retrieval mechanism; authorization must be enforced by the retrieval architecture and underlying data controls.
+## 12.22 Advisor Lens: Questions That Expose Weak Data Architecture
 
-## 12.20 Data Architecture for Analytics and ML
+When reviewing a proposal, ask:
 
-Analytical and ML workloads may require additional artifacts:
+1. What is the authoritative source for each critical fact?
+2. What happens when the source and the AI data store disagree?
+3. What business definitions are applied to each material metric?
+4. Which transformations change meaning rather than merely format?
+5. What is the maximum tolerated data age for this decision?
+6. What happens when the data is stale?
+7. What happens when a record is duplicated or arrives out of order?
+8. Which quality failures block downstream processing?
+9. Which quality thresholds are evidence-based, and which are assumptions?
+10. Can the architecture prove which data version was used for an important output?
+11. Can authorization be enforced independently of the LLM?
+12. Can data from one entity or portfolio be isolated from another?
+13. Who owns the business definition of the metric?
+14. Who is accountable when the number is wrong?
+15. Does the evaluation set represent the actual freshness, semantics, and data-quality conditions of production?
+16. What happens when the source system is unavailable?
+17. Can a derived artifact be traced back to its source and transformation history?
+18. What evidence would make us change the data architecture?
 
-- curated analytical tables;
-- feature definitions;
-- training datasets;
-- validation datasets;
-- labels;
-- feature lineage;
-- model-input snapshots;
-- evaluation datasets.
+## 12.23 Architecture Warning: More Data Is Not the Same as Better Decision Support
 
-The critical architectural principle is reproducibility.
+A common enterprise AI assumption is:
 
-If a risk model produced a 68% probability on 1 September, the organization should be able to determine what data, feature definitions, model version, and calculation produced that result. Whether the value is statistically well calibrated is a separate model-evaluation question; the data architecture must at least make the result reproducible and traceable.
+> “If we connect more enterprise data, the AI will become more useful.”
 
-Otherwise, the number is difficult to defend retrospectively.
+That proposition is not generally established. Additional data can improve a system when it is relevant, authorized, sufficiently fresh, semantically compatible, and usable by the task. It can also increase noise, cost, latency, privacy exposure, attack surface, and opportunities for conflicting definitions.
 
-## 12.21 Data Architecture for Agents
+The advisor should therefore challenge data expansion with four questions:
 
-Agents introduce another data requirement: **state**.
+- **Relevance:** does the additional data improve the task?
+- **Authority:** is the source appropriate for the fact being asserted?
+- **Fitness:** does its quality and freshness satisfy the decision requirement?
+- **Control:** can the organization authorize, trace, evaluate, and remove it safely?
 
-State can include:
+The objective is not maximum data access. It is sufficient, controlled, decision-relevant evidence.
 
-- conversation context;
-- task state;
-- intermediate results;
-- memory;
-- approvals;
-- tool outputs;
-- execution history.
+## 12.24 Field Rule
 
-State should have explicit:
+> **Do not ask whether the organization has enough data. Ask whether it has the right evidence, from the right authority, with the right semantics, at the right freshness, under the right authorization, with enough quality and provenance to support the intended decision.**
 
-- ownership;
-- retention;
-- access control;
-- integrity protection;
-- deletion rules;
-- provenance.
+And:
 
-A persistent agent memory should therefore be treated as enterprise data—not as an invisible implementation detail.
+> **Data quality is not a property that exists independently of use. It is evidence about fitness for a defined purpose.**
 
-## 12.22 AI-IDSS Reference Data Architecture
+## 12.25 Evidence Anchors
 
-The reference architecture for this manual is:
+- [NIST SP 1500-6r2 — Big Data Reference Architecture](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture)
+- [NIST provenance glossary](https://csrc.nist.gov/glossary/term/provenance)
+- [ISO 8000-1:2022 — Data quality: Overview](https://www.iso.org/standard/81745.html)
+- [ISO 8000-140:2016 — Data quality: Completeness](https://www.iso.org/standard/62395.html)
+- [ISO/IEC 20547-3:2020 — Big data reference architecture](https://www.iso.org/standard/71277.html)
 
-```mermaid
-flowchart TD
-    A[Portfolio ERP / Financials] --> I[Ingestion & Integration]
-    B[Market Data] --> I
-    C[Documents / Memos / Contracts] --> I
-    D[Email / Research / External Intelligence] --> I
-
-    I --> L[Controlled Data & Document Layer]
-    L --> Q[Quality / Reconciliation / Classification]
-    Q --> P[Curated Data Products]
-    P --> R[RAG / Search]
-    P --> M[Analytics / ML / Risk Models]
-    R --> X[AI Orchestration]
-    M --> X
-    X --> Y[AI-IDSS]
-    Y --> Z[Regional Director Interface]
-
-    G[Identity / Governance / Lineage / Audit] -.-> I
-    G -.-> L
-    G -.-> Q
-    G -.-> P
-    G -.-> R
-    G -.-> M
-    G -.-> X
-```
-
-This architecture separates:
-
-1. **source authority**;
-2. **data engineering**;
-3. **analytical computation**;
-4. **knowledge retrieval**;
-5. **LLM orchestration**;
-6. **decision support**.
-
-That separation makes technical challenge possible. If the Head of AI claims that an AI-generated risk score is reliable, the advisor can independently inspect the data and analytical path rather than accepting the LLM output as a black box.
-
-## 12.23 Common Architectural Mistakes
-
-### Mistake 1 — “Put everything in the data lake.”
-
-A lake is not automatically a semantic model, quality system, governance system, or decision-support system.
-
-### Mistake 2 — “The ERP database is our AI database.”
-
-Operational and analytical workloads can have different requirements.
-
-### Mistake 3 — “More data means better AI.”
-
-More data is not automatically better decision support. Additional data can introduce noise, duplication, conflicting definitions, processing cost, privacy exposure, and attack surface. Treat this as an architectural inference rather than a universal empirical law.
-
-### Mistake 4 — “The vector database is the knowledge base.”
-
-The vector index is a retrieval mechanism. Source authority and governance remain elsewhere.
-
-### Mistake 5 — “Data quality is the data team's problem.”
-
-Business definitions and ownership cannot be outsourced simply because the data platform is centralized.
-
-### Mistake 6 — “Real-time is always better.”
-
-Freshness should follow decision requirements.
-
-### Mistake 7 — “Copy first, govern later.”
-
-Uncontrolled replication creates security, retention, lineage, and reconciliation problems.
-
-### Mistake 8 — “LLM summaries are facts.”
-
-A generated interpretation must remain distinguishable from source evidence.
-
-## 12.24 Technical Challenge Questions
-
-When reviewing an enterprise data architecture, ask:
-
-1. What are the authoritative systems of record?
-2. Which data is derived?
-3. Who owns each critical business definition?
-4. What is the required freshness for each decision?
-5. Why is batch insufficient—or why is streaming unnecessary?
-6. What happens when ingestion fails?
-7. How are duplicates detected?
-8. How is reconciliation performed?
-9. What quality thresholds block downstream processing?
-10. Where is data quarantined when quality fails?
-11. Which datasets are sensitive?
-12. Where is authorization enforced?
-13. Can portfolio-company data cross security boundaries?
-14. How is entity identity resolved across systems?
-15. Which semantic definitions are centrally controlled?
-16. Can a result be traced to source data?
-17. Can the exact input dataset be reconstructed later?
-18. What is the retention policy?
-19. Which copies of the data exist?
-20. Why does each copy exist?
-21. Who can modify the curated dataset?
-22. What happens when a schema changes?
-23. What is the compatibility policy for downstream consumers?
-24. What metadata is mandatory?
-25. Does the RAG index preserve source authorization?
-26. Can an agent retrieve data the user is not entitled to see?
-27. What data enters model context?
-28. What data is sent to external model providers?
-29. Which outputs are considered authoritative?
-30. What would make us reject this data architecture?
-
-## 12.25 Architecture Review Checklist
-
-Before approving a material enterprise data architecture, verify:
-
-- [ ] Systems of record identified
-- [ ] Business owners identified
-- [ ] Data classifications defined
-- [ ] Ingestion pattern justified
-- [ ] Freshness requirements documented
-- [ ] Storage pattern justified
-- [ ] Transformation rules documented
-- [ ] Quality controls defined
-- [ ] Quality failure behavior defined
-- [ ] Master/reference data strategy defined
-- [ ] Metadata strategy defined
-- [ ] Lineage available for critical data
-- [ ] Provenance available for critical analytical outputs
-- [ ] Data contracts defined where needed
-- [ ] Access-control boundaries defined
-- [ ] Portfolio/tenant isolation tested
-- [ ] Retention and deletion defined
-- [ ] RAG authorization preserved
-- [ ] ML/analytics inputs reproducible
-- [ ] Agent state governed
-- [ ] Operational failure and recovery defined
-- [ ] Costs and duplication understood
-- [ ] Exit/migration considerations documented
-
-## 12.26 Evidence Discipline
-
-The following distinctions must remain explicit.
-
-| Statement | Classification |
-|---|---|
-| NIST publishes a vendor-neutral Big Data Reference Architecture | **Fact / Technical evidence** |
-| ISO 8000-1 establishes principles and an overview for data quality | **Fact / Technical evidence** |
-| ISO 8000-150 addresses roles and responsibilities for data-quality management | **Fact / Technical evidence** |
-| A lakehouse combines capabilities associated with lake and warehouse patterns | **Industry/technical evidence; implementation-dependent** |
-| Critical AI outputs should have reproducible data lineage | **Recommendation / architectural inference** |
-| Provenance demonstrates accuracy | **Incorrect — provenance establishes origin/history, not truth** |
-| Every organization should use a lakehouse | **Unsupported universal claim — reject** |
-| Streaming is required for enterprise AI | **Unsupported universal claim — reject** |
-| A vector database is inherently required for RAG | **Unsupported universal claim — reject** |
-| More data automatically improves AI decision quality | **Unsupported universal claim — reject** |
-
-The advisor should continuously separate what a standard says from what the advisor recommends.
-
-## 12.27 What Would Change Our Mind?
-
-A recommendation should remain falsifiable.
-
-For example, if we recommend batch ingestion for an investment-risk workflow, the recommendation should change if evidence shows that:
-
-- material risk events occur inside the current batch interval;
-- decision latency causes measurable losses;
-- authoritative source systems can reliably provide lower-latency data;
-- the incremental value exceeds the additional operational complexity and cost.
-
-Likewise, if we recommend a centralized data platform, the recommendation should be reconsidered if organizational boundaries, regulatory requirements, latency requirements, or ownership constraints make decentralization materially safer or more effective.
-
-## 12.28 Field Rule
-
-> **Do not ask whether the organization has data. Ask whether it has authoritative, usable, authorized, sufficiently fresh, sufficiently reliable, traceable data for the decision at hand.**
-
-And for AI-IDSS:
-
-> **The quality of the decision-support architecture is bounded by the quality and governance of the information path feeding it.**
-
-### Primary evidence
-
-- NIST, *Big Data Interoperability Framework: Volume 6, Reference Architecture*. [NIST SP 1500-6r2](https://www.nist.gov/publications/nist-big-data-interoperability-framework-volume-6-reference-architecture)
-- NIST, *Big Data Interoperability Framework: Volume 6, Reference Architecture* PDF. [NIST SP 1500-6r2](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1500-6r2.pdf)
-- NIST, *Big Data Interoperability Framework: Volume 4, Security and Privacy Version 3*. [NIST SP 1500-4r2](https://csrc.nist.gov/pubs/sp/1500/4/r2/final)
-- NIST, *Provenance*. [NIST CSRC Glossary](https://csrc.nist.gov/glossary/term/provenance)
-- NIST, *Authorization*. [NIST CSRC Glossary](https://csrc.nist.gov/glossary/term/authorization)
-- ISO, *ISO/IEC 20547-3:2020 — Big data reference architecture — Part 3: Reference architecture*. [ISO](https://www.iso.org/standard/71277.html)
-- ISO, *ISO 8000-1:2022 — Data quality — Part 1: Overview*. [ISO](https://www.iso.org/standard/81745.html)
-- ISO, *ISO 8000-8:2015 — Data quality — Part 8: Information and data quality concepts*. [ISO](https://www.iso.org/standard/60805.html)
-- ISO, *ISO/TS 8000-82:2022 — Data quality — Part 82: Data rules and data profiling*. [ISO](https://www.iso.org/standard/78707.html)
-- ISO, *ISO 8000-120:2016 — Data quality — Part 120: Master data: Exchange of characteristic data: Provenance*. [ISO](https://www.iso.org/standard/62393.html)
-- ISO, *ISO 8000-140:2016 — Data quality — Part 140: Master data: Exchange of characteristic data: Completeness*. [ISO](https://www.iso.org/standard/62395.html)
-
-**Evidence note:** Standards and reference architectures establish concepts, requirements, and architectural guidance; they do not by themselves prove that one implementation pattern is optimal for every organization. Vendor-specific platform claims should be verified against current primary documentation during an architecture decision.
+**Evidence note:** Standards and reference architectures establish concepts and requirements within their stated scope. They do not by themselves prove that a particular data platform, topology, quality threshold, or vendor product is optimal for a particular AI-IDSS workload.
