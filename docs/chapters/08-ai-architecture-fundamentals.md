@@ -4,7 +4,7 @@
 
 An enterprise AI system is not a model. It is a socio-technical system that combines models with data, knowledge, software, infrastructure, security controls, workflows, evaluation, and human decision boundaries.
 
-For the technical advisor, this distinction is foundational. Many weak technology proposals begin with a model choice—“Which LLM should we use?”—before defining the system that the model is expected to serve.
+For the technical advisor, this distinction is foundational. Weak proposals often begin with a model choice—“Which LLM should we use?”—before defining the system the model is expected to serve.
 
 The correct question is:
 
@@ -12,7 +12,7 @@ The correct question is:
 
 The model is one component of that architecture.
 
-This chapter establishes the technical mental model used throughout the rest of this manual. Later chapters will go deeper into LLM architecture, RAG, agents, data, cloud, security, integration, deployment, and AI-IDSS.
+This chapter establishes the mental model used throughout the manual. It is a **logical architecture**, not a mandatory product topology or a formal standard.
 
 ---
 
@@ -23,7 +23,7 @@ A large language model is a computational component capable of generating or tra
 A production system may need to:
 
 - acquire authoritative data;
-- determine which information a user or agent is allowed to access;
+- determine which information a user, service, or agent is authorized to access;
 - retrieve relevant knowledge;
 - transform and validate data;
 - invoke one or more models;
@@ -38,9 +38,9 @@ A production system may need to:
 
 Therefore:
 
-**LLM capability ≠ AI system capability.**
+> **LLM capability ≠ AI system capability.**
 
-A useful abstraction is:
+A useful logical decomposition is:
 
 ```text
                     Enterprise AI System
@@ -64,17 +64,13 @@ Security · Identity · Governance · Evaluation · Audit
 Observability · Reliability · Cost · Interoperability
 ```
 
-This is a **logical architecture**, not necessarily a physical deployment. A commercial platform may combine several layers; an internal platform may split one layer across many services.
-
-The purpose of the model is to make responsibilities and dependencies visible.
+A commercial platform may combine several layers; an internal platform may split one layer across many services. The value of this model is that it makes responsibilities and dependencies visible.
 
 ---
 
 ## 8.2 From Business Question to Architecture
 
-The architecture should begin with the decision or task, not with an AI technology.
-
-A useful decomposition is:
+Architecture should begin with the decision or task, not with an AI technology.
 
 ```text
 Business Objective
@@ -96,23 +92,21 @@ Application / Decision Interface
 Human / Business Action
 ```
 
-For example:
+For an investment-risk use case:
 
 > Business objective: protect portfolio value.
 >
 > Decision task: identify portfolio companies requiring attention.
 >
-> Evidence: financial performance, liquidity, leverage, market conditions, operational indicators, investment documents.
+> Evidence: financial performance, liquidity, leverage, market conditions, operational indicators, and investment documents.
 >
-> Analysis: calculate indicators, detect deterioration, compare against thresholds and historical patterns, retrieve relevant qualitative evidence.
+> Analysis: calculate indicators, detect deterioration, compare thresholds and historical patterns, and retrieve relevant qualitative evidence.
 >
-> AI: predict, classify, summarize, explain, or synthesize depending on the specific subtask.
+> AI: predict, classify, summarize, explain, or synthesize depending on the defined subtask.
 >
-> Decision interface: present an alert, evidence, uncertainty, and recommended next action to the RD.
+> Decision interface: present findings, evidence, uncertainty, and recommended next action to the decision maker.
 
-This decomposition is important because different parts of the problem may require different technologies.
-
-A single LLM does not automatically replace statistical analysis, data engineering, search, workflow management, authorization, or enterprise applications.
+Different parts of this problem may require different technologies. An LLM does not automatically replace statistical analysis, data engineering, search, workflow management, authorization, or enterprise applications.
 
 ---
 
@@ -124,9 +118,9 @@ Each architectural layer should have a clear responsibility.
 |---|---|---|
 | Application | Present capability and collect user intent | What does the user see and do? |
 | Orchestration | Coordinate execution | What happens, and in what order? |
-| Model | Produce computational output | What does the model calculate/generate? |
+| Model | Produce computational output | What does the model calculate or generate? |
 | Knowledge | Supply relevant contextual evidence | What information should the model see? |
-| Data | Provide authoritative information | Where does the truth come from? |
+| Data | Provide authoritative information | Where does the authoritative information come from? |
 | Infrastructure | Provide execution environment | Where and under what operational conditions does it run? |
 
 Cross-cutting controls answer another set of questions:
@@ -135,31 +129,22 @@ Cross-cutting controls answer another set of questions:
 |---|---|
 | Security | What can be attacked, accessed, or exposed? |
 | Identity | Who is acting? |
-| Authorization | What is that identity allowed to see/do? |
+| Authorization | What is that identity allowed to see or do? |
 | Governance | What policies constrain the system? |
-| Evaluation | How do we know it works? |
-| Audit | Can we reconstruct what happened? |
-| Observability | Can we see system behavior in production? |
+| Evaluation | How do we know it works for its intended purpose? |
+| Audit | Can important events be reconstructed? |
+| Observability | Can production behavior be understood? |
 | Reliability | What happens when something fails? |
 | Cost | What does the complete system cost? |
-| Interoperability | Can it work with the surrounding enterprise? |
+| Interoperability | Can it work with surrounding enterprise systems? |
 
-This responsibility model is useful during architecture review because it exposes **missing responsibilities**. If nobody owns data freshness, retrieval authorization, model evaluation, or failure behavior, the architecture is incomplete even if the diagram looks sophisticated.
+If nobody owns data freshness, retrieval authorization, model evaluation, or failure behavior, the architecture is incomplete even if the diagram looks sophisticated.
 
 ---
 
-## 8.4 Layer 1 — Application and User Experience
+## 8.4 Application and Decision Boundary
 
-The application is where users consume the system's capabilities.
-
-Examples include:
-
-- an executive dashboard;
-- an investment-risk alert interface;
-- an analyst workspace;
-- a document-review application;
-- an API consumed by another enterprise system; or
-- a workflow embedded in an existing enterprise application.
+The application is where users consume the system's capabilities. Examples include an executive dashboard, investment-risk alert interface, analyst workspace, document-review application, enterprise API, or workflow embedded in an existing application.
 
 The advisor should ask:
 
@@ -172,11 +157,9 @@ The advisor should ask:
 7. How is uncertainty communicated?
 8. Can the user distinguish source data, analytical output, and AI-generated synthesis?
 
-The interface is therefore not merely presentation. It is part of the **decision boundary**.
+The interface is therefore part of the **decision boundary**.
 
-For an AI-IDSS, the interface should make it difficult to confuse an AI recommendation with an authorized business decision.
-
-A useful interface separation is:
+A useful separation is:
 
 ```text
 Evidence
@@ -190,49 +173,30 @@ Recommendation
 Human Decision
 ```
 
-These should not be collapsed into one visually authoritative sentence if doing so could cause users to mistake generated text for verified fact.
+These should not be collapsed into one authoritative-looking statement if that could cause generated content to be mistaken for verified fact or an authorized decision.
 
 ---
 
-## 8.5 Layer 2 — Orchestration, Workflow, and Agents
+## 8.5 Orchestration, Workflow, and Agents
 
-Between the application and models sits the control layer that determines how work is performed.
-
-This layer may contain:
-
-- workflow engines;
-- prompt and context construction;
-- model routing;
-- tool invocation;
-- agent loops;
-- state management;
-- retries and timeouts;
-- human approval steps;
-- policy enforcement; and
-- failure handling.
-
-A useful distinction is:
+Between the application and models sits the control layer that determines how work is performed. It may contain workflow engines, context construction, model routing, tool invocation, agent loops, state management, retries, timeouts, approval steps, policy enforcement, and failure handling.
 
 | Component | Primary responsibility | Typical behavior |
 |---|---|---|
-| Workflow | Executes a known sequence | Deterministic sequence |
-| Orchestrator | Coordinates components | Controls execution across services |
-| Agent | Selects actions dynamically within permissions | Adaptive execution |
-| Tool/API | Performs an external operation | Read/write/query/execute |
-| Model | Produces predictions, classifications, generations, or other outputs | Probabilistic computation |
+| Workflow | Execute a known sequence | Predetermined sequence |
+| Orchestrator | Coordinate components | Controls execution across services |
+| Agent | Select actions dynamically within granted authority | Adaptive execution |
+| Tool/API | Perform an external operation | Read / write / query / execute |
+| Model | Produce predictions, classifications, generations, or other outputs | Probabilistic computation |
 
-### Why this separation matters
+This distinction is architectural guidance, not a claim that every system must use separate products for each function.
 
-Suppose an AI assistant can retrieve portfolio information and also send an email.
-
-The LLM may decide that sending an email is useful, but the LLM should not by itself define whether the action is authorized.
-
-The architecture should instead resemble:
+Suppose an AI assistant can retrieve portfolio information and send an email. The LLM may propose sending the email, but the LLM should not by itself define whether that action is authorized.
 
 ```text
 LLM proposes action
        ↓
-Policy / Authorization Check
+Identity / Policy / Authorization Check
        ↓
 Optional Human Approval
        ↓
@@ -241,65 +205,39 @@ Tool/API Execution
 Audit Record
 ```
 
-This creates a separation between **reasoning** and **authority**.
+This creates a separation between **reasoning** and **authority**. For consequential workflows, permissions should be explicitly scoped and approval points should be architecturally enforced.
 
-For consequential workflows, permissions should be explicitly scoped and approval points should be architecturally enforced.
+NIST's 2026 AI Agent Standards Initiative explicitly identifies agent security, identity, authorization, and interoperability as active standards and research areas. This is evidence that these concerns are still an evolving field, not a settled universal architecture. See: [NIST AI Agent Standards Initiative](https://www.nist.gov/artificial-intelligence/ai-agent-standards-initiative).
 
 ---
 
-## 8.6 Layer 3 — AI, ML, and LLM Models
+## 8.6 AI, ML, and LLM Models
 
-The model layer may contain several types of computational intelligence.
+The model layer may contain statistical models, deterministic rules, classical ML, deep learning, embedding models, rerankers, LLMs, multimodal models, or ensembles.
 
-Examples:
+The architecture should assign each computational method a defined responsibility.
 
-- statistical models;
-- deterministic rules;
-- classical machine-learning models;
-- deep-learning models;
-- embedding models;
-- reranking models;
-- large language models;
-- multimodal models; and
-- ensembles of several models.
+### Match the method to the claim
 
-The architecture should assign each model a defined responsibility.
+Ask:
 
-### 8.6.1 Match the method to the claim
-
-A critical advisor question is:
-
-> **What exactly does the model claim to know?**
+> **What exactly does the system claim to know?**
 
 Consider:
 
 > “Portfolio Company A — probability of material deterioration: 68%.”
 
-The number 68% implies a quantitative statement about uncertainty. The architecture must identify its source.
+A number presented as a probability has a stronger semantic meaning than an ordinary generated sentence. The architecture must identify its source and intended interpretation.
 
-Possible sources include:
+Possible sources include a statistical model, supervised classifier, calibrated predictive model, ensemble, validated risk model, deterministic score mapped to a category, or an LLM-generated assessment. These are not equivalent.
 
-- a statistical model;
-- a supervised ML classifier;
-- a calibrated predictive model;
-- an ensemble;
-- a validated risk model;
-- a deterministic score mapped to a risk category; or
-- an LLM-generated assessment.
-
-These are not equivalent.
-
-An LLM can produce a statement that sounds probabilistic without that statement having the statistical interpretation of a calibrated probability. Therefore, the advisor should not accept a probability merely because it appears in an AI-generated response.
-
-The principle is:
+An LLM can produce language that sounds probabilistic without establishing a calibrated probability. Therefore:
 
 > **The computational method must match the semantic strength of the claim.**
 
-If the system presents a numerical probability, the architecture should define how that probability is generated, validated, calibrated where appropriate, monitored, and interpreted.
+If a numerical probability is presented, the architecture should define how it is generated, validated, calibrated where appropriate, monitored, and interpreted.
 
-### 8.6.2 Different models can solve different subtasks
-
-A realistic AI-IDSS may use:
+### Different models can solve different subtasks
 
 ```text
 Financial Data
@@ -315,8 +253,6 @@ LLM synthesizes evidence
 Decision-support interface
 ```
 
-This can be preferable to asking an LLM to perform every computational task.
-
 The advisor is not required to favor ML over LLMs categorically. The objective is **fit-for-purpose computation**.
 
 ---
@@ -327,43 +263,23 @@ Enterprise AI architectures often combine deterministic and probabilistic compon
 
 ### Deterministic components
 
-Examples:
-
-- arithmetic;
-- accounting rules;
-- authorization;
-- threshold checks;
-- data validation;
-- workflow transitions;
-- policy enforcement;
-- API contracts.
+Examples include arithmetic, accounting rules, authorization, threshold checks, data validation, workflow transitions, policy enforcement, and API contracts.
 
 ### Probabilistic components
 
-Examples:
-
-- classification;
-- prediction;
-- language generation;
-- semantic similarity;
-- ranking;
-- anomaly detection;
-- document interpretation.
+Examples include classification, prediction, language generation, semantic similarity, ranking, anomaly detection, and document interpretation.
 
 A strong architecture does not ask a probabilistic model to replace deterministic controls without justification.
-
-For example:
 
 ```text
 Is user allowed to access Company A?
             ↓
       Authorization
-       (deterministic)
+       (controlled)
 
 Is Company A showing signs of deterioration?
             ↓
       ML / statistical analysis
-       (probabilistic)
 
 What evidence explains the signal?
             ↓
@@ -375,28 +291,15 @@ Should the company be placed under review?
       Human decision
 ```
 
-This separation improves auditability and reduces ambiguity about what the AI is actually responsible for.
+The important principle is not “deterministic is always better.” It is that the architecture should make clear **which component has authority to enforce a rule and which component is producing an uncertain analytical result**.
 
 ---
 
-## 8.8 Layer 4 — Knowledge and Retrieval
+## 8.8 Knowledge and Retrieval
 
-Models do not automatically possess the organization's current authoritative knowledge.
+Models do not automatically possess an organization's current authoritative knowledge. Enterprise AI may therefore require document repositories, structured data, metadata, embeddings, indexes, hybrid retrieval, reranking, access-aware retrieval, and evidence references.
 
-Enterprise AI commonly requires a knowledge layer containing mechanisms such as:
-
-- document repositories;
-- structured enterprise data;
-- metadata;
-- embeddings;
-- vector indexes;
-- keyword or lexical indexes;
-- hybrid retrieval;
-- reranking;
-- access-aware retrieval; and
-- evidence references.
-
-Retrieval-Augmented Generation (RAG) is one architectural pattern for connecting a model to external knowledge without requiring that knowledge to be encoded into model parameters.
+RAG is one architectural pattern for connecting a model to external knowledge without requiring that knowledge to be encoded into model parameters. NIST defines RAG as a pattern that combines a model with a separate information retrieval system or knowledge base. See: [NIST RAG Glossary](https://csrc.nist.gov/glossary/term/rag).
 
 A useful conceptual flow is:
 
@@ -422,69 +325,25 @@ Model
 Answer + Evidence
 ```
 
-The critical architectural issue is not simply whether a vector database exists. It is whether retrieval reliably supplies **the right authorized evidence**.
+The critical issue is not whether a vector database exists. It is whether retrieval supplies **the right authorized evidence**.
 
-### Retrieval quality is a system property
+Poor answers may originate from incomplete ingestion, parsing errors, poor chunking, weak metadata, inappropriate retrieval strategy, incorrect filters, stale indexes, authorization failures, ranking errors, or model interpretation errors.
 
-Poor answers may originate from:
-
-- incomplete ingestion;
-- bad parsing;
-- poor chunking;
-- weak metadata;
-- inappropriate embedding/search strategy;
-- incorrect filters;
-- stale indexes;
-- failed authorization filtering;
-- ranking errors; or
-- model interpretation errors.
-
-Therefore, “the LLM hallucinated” may be an incomplete diagnosis.
-
-The architecture review should determine **which stage introduced the failure**.
+Therefore, “the LLM hallucinated” may be an incomplete diagnosis. The advisor should locate the stage that introduced the failure.
 
 ---
 
-## 8.9 Layer 5 — Data, Integration, and Processing
+## 8.9 Data, Integration, and Processing
 
-Enterprise AI depends on data architecture more than many AI proposals acknowledge.
+Enterprise AI depends on data architecture. Potential sources include ERP systems, financial statements, market-data platforms, CRM systems, internal documents, investment memoranda, selected communications, research databases, and external intelligence.
 
-Potential sources include:
+The data layer must address source authority, schema and semantics, data quality, freshness, lineage, access control, transformation, deduplication, retention, and synchronization.
 
-- ERP systems;
-- financial statements;
-- market-data platforms;
-- CRM systems;
-- internal documents;
-- investment memoranda;
-- selected communications;
-- research databases; and
-- external intelligence.
-
-The data layer must address:
-
-- source authority;
-- schema and semantics;
-- data quality;
-- freshness;
-- lineage;
-- access control;
-- transformation;
-- deduplication;
-- retention; and
-- synchronization.
-
-For the advisor, an important principle is:
+A central principle is:
 
 > **The AI system should consume authoritative enterprise data; it should not silently become the authoritative source of that data.**
 
-This is especially important for financial and investment use cases.
-
-### 8.9.1 Source authority
-
-For each important data element, the architecture should identify the authoritative source.
-
-For example:
+For each important data element, identify the authoritative source.
 
 | Information | Possible authoritative source |
 |---|---|
@@ -494,13 +353,11 @@ For example:
 | Legal agreement | Controlled document repository |
 | AI-generated summary | AI system output — not source of record |
 
-If multiple sources disagree, the system should not silently choose one merely because it was retrieved first.
+If sources disagree, the system should not silently choose one merely because it was retrieved first.
 
-### 8.9.2 Data freshness
+### Data freshness
 
-A recommendation is only as useful as the temporal validity of its evidence.
-
-The architecture should therefore distinguish:
+The architecture should distinguish:
 
 - event time;
 - source update time;
@@ -508,49 +365,33 @@ The architecture should therefore distinguish:
 - processing time; and
 - recommendation time.
 
-This becomes particularly important when AI combines financial statements, market data, and documents with different update frequencies.
+This matters when evidence sources operate at different update frequencies.
 
 ---
 
-## 8.10 Layer 6 — Infrastructure
+## 8.10 Infrastructure
 
-Infrastructure provides the execution environment for all upper layers.
+Infrastructure provides the execution environment. It may include public or private cloud, compute, GPU/CPU infrastructure, storage, databases, networks, private connectivity, secrets and key management, observability, backup, and disaster recovery.
 
-It may include:
+Infrastructure decisions should follow workload requirements rather than precede them.
 
-- public or private cloud;
-- compute;
-- GPU infrastructure;
-- CPU infrastructure;
-- storage;
-- databases;
-- networks;
-- private connectivity;
-- secrets and key management;
-- observability platforms; and
-- backup and disaster-recovery mechanisms.
+“ We need GPUs” is not an architecture. Establish:
 
-Infrastructure decisions should follow system requirements rather than precede them.
-
-For example, “we need GPUs” is not an architecture. The advisor should establish:
-
-- which workloads require GPU acceleration;
-- whether inference is hosted internally or externally;
+- which workloads require acceleration;
+- whether inference is internal or external;
 - expected concurrency;
 - latency requirements;
 - model size;
 - availability requirements;
 - utilization assumptions;
 - scaling characteristics; and
-- total cost of ownership.
+- total cost.
 
-The same principle applies to cloud topology. “Private cloud” or “on-premise” is not automatically more secure or more appropriate; security depends on the complete architecture and operational controls.
+Likewise, “private cloud” or “on-premise” is not automatically more secure. Security depends on the complete architecture and operational controls.
 
 ---
 
 ## 8.11 Cross-Cutting Architecture Concerns
-
-The following concerns cut across every layer.
 
 ### Security
 
@@ -558,9 +399,9 @@ Security boundaries should be designed across identity, data, APIs, models, tool
 
 ### Identity and authorization
 
-A system must know not only **who the user is**, but **what that identity is permitted to access and do**.
+A system must know not only **who is acting**, but **what that identity is permitted to access and do**. The same principle applies to service identities and AI agents.
 
-The same principle applies to service identities and AI agents.
+NIST's current agent work specifically treats identity and authorization for software and AI agents as an active technical problem; it is therefore inappropriate to assume that an LLM itself is an authorization mechanism. See: [NIST Agent Identity and Authorization Concept Paper](https://csrc.nist.gov/pubs/other/2026/02/05/accelerating-the-adoption-of-software-and-ai-agent/ipd).
 
 ### Governance
 
@@ -568,28 +409,31 @@ Policies should be enforceable through architecture where practical, rather than
 
 ### Evaluation
 
-AI output quality must be measured against explicit evaluation criteria. A system cannot be considered production-ready merely because individual demonstrations look impressive.
+AI output quality must be measured against explicit evaluation criteria. A successful demonstration is not sufficient evidence of production fitness.
 
-Evaluation should cover both component-level and end-to-end behavior.
+The evaluation hierarchy used throughout this manual is:
+
+```text
+Model capability
+       ↓
+Task performance
+       ↓
+System performance
+       ↓
+Business / decision value
+```
+
+These are different evidence levels. A high model benchmark score does not by itself establish that an enterprise system solves the intended task, operates reliably, or creates decision value.
 
 ### Observability
 
-Production systems need visibility into:
-
-- latency;
-- failures;
-- model usage;
-- retrieval behavior;
-- tool calls;
-- token or compute consumption;
-- cost; and
-- relevant quality indicators.
+Production systems need visibility into latency, failures, model usage, retrieval behavior, tool calls, token or compute consumption, cost, and relevant quality indicators.
 
 ### Auditability
 
-For consequential outputs, the system should preserve enough information to reconstruct what happened, subject to applicable privacy and retention requirements.
+For consequential outputs, preserve enough information to reconstruct what happened, subject to applicable privacy and retention requirements. This does **not** require exposing or storing hidden model chain-of-thought.
 
-A useful conceptual audit chain is:
+A useful observable audit chain is:
 
 ```text
 User / Trigger
@@ -609,17 +453,21 @@ Recommendation
 Approval / Human Action
 ```
 
-### Reliability
+### Reliability and failure containment
 
 The architecture should define behavior when models, APIs, data sources, networks, or downstream systems fail.
 
+A stronger question than “How accurate is the model?” is:
+
+> **What is the maximum consequence of a wrong, stale, unavailable, or manipulated result, and which architectural controls contain that consequence?**
+
 ### Economics
 
-The relevant measure is not model price alone. The advisor should evaluate the cost of the complete system: infrastructure, model usage, data, storage, networking, engineering, security, operations, support, and failure handling.
+The relevant measure is not model price alone. Evaluate complete system cost: infrastructure, model usage, data, storage, networking, engineering, security, operations, support, and failure handling.
 
-### Interoperability
+### Interoperability and reversibility
 
-AI components should integrate with enterprise systems through explicit contracts rather than creating isolated AI islands.
+AI components should integrate through explicit contracts rather than creating isolated AI islands. Major choices should also be evaluated for replaceability and migration cost.
 
 ---
 
@@ -627,7 +475,7 @@ AI components should integrate with enterprise systems through explicit contract
 
 A complete request should be viewed as a sequence of controlled transformations rather than a single prompt sent to an LLM.
 
-For an AI-IDSS request such as:
+For:
 
 > “Which portfolio companies require attention this month?”
 
@@ -665,11 +513,11 @@ RD Decision
 
 Not every request requires every step. The architecture should be **proportionate to the task**.
 
-However, the flow illustrates an important principle:
+The important principle is:
 
 > **The prompt is only one step in the request lifecycle.**
 
-This is why prompt engineering alone cannot define enterprise AI architecture.
+Prompt engineering can improve a model interaction, but it cannot by itself establish enterprise authorization, data quality, reliability, auditability, or production readiness.
 
 ---
 
@@ -703,9 +551,9 @@ Investment Risk Alert
 RD Review
 ```
 
-The LLM may be responsible for synthesis and explanation while another model produces the probability.
+The LLM may be responsible for synthesis while another model produces the probability.
 
-This architecture is stronger than:
+This is stronger than:
 
 ```text
 Documents → Prompt → LLM → “68% probability”
@@ -713,10 +561,10 @@ Documents → Prompt → LLM → “68% probability”
 
 because the latter does not establish what the number means or how it was derived.
 
-The advisor should therefore insist on a distinction between:
+The advisor should distinguish:
 
-1. **Source evidence** — what the organization or external source actually reported.
-2. **Analytical output** — what deterministic/statistical/ML processing calculated.
+1. **Source evidence** — what the organization or external source reported.
+2. **Analytical output** — what deterministic, statistical, or ML processing calculated.
 3. **Model interpretation** — what an AI model inferred or synthesized.
 4. **Recommendation** — what action the system suggests.
 5. **Decision** — what the authorized human ultimately decides.
@@ -726,8 +574,6 @@ The advisor should therefore insist on a distinction between:
 ## 8.14 Determining Where a Failure Occurred
 
 When an AI output is wrong, “the AI failed” is not a sufficient root-cause analysis.
-
-The advisor should locate the failure in the chain.
 
 | Failure location | Example |
 |---|---|
@@ -743,19 +589,17 @@ The advisor should locate the failure in the chain.
 | Application | UI presented a recommendation misleadingly |
 | Human process | User misunderstood or over-trusted the output |
 
-This decomposition is important for both technical remediation and accountability.
-
 A model replacement may not fix a retrieval problem. A better prompt may not fix stale data. More GPU capacity may not fix an authorization defect.
 
 ---
 
 ## 8.15 AI Architecture Quality Attributes
 
-AI architectures should be evaluated against explicit quality attributes.
+Evaluate AI architectures against explicit quality attributes.
 
 | Attribute | Architectural question |
 |---|---|
-| Correctness | Does the system produce the intended result? |
+| Correctness | Does the system produce the intended result under defined acceptance criteria? |
 | Accuracy | How often is the output correct under defined evaluation conditions? |
 | Security | Can unauthorized access or manipulation occur? |
 | Privacy | How is sensitive information controlled? |
@@ -763,114 +607,34 @@ AI architectures should be evaluated against explicit quality attributes.
 | Availability | Is the service available at the required level? |
 | Latency | Can it respond within the required time? |
 | Throughput | Can it handle the expected workload? |
-| Scalability | Can capacity grow without disproportionate redesign/cost? |
+| Scalability | Can capacity grow without disproportionate redesign or cost? |
 | Maintainability | Can the system be changed safely? |
 | Interoperability | Can it integrate with surrounding systems? |
 | Observability | Can operators understand production behavior? |
-| Auditability | Can important decisions be reconstructed? |
+| Auditability | Can important events and outputs be reconstructed? |
 | Cost efficiency | Is the outcome economically justified? |
 | Reversibility | Can major architecture choices be changed later? |
 | Governance | Can policy and accountability be enforced? |
 
-These attributes frequently conflict.
-
-For example:
-
-```text
-More control
-    → potentially more operational complexity
-
-Higher model capability
-    → potentially higher cost / latency
-
-More redundancy
-    → higher availability but higher infrastructure cost
-
-More self-hosting
-    → potentially more control but greater operational burden
-
-More automation
-    → potentially higher efficiency but greater control risk
-```
-
-The advisor's task is not to maximize every attribute. It is to identify the appropriate balance under explicit constraints.
+These attributes conflict. The advisor should not maximize every attribute; the objective is an explicit balance under requirements and constraints.
 
 ---
 
 ## 8.16 Architecture Trade-offs
 
-There is rarely one universally “best” AI architecture.
-
-The correct question is:
+There is rarely one universally best AI architecture.
 
 > **Which architecture best satisfies the requirements and constraints of this use case?**
 
-For example, consider two simplified approaches.
+For example, a managed model service may reduce model-serving operational burden and provide elastic capacity, while introducing provider dependency and service-availability considerations. A self-hosted model may increase deployment control while increasing infrastructure, operations, capacity, and lifecycle responsibility.
 
-### Option A — Managed model service
+Neither “cloud” nor “self-hosted” is a universal security or architecture property. Compare the complete control and dependency model.
 
-```text
-Enterprise Data
-      ↓
-Controlled Application / Network
-      ↓
-Managed LLM Service
-      ↓
-AI Application
-```
-
-Potential advantages:
-
-- lower model-serving operational burden;
-- faster implementation;
-- access to advanced models;
-- elastic capacity.
-
-Potential concerns:
-
-- provider dependency;
-- data-processing constraints;
-- service availability dependency;
-- cost at scale;
-- portability.
-
-### Option B — Self-hosted model
-
-```text
-Enterprise Data
-      ↓
-Internal Processing
-      ↓
-Self-hosted Model
-      ↓
-AI Application
-```
-
-Potential advantages:
-
-- greater control over deployment;
-- potentially stronger isolation for selected workloads;
-- greater control over model lifecycle.
-
-Potential concerns:
-
-- GPU and infrastructure requirements;
-- model-serving operations;
-- patching and security;
-- capacity planning;
-- model upgrades;
-- engineering burden;
-- potentially weaker capability depending on the selected model.
-
-Neither option is universally superior.
-
-The advisor should compare them against the actual requirements rather than applying a generic “cloud is better” or “on-premise is safer” rule.
+The same reasoning applies to model ownership. **Deployment control, model ownership, data control, and enterprise control are related but distinct concepts.**
 
 ---
 
 ## 8.17 Architecture Before Vendor
-
-Vendor evaluation should occur after the architectural requirements and constraints are sufficiently understood.
 
 A disciplined sequence is:
 
@@ -902,15 +666,11 @@ Recommendation
 
 This prevents vendor products from becoming accidental architecture.
 
-A vendor may provide an excellent implementation of one architectural option while another option is better suited to the organization's constraints.
-
-The advisor should therefore remain vendor-neutral until the architectural problem has been framed.
+For rapidly changing claims about model capability, pricing, deployment options, API behavior, and vendor controls, evidence should be treated as **time-bounded** and revalidated when relevant conditions change.
 
 ---
 
 ## 8.18 Architecture Anti-Patterns
-
-The following patterns should trigger technical scrutiny.
 
 ### 1. LLM-centric architecture
 
@@ -926,7 +686,7 @@ A vendor or model is selected before requirements and architecture are establish
 
 ### 3. RAG as a solution to bad data
 
-The organization assumes that adding a vector database will solve data-quality or data-governance problems.
+A vector database is expected to solve data-quality or governance problems.
 
 **Challenge:** Is the source data correct, complete, current, and authoritative?
 
@@ -938,7 +698,7 @@ Critical business rules exist only inside prompts.
 
 ### 5. Unrestricted agent permissions
 
-An agent receives broad access to enterprise systems because it is convenient.
+An agent receives broad access because it is convenient.
 
 **Challenge:** What is the minimum permission required for each action?
 
@@ -948,17 +708,17 @@ AI-generated conclusions overwrite or replace authoritative enterprise informati
 
 **Challenge:** What is the actual system of record?
 
-### 7. Probability without a probabilistic model
+### 7. Probability without a defined probabilistic basis
 
 The system generates precise percentages without a defined statistical interpretation.
 
-**Challenge:** What exactly does the number mean and how was it validated?
+**Challenge:** What exactly does the number mean, and how was it validated?
 
 ### 8. GPU-first architecture
 
 Infrastructure is purchased before workload characteristics are understood.
 
-**Challenge:** What workload requires this capacity, and what is the expected utilization?
+**Challenge:** What workload requires this capacity, and what is expected utilization?
 
 ### 9. Demo-driven production readiness
 
@@ -970,36 +730,34 @@ A successful demonstration is treated as evidence that the production architectu
 
 The system has no defined behavior when an LLM, API, retrieval service, or data source becomes unavailable.
 
-**Challenge:** What happens at 99% availability, not just during a successful demo?
+**Challenge:** What happens when a critical dependency is unavailable?
 
 ---
 
 ## 8.19 AI-IDSS Reference Architecture
 
-The target conceptual architecture for the advisor's domain can be represented as:
+The target conceptual architecture is:
 
 ```text
-                         Regional Director
-                         / Decision Maker
-                                  │
-                           AI-IDSS Interface
-                                  │
-                               AI-IDSS
-                                  │
-                        Agents / Workflows
-                                  │
-                         AI / ML / LLM Layer
-                                  │
-                         RAG / Knowledge Layer
-                                  │
-                    Processing & Intelligence
-                                  │
-                            Data / Cloud
-                                  │
-          ┌──────────────┬────────┼────────┬──────────────┐
-          ▼              ▼        ▼        ▼              ▼
-      Bloomberg         ERP   Financial  Internal      External
-                                  Statements Documents  Intelligence
+                         Decision Maker
+                              │
+                       AI-IDSS Interface
+                              │
+                           AI-IDSS
+                              │
+                      Agents / Workflows
+                              │
+                       AI / ML / LLM Layer
+                              │
+                       RAG / Knowledge Layer
+                              │
+                  Processing & Intelligence
+                              │
+                         Data / Cloud
+                              │
+          ┌──────────────┬────┴────┬──────────────┐
+          ▼              ▼         ▼              ▼
+      Market Data       ERP   Financial Data   Documents
 ```
 
 Cross-cutting:
@@ -1012,7 +770,9 @@ Cost · Interoperability · Data Lineage
 
 This is a logical reference architecture. Actual implementation may use different physical components.
 
-The key principle is that the LLM is **inside the architecture**, not **the architecture itself**.
+The key principle is:
+
+> **The LLM is inside the architecture, not the architecture itself.**
 
 ---
 
@@ -1024,9 +784,7 @@ Consider the target output:
 >
 > Primary drivers: margin compression, refinancing risk, weakening demand.
 >
-> Recommended RD action: initiate independent portfolio review.
-
-The architectural questions are deeper than “Which LLM should generate this?”
+> Recommended action: initiate independent portfolio review.
 
 The advisor should ask:
 
@@ -1035,14 +793,14 @@ The advisor should ask:
 3. How fresh is the data?
 4. How are conflicting figures reconciled?
 5. Which analytical method produces the 68% probability?
-6. Is that probability calibrated and evaluated appropriately for its intended use?
+6. Is that probability evaluated and calibrated appropriately for its intended use?
 7. Which method identifies the primary drivers?
 8. Is an LLM used for synthesis, classification, explanation, or prediction?
 9. How are supporting documents retrieved?
-10. Are portfolio-company permissions enforced during retrieval?
+10. Are permissions enforced during retrieval?
 11. Can the system cite the evidence behind the conclusion?
 12. What happens when required data is missing?
-13. What happens when the model fails?
+13. What happens when the model or provider fails?
 14. What happens when market data is unavailable or delayed?
 15. Who can approve the recommended action?
 16. What is recorded for audit?
@@ -1054,17 +812,15 @@ Only after these questions are answered should model and platform selection beco
 
 ## 8.21 Technical Challenge Questions
 
-When Head of AI, CTO, engineering teams, or vendors present an AI architecture, the advisor can use the following questions.
-
-### About the model
+### Model
 
 - What exactly does the model do?
 - Why is this model type appropriate?
 - What evidence supports the claimed capability?
-- What is the evaluation dataset?
+- What is the task-specific evaluation?
 - What are the known failure modes?
 
-### About data
+### Data
 
 - What is the authoritative source?
 - How fresh is the data?
@@ -1072,66 +828,57 @@ When Head of AI, CTO, engineering teams, or vendors present an AI architecture, 
 - How are conflicting sources reconciled?
 - What happens when data is missing?
 
-### About RAG
+### RAG
 
 - How are documents parsed?
-- Why was this chunking strategy selected?
+- Why was this retrieval strategy selected?
 - How is retrieval evaluated?
 - How are access permissions enforced?
-- Can the answer cite its supporting evidence?
+- Can the answer cite supporting evidence?
 
-### About agents
+### Agents
 
 - What tools can the agent call?
-- What permissions does each tool have?
+- What identity and permissions does each tool use?
 - Can the agent write or execute actions?
 - Which actions require human approval?
 - What prevents an unintended tool call?
 
-### About security
+### Security
 
 - Where does sensitive data travel?
 - Where is it stored?
 - Who can access it?
 - How are identities and service credentials managed?
-- What happens if an attacker manipulates retrieved content or instructions?
+- What happens if retrieved content attempts to manipulate instructions?
 
-### About operations
+### Operations
 
-- What is the expected latency?
-- What is the expected concurrency?
+- What is expected latency and concurrency?
 - How does the system scale?
 - What happens when a dependency fails?
 - How is production behavior observed?
+- What is the degradation mode?
 
-### About economics
+### Economics and reversibility
 
 - What is the complete TCO?
 - What assumptions drive the cost model?
-- How does cost change with usage?
-- What is the cost of operating the system internally?
-- What is the cost of changing providers later?
-
-### About reversibility
-
-- Can the model be replaced?
-- Can the data layer be replaced?
-- Can the orchestration layer be replaced?
-- Can the organization migrate away from the provider?
-- Which architecture decisions are difficult to reverse?
+- What is the cost per useful result?
+- What is the operational burden?
+- Can the model, data layer, orchestration layer, or provider be replaced?
+- Which decisions are difficult to reverse?
 
 ---
 
 ## 8.22 Architecture Review Checklist
 
-When reviewing an enterprise AI proposal, verify:
-
 ### Problem
 
 - [ ] The business task is explicit.
 - [ ] The supported decision is explicit.
-- [ ] The required evidence is defined.
-- [ ] The human decision boundary is explicit.
+- [ ] Required evidence is defined.
+- [ ] Human decision authority is explicit.
 
 ### System
 
@@ -1164,40 +911,36 @@ When reviewing an enterprise AI proposal, verify:
 - [ ] Evaluation methodology exists.
 - [ ] Model claims match the underlying computational method.
 - [ ] Retrieval quality is evaluated.
-- [ ] Evidence/provenance can be traced.
+- [ ] Evidence/provenance can be traced without requiring hidden chain-of-thought.
 - [ ] Missing-data behavior is defined.
 - [ ] Production monitoring is defined.
 
-### Economics
+### Economics and reversibility
 
 - [ ] Total cost is estimated.
 - [ ] Scaling assumptions are explicit.
 - [ ] Operational burden is included.
-- [ ] Vendor dependency is understood.
+- [ ] Vendor/provider dependency is understood.
 - [ ] Exit or migration options are considered.
 
 ---
 
 ## 8.23 Evidence Standard
 
-This chapter establishes conceptual and architectural principles rather than prescribing a particular vendor or product.
+This chapter is a logical architecture and advisor framework, not a formal standard.
 
-The reasoning draws on established areas including:
+Relevant authoritative anchors include:
 
-- software and enterprise architecture;
-- information systems architecture;
-- machine-learning system design;
-- information retrieval and RAG architectures;
-- security architecture;
-- data governance and lineage;
-- reliability engineering; and
-- decision-support system design.
+- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) — NIST's current page states that AI RMF 1.0 is being revised in 2026. The existing framework remains useful reference material, but it should not be described as the final current version.
+- [NIST AI RMF Core](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/) — provides the Govern, Map, Measure, and Manage structure and describes risk management as continuous across the AI lifecycle.
+- [NIST Generative AI Profile](https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence) — technology-specific risk-management guidance derived from the AI RMF.
+- [NIST AI Agent Standards Initiative](https://www.nist.gov/artificial-intelligence/ai-agent-standards-initiative) — current work on secure, interoperable agents, including identity and authorization.
+- [NIST RAG Glossary](https://csrc.nist.gov/glossary/term/rag) — authoritative definition of retrieval-augmented generation.
+- [OWASP GenAI LLM Top 10 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — current community security guidance for LLM applications.
 
-The chapter deliberately separates architectural reasoning from vendor-specific claims.
+These sources support the risk-management, RAG, agent-security, and evaluation framing. They do **not** prove that any particular architecture is universally optimal.
 
-Where later chapters make empirical or vendor-specific claims, those claims should be supported by the stronger evidence hierarchy defined in **Chapter 0 — Reasoning & Evidence Standard**.
-
-In particular, rapidly changing claims about model capability, pricing, deployment options, API behavior, and vendor controls should be verified against current primary documentation rather than treated as permanent architectural facts.
+Rapidly changing claims about model capability, pricing, deployment options, API behavior, and vendor controls must be verified against current primary documentation and treated as time-bounded evidence.
 
 ---
 
@@ -1207,6 +950,10 @@ In particular, rapidly changing claims about model capability, pricing, deployme
 
 > **The computational method must match the semantic strength of the claim.**
 
+> **Use the hierarchy Model capability → Task performance → System performance → Business / decision value. Do not treat a benchmark score as proof of business value.**
+
 > **Every material AI conclusion should have an identifiable chain from authoritative evidence → analytical processing → model output → reasoning/synthesis → recommendation → human decision.**
 
-> **AI should support decision-making without silently becoming the authority for data, policy, or consequential business decisions.**
+> **The LLM is not the authorization boundary, the system of record, or the final decision authority merely because it can generate a convincing answer.**
+
+> **Good architecture does not guarantee success. It improves the organization's ability to detect unacceptable failure early, contain its consequences, and recover safely.**
