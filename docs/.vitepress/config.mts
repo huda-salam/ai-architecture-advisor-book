@@ -39,6 +39,7 @@ export default withMermaid(defineConfig({
           text: 'Part III — Enterprise AI Architecture',
           collapsed: true,
           items: [
+            { text: '8A. Advisor Gateway — How to Read AI Architecture', link: '/chapters/08a-advisor-gateway' },
             { text: '8. AI Architecture Fundamentals', link: '/chapters/08-ai-architecture-fundamentals' },
             { text: '9. Enterprise LLM Architecture', link: '/chapters/09-enterprise-llm-architecture' },
             { text: '10. RAG Architecture', link: '/chapters/10-rag-architecture' },
