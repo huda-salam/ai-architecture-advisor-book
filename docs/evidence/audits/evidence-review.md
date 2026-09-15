@@ -8,13 +8,13 @@ The handbook uses evidence review as a formal part of its architecture method. T
 
 Covers the reasoning standard, role charter, advisory method, operating principles, communication, proposal evaluation, and architecture decision framework.
 
-[Open Evidence Audit — Chapters 0–7](./00-07-evidence-audit)
+[Open Evidence Audit — Chapters 0–7](../chapters/00-07-evidence-audit)
 
 ### Chapters 8–9
 
 Covers AI architecture fundamentals and enterprise LLM architecture, including RAG, security boundaries, model deployment choices, self-hosting, vendor claims, and numerical probability semantics.
 
-[Open Evidence Review — Chapters 8–9](./08-09-evidence-review)
+[Open Evidence Review — Chapters 8–9](../chapters/08-09-evidence-review)
 
 ## How to Read the Reviews
 
