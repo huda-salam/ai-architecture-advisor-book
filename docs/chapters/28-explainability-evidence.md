@@ -8,7 +8,7 @@
 A defensible AI-IDSS must keep these concepts separate and connect them through an auditable evidence chain.
 :::
 
-NIST distinguishes transparency, explainability, and interpretability. Its AI RMF also calls for AI models to be explained, validated, documented, and their outputs interpreted in context. NIST's current AI RMF 1.0 is being revised, so this chapter treats the framework as versioned guidance rather than a permanent specification. citeturn0search2turn0search3
+NIST distinguishes transparency, explainability, and interpretability. Its AI RMF also calls for AI models to be explained, validated, documented, and their outputs interpreted in context. NIST's current AI RMF 1.0 is being revised, so this chapter treats the framework as versioned guidance rather than a permanent specification. The relevant NIST guidance is documented in this chapter's Evidence Review.
 
 ## 28.1 Why Explainability Matters to the Advisor
 
@@ -29,7 +29,7 @@ For an AI-IDSS, explainability supports at least:
 - appropriate human oversight;
 - post-deployment monitoring.
 
-NIST specifically notes that explainable systems can support debugging, monitoring, documentation, audit, and governance. citeturn0search2turn0search7
+NIST specifically notes that explainable systems can support debugging, monitoring, documentation, audit, and governance. The source and evidence boundary are recorded in the chapter's Evidence Review.
 
 ## 28.2 Four Concepts That Must Not Be Collapsed
 
@@ -230,7 +230,7 @@ Two broad approaches are useful.
 | Intrinsic | Model structure is itself relatively understandable | Often easier to inspect, but may trade off predictive flexibility |
 | Post-hoc | Explanation is generated after the model output | Can be useful, but explanation fidelity must be tested |
 
-NIST's AI RMF Playbook recommends considering inherently explainable approaches where appropriate and testing explanation methods for properties including fidelity, consistency, robustness, and interpretability. citeturn0search7
+NIST's AI RMF Playbook recommends considering inherently explainable approaches where appropriate and testing explanation methods for properties including fidelity, consistency, robustness, and interpretability. The source and evidence boundary are recorded in the chapter's Evidence Review.
 
 This is a decision trade-off, not a rule that all AI systems should use interpretable models.
 
@@ -242,7 +242,7 @@ A particularly important risk in generative AI is:
 
 A fluent explanation can therefore increase perceived trust without proving that the stated reasoning actually caused the result.
 
-NIST's Generative AI Profile explicitly warns that GAI systems can produce confabulated logic or citations that purport to justify or explain an answer, potentially misleading users. citeturn0search15
+NIST's Generative AI Profile explicitly warns that GAI systems can produce confabulated logic or citations that purport to justify or explain an answer, potentially misleading users. The source and evidence boundary are recorded in the chapter's Evidence Review.
 
 Architecture response:
 
@@ -532,7 +532,7 @@ The following classifications should be maintained:
 | Every AI-IDSS must expose feature importance | **Unsupported universal claim — reject** |
 | A citation proves the cited claim | **False universal claim — reject** |
 
-NIST's current guidance explicitly recommends testing explanation methods for fidelity, consistency, robustness, and interpretability rather than assuming explanations are inherently reliable. citeturn0search7
+NIST's current guidance explicitly recommends testing explanation methods for fidelity, consistency, robustness, and interpretability rather than assuming explanations are inherently reliable. The source and evidence boundary are recorded in the chapter's Evidence Review.
 
 ## 28.25 Falsifiability
 
