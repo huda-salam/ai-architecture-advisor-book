@@ -10,6 +10,7 @@ export default withMermaid(defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Executive Guide', link: '/executive-summary' },
       { text: 'Chapters', link: '/chapters/00-reasoning-evidence' },
       { text: 'Evidence & Reviews', link: '/evidence/' },
       { text: 'Editorial Standard', link: '/standards/knowledge-ready-editorial-standard' }
@@ -24,7 +25,8 @@ export default withMermaid(defineConfig({
             { text: '2. Relationship With the Regional Director', link: '/chapters/02-relationship-with-rd' },
             { text: '3. Relationship With CTO, Head of AI & Vendors', link: '/chapters/03-relationships' },
             { text: '4. Advisor Operating Principles', link: '/chapters/04-operating-principles' },
-            { text: '5. Advisory Communication & Influence', link: '/chapters/05-advisory-communication' }
+            { text: '5. Advisory Communication & Influence', link: '/chapters/05-advisory-communication' },
+            { text: '5A. AI Suitability & Opportunity', link: '/chapters/05a-ai-suitability-opportunity' }
           ]
         },
         {
@@ -32,6 +34,7 @@ export default withMermaid(defineConfig({
           collapsed: true,
           items: [
             { text: '6. How to Evaluate a Technology Proposal', link: '/chapters/06-evaluating-proposals' },
+            { text: '6A. From AI Opportunity to AI Solution', link: '/chapters/06a-from-ai-opportunity-to-solution' },
             { text: '7. Architecture Decision Framework', link: '/chapters/07-architecture-decisions' }
           ]
         },
