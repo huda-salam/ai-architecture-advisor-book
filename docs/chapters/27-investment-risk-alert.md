@@ -12,7 +12,7 @@ The central rule is:
 
 > **Never allow a numeric risk score to acquire more authority than the method that produced it.**
 
-NIST AI RMF emphasizes measurement, performance assessment, uncertainty, testing before deployment and regular testing during operation. It therefore supports treating risk outputs as measurable system behavior rather than as self-authenticating conclusions. citeturn0search6turn0search7
+NIST AI RMF emphasizes measurement, performance assessment, uncertainty, testing before deployment and regular testing during operation. It therefore supports treating risk outputs as measurable system behavior rather than as self-authenticating conclusions. See the NIST AI RMF 1.0 and AI RMF Playbook references in the Evidence Review.
 
 ## 27.1 The First Question: What Does 68% Mean?
 
@@ -143,7 +143,7 @@ Calibration should therefore be assessed separately from discrimination.
 | Stability | Does performance remain acceptable across time and relevant segments? |
 | Utility | Does using the prediction improve the intended decision? |
 
-Recent empirical work continues to demonstrate that models with different discrimination/performance characteristics can have materially different probability calibration, reinforcing the need to evaluate calibration explicitly when probabilities drive decisions. citeturn0search0turn0search18
+Recent empirical work continues to demonstrate that models with different discrimination/performance characteristics can have materially different probability calibration, reinforcing the need to evaluate calibration explicitly when probabilities drive decisions. See the calibration studies listed in the Evidence Review.
 
 ### Useful measures
 
@@ -357,7 +357,7 @@ Monitor at least the dimensions relevant to the use case:
 | Outcome performance | Realized prediction quality deteriorates |
 | Operational health | Pipeline latency/failures increase |
 
-NIST's AI RMF measurement guidance explicitly calls for testing before deployment and regularly during operation, including performance assessment and measures of uncertainty. citeturn0search6
+NIST's AI RMF measurement guidance explicitly calls for testing before deployment and regularly during operation, including performance assessment and measures of uncertainty. See the NIST AI RMF Core and related measurement guidance in the Evidence Review.
 
 ## 27.16 Evaluation Design
 
@@ -558,7 +558,7 @@ This chapter distinguishes:
 | 60% alert threshold | **Example policy assumption, not a universal standard** |
 | Human decision boundary | **Architecture recommendation for this AI-IDSS context** |
 
-NIST AI RMF 1.0 is voluntary and is currently being revised; chapter references should therefore remain version-aware. citeturn0search2turn0search4
+NIST AI RMF 1.0 is voluntary and is currently being revised; chapter references should therefore remain version-aware. See the current NIST AI RMF page and the versioned NIST AI RMF 1.0 and AI RMF Generative AI Profile references in the Evidence Review.
 
 ## 27.24 Falsifiability
 
