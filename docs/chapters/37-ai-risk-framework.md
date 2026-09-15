@@ -6,9 +6,9 @@
 
 AI risk management is not a separate compliance exercise performed after architecture has been designed. It is an architectural discipline for understanding whether an AI system is appropriate for its intended purpose and whether its failure modes are controlled well enough for the context in which it will operate.
 
-NIST AI RMF 1.0 organizes AI risk management around four functions: **Govern, Map, Measure, and Manage**. NIST describes risk management as continuous across the AI lifecycle rather than as a one-time approval activity. The framework is voluntary and use-case agnostic. citeturn0search0turn0search7
+NIST AI RMF 1.0 organizes AI risk management around four functions: **Govern, Map, Measure, and Manage**. NIST describes risk management as continuous across the AI lifecycle rather than as a one-time approval activity. The framework is voluntary and use-case agnostic. See the NIST AI RMF references in the Evidence Review.
 
-ISO/IEC 23894:2023 similarly provides guidance for organizations that develop, produce, deploy, or use AI systems and describes integrating AI risk management into organizational activities. citeturn0search4
+ISO/IEC 23894:2023 similarly provides guidance for organizations that develop, produce, deploy, or use AI systems and describes integrating AI risk management into organizational activities. See the ISO/IEC 23894 reference in the Evidence Review.
 
 For this advisor role, the important implication is:
 
@@ -18,7 +18,7 @@ For this advisor role, the important implication is:
 
 ## 37.1 Risk Is Contextual
 
-NIST defines AI risk in terms of the likelihood of an event and the magnitude of its consequences. citeturn0search13
+NIST defines AI risk in terms of the likelihood of an event and the magnitude of its consequences. See the NIST AI RMF reference in the Evidence Review.
 
 A technically identical model can therefore present different risk in different applications.
 
@@ -60,7 +60,7 @@ Before evaluating controls, document:
 - human oversight;
 - acceptable failure conditions.
 
-NIST's MAP function explicitly calls for documenting intended purposes, context, users, impacts, assumptions, limitations, and relevant metrics. citeturn0search0
+NIST's MAP function explicitly calls for documenting intended purposes, context, users, impacts, assumptions, limitations, and relevant metrics. See the NIST AI RMF references in the Evidence Review.
 
 For AI-IDSS, the context should state whether the output is:
 
@@ -179,7 +179,7 @@ Some risks are difficult to quantify reliably.
 
 For those risks, qualitative assessment, scenario analysis, testing, expert judgment, and documented uncertainty may be more appropriate.
 
-NIST explicitly supports quantitative, qualitative, and mixed-method measurement approaches. citeturn0search0turn0search9
+NIST explicitly supports quantitative, qualitative, and mixed-method measurement approaches. See the NIST AI RMF references in the Evidence Review.
 
 **Important:** A numerical risk score can create false precision if its inputs are not defensible.
 
@@ -320,7 +320,7 @@ For example:
 - a low-confidence analytical suggestion may be acceptable if it is clearly labeled and reviewed by an analyst;
 - automated execution of a financial transaction may require substantially stronger controls than a recommendation shown to an RD.
 
-NIST AI RMF links the level of risk-management activity to organizational risk tolerance and requires risk treatment to consider impact, likelihood, and available resources. citeturn0search0
+NIST AI RMF links the level of risk-management activity to organizational risk tolerance and requires risk treatment to consider impact, likelihood, and available resources. See the NIST AI RMF references in the Evidence Review.
 
 **Advisor boundary:** The technical advisor recommends whether architecture can satisfy a stated tolerance. The organization decides the tolerance.
 
@@ -591,7 +591,7 @@ Reassessment
 Retirement
 ```
 
-NIST AI RMF states that risk management should continue throughout the AI lifecycle, and its Manage function calls for ongoing monitoring and improvement. citeturn0search0
+NIST AI RMF states that risk management should continue throughout the AI lifecycle, and its Manage function calls for ongoing monitoring and improvement. See the NIST AI RMF references in the Evidence Review.
 
 A risk assessment that is correct at launch can become stale when:
 
@@ -718,7 +718,7 @@ If nobody explicitly accepts residual risk, accountability is ambiguous.
 
 Following a framework does not prove that a particular architecture is safe or appropriate.
 
-NIST itself describes the AI RMF Playbook as voluntary guidance rather than a one-size-fits-all checklist. citeturn0search5turn0search12
+NIST describes the AI RMF Playbook as voluntary guidance rather than a one-size-fits-all checklist. See the NIST AI RMF Playbook reference in the Evidence Review.
 
 ---
 
@@ -786,15 +786,15 @@ NIST itself describes the AI RMF Playbook as voluntary guidance rather than a on
 
 ### Fact
 
-NIST AI RMF 1.0 defines the four functions Govern, Map, Measure, and Manage and describes AI risk management as continuous across the lifecycle. citeturn0search0turn0search7
+NIST AI RMF 1.0 defines the four functions Govern, Map, Measure, and Manage and describes AI risk management as continuous across the lifecycle. See the NIST AI RMF references in the Evidence Review.
 
 ### Technical Evidence
 
-NIST calls for testing before deployment and regular testing during operation, including uncertainty, benchmark comparisons, documentation, and—where appropriate—independent review. citeturn0search0turn0search35
+NIST calls for testing before deployment and regular testing during operation, including uncertainty, benchmark comparisons, documentation, and—where appropriate—independent review. See the NIST AI RMF references in the Evidence Review.
 
 ### Standard Guidance
 
-ISO/IEC 23894:2023 provides guidance for integrating AI risk management into organizations that develop, deploy, or use AI systems. citeturn0search4
+ISO/IEC 23894:2023 provides guidance for integrating AI risk management into organizations that develop, deploy, or use AI systems. See the ISO/IEC 23894 reference in the Evidence Review.
 
 ### Recommendation
 
