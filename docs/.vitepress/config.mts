@@ -84,8 +84,11 @@ export default withMermaid(defineConfig({
             { text: '41. Auditability', link: '/chapters/41-auditability' },
             { text: '41A. Auditability Advisor Review', link: '/chapters/41a-auditability-advisor-review' },
             { text: '42. Successful Enterprise AI Architectures', link: '/chapters/42-successful-enterprise-ai-architectures' },
+            { text: '42A. Successful Architecture Advisor Review', link: '/chapters/42a-advisor-review' },
             { text: '43. Failed AI Programs', link: '/chapters/43-failed-ai-programs' },
-            { text: '44. Third-Party LLM vs Proprietary Model Cases', link: '/chapters/44-third-party-llm-vs-proprietary-model-cases' }
+            { text: '43A. Failure Evidence Advisor Review', link: '/chapters/43a-advisor-review' },
+            { text: '44. Third-Party LLM vs Proprietary Model Cases', link: '/chapters/44-third-party-llm-vs-proprietary-model-cases' },
+            { text: '44A. Model Ownership Advisor Review', link: '/chapters/44a-advisor-review' }
           ]
         }
       ],
@@ -165,6 +168,7 @@ export default withMermaid(defineConfig({
             { text: 'Chapter 28 Final Evidence Adversarial Review', link: '28-iteration-4-final-evidence-adversarial-review' },
             { text: 'Chapter 29 Final Evidence Adversarial Review', link: '29-iteration-4-final-evidence-adversarial-review' },
             { text: 'Chapters 30–44 Cross-Chapter Consistency Review', link: '30-44-cross-chapter-consistency-review' },
+            { text: 'Chapters 42–44 Advisor Case Evidence Review', link: '42-44-advisor-case-review' },
             { text: 'Chapter 30 Final Evidence Adversarial Review', link: '30-iteration-4-final-evidence-adversarial-review' }
           ]
         },
