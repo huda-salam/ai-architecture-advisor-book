@@ -40,9 +40,9 @@ Cross-cutting concerns:
 
 ### Evidence reviews
 
-- [Evidence Review](./chapters/evidence-review)
-- [Evidence Audit — Chapters 0–7](./chapters/00-07-evidence-audit)
-- [Evidence Review — Chapters 8–9](./chapters/08-09-evidence-review)
+- [Evidence Review](./evidence/audits/evidence-review)
+- [Evidence Audit — Chapters 0–7](./evidence/chapters/00-07-evidence-audit)
+- [Evidence Review — Chapters 8–9](./evidence/chapters/08-09-evidence-review)
 
 ### Project standards
 
