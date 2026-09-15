@@ -18,7 +18,7 @@ A lower infrastructure bill can be a false economy if it creates more failures, 
 
 FinOps now treats AI as a distinct cost-management scope because AI spending combines rapidly changing tools, heterogeneous pricing, specialized infrastructure, and business-value questions. Its current guidance emphasizes **use-case economics**: measuring the total cost of achieving a defined business outcome rather than relying only on tokens or GPU-hours. urlFinOps for AI — Tools & Services Considerationshttps://www.finops.org/wg/finops-for-ai-tools-services-considerations/
 
-The 2026 AI landscape makes this even more important. Stanford's 2026 AI Index reports rapid capability gains and convergence among leading models, while noting that competitive pressure is increasingly shifting toward cost, reliability, and domain-specific performance. It also documents growing concerns about benchmark reliability and real-world generalization. citeturn0search0turn0search48
+The 2026 AI landscape makes this even more important. Stanford's 2026 AI Index reports rapid capability gains and convergence among leading models, while noting that competitive pressure is increasingly shifting toward cost, reliability, and domain-specific performance. It also documents growing concerns about benchmark reliability and real-world generalization. See the Stanford AI Index evidence review for the underlying sources and limitations.
 
 Therefore:
 
@@ -151,7 +151,7 @@ A result may be rejected because it is:
 - too slow;
 - requiring substantial manual correction.
 
-FinOps explicitly recommends use-case economics and examples such as cost per query resolved or document summarized. It also emphasizes that these metrics should be reviewed continuously because changes in models, caching, serving, or retrieval can change the economics. citeturn0search4turn0search10
+FinOps explicitly recommends use-case economics and examples such as cost per query resolved or document summarized. It also emphasizes that these metrics should be reviewed continuously because changes in models, caching, serving, or retrieval can change the economics. See the FinOps evidence review for the cited guidance.
 
 > **Optimize the economics of useful outcomes, not merely the price of infrastructure.**
 
@@ -161,7 +161,7 @@ FinOps explicitly recommends use-case economics and examples such as cost per qu
 
 Model economics should not be treated as static.
 
-Current model evaluation systems increasingly compare several dimensions simultaneously: capability, price, latency, speed, token usage, and cost per task. Artificial Analysis, for example, distinguishes model, endpoint, and provider performance and calculates cost per task from actual token consumption rather than token price alone. citeturn0search1turn0search3
+Current model evaluation systems increasingly compare several dimensions simultaneously: capability, price, latency, speed, token usage, and cost per task. Artificial Analysis, for example, distinguishes model, endpoint, and provider performance and calculates cost per task from actual token consumption rather than token price alone. See the Artificial Analysis evidence review for the methodology and scope.
 
 This creates an important distinction:
 
@@ -227,7 +227,7 @@ A high-end accelerator running below useful utilization can be less economical t
 
 Conversely, under-provisioning can increase queueing, failures, latency, and downstream cost.
 
-FinOps explicitly identifies infrastructure-model selection and utilization as important variables in AI economics. citeturn0search9
+FinOps explicitly identifies infrastructure-model selection and utilization as important variables in AI economics. See the FinOps evidence review for the cited guidance.
 
 > **Compare useful production work per unit of provisioned capacity, not hardware specifications alone.**
 
@@ -248,9 +248,9 @@ Possible strategies include:
 
 But routing is not free. It adds classification logic, evaluation burden, observability, failure modes, and operational complexity.
 
-FinOps recommends benchmarking quality against cost for the organization's specific use case rather than relying only on generic benchmarks. citeturn1view0
+FinOps recommends benchmarking quality against cost for the organization's specific use case rather than relying only on generic benchmarks. See the FinOps evidence review for the relevant guidance.
 
-The current model landscape strengthens this point: Stanford reports that leading model performance is converging and that cost, reliability, and domain-specific performance are increasingly important differentiators. citeturn0search0
+The current model landscape strengthens this point: Stanford reports that leading model performance is converging and that cost, reliability, and domain-specific performance are increasingly important differentiators. See the Stanford AI Index evidence review.
 
 Therefore:
 
@@ -274,7 +274,7 @@ Potential techniques:
 - asynchronous processing;
 - bounded agent loops.
 
-For agentic systems, cost can multiply because one user interaction may trigger many model calls and tool calls. FinOps specifically recommends tracing and cost attribution at the agent-run level and enforcing budget or iteration controls. citeturn1view0
+For agentic systems, cost can multiply because one user interaction may trigger many model calls and tool calls. FinOps specifically recommends tracing and cost attribution at the agent-run level and enforcing budget or iteration controls. See the FinOps evidence review for the relevant guidance.
 
 Optimization must preserve semantics. A shortcut that changes what the system is allowed to conclude is not merely a performance optimization.
 
@@ -361,7 +361,7 @@ For AI systems, cache correctness is not only a performance issue. It can become
 
 Never allow cached content to bypass authorization or freshness requirements.
 
-FinOps identifies prompt caching and other caching layers as meaningful optimization levers, while also stressing the need to evaluate hit rates and maintenance costs rather than assuming every cache pays for itself. citeturn1view0
+FinOps identifies prompt caching and other caching layers as meaningful optimization levers, while also stressing the need to evaluate hit rates and maintenance costs rather than assuming every cache pays for itself. See the FinOps evidence review for the relevant guidance.
 
 ---
 
@@ -536,7 +536,7 @@ Measure:
 
 If the quality constraint fails, reject the optimization regardless of token savings.
 
-FinOps likewise emphasizes that use-case costs are not static and should be measured continuously as models, serving configurations, caching, and retrieval change. citeturn0search10
+FinOps likewise emphasizes that use-case costs are not static and should be measured continuously as models, serving configurations, caching, and retrieval change. See the FinOps evidence review.
 
 ---
 
@@ -544,7 +544,7 @@ FinOps likewise emphasizes that use-case costs are not static and should be meas
 
 External benchmarks can be useful for comparing candidate models, but benchmark economics are not the organization's economics.
 
-Artificial Analysis, for example, calculates cost per benchmark task from measured token consumption and provider pricing. That is useful comparative evidence, but the workload is defined by the benchmark rather than by the organization's production process. citeturn0search1
+Artificial Analysis, for example, calculates cost per benchmark task from measured token consumption and provider pricing. That is useful comparative evidence, but the workload is defined by the benchmark rather than by the organization's production process. See the Artificial Analysis evidence review for the methodology and scope.
 
 The advisor should therefore maintain two layers:
 
@@ -566,7 +566,7 @@ A model can be attractive on a public price-performance frontier and still be un
 
 ## 35.21 Beware the Benchmark Optimization Trap
 
-Stanford's 2026 AI Index documents rapid benchmark saturation and growing concerns about benchmark reliability, contamination, gaming, and the gap between benchmark scores and real-world utility. citeturn0search0turn0search48
+Stanford's 2026 AI Index documents rapid benchmark saturation and growing concerns about benchmark reliability, contamination, gaming, and the gap between benchmark scores and real-world utility. See the Stanford AI Index evidence review.
 
 Therefore:
 
@@ -610,7 +610,7 @@ Useful dimensions include:
 - provider;
 - project.
 
-FinOps recommends unit economics and attribution across technology categories so actual spending can be reconciled with business-case assumptions. citeturn0search4turn0search9
+FinOps recommends unit economics and attribution across technology categories so actual spending can be reconciled with business-case assumptions. See the FinOps evidence review.
 
 Perfect attribution is not always economically justified.
 
@@ -762,17 +762,17 @@ Ask:
 
 ### Fact / Technical Evidence
 
-Established FinOps and cloud architecture guidance supports measuring AI costs against workload, utilization, unit economics, and business value rather than treating a single infrastructure metric as sufficient. citeturn0search4turn0search9
+Established FinOps and cloud architecture guidance supports measuring AI costs against workload, utilization, unit economics, and business value rather than treating a single infrastructure metric as sufficient. See the FinOps evidence review.
 
 ### Industry Evidence
 
-Current FinOps guidance describes use-case economics, cost attribution, model selection, caching, serving, agent cost controls, and continuous measurement as important parts of AI cost management. citeturn1view0
+Current FinOps guidance describes use-case economics, cost attribution, model selection, caching, serving, agent cost controls, and continuous measurement as important parts of AI cost management. See the FinOps evidence review.
 
 ### Research / Independent Evidence
 
-Stanford's 2026 AI Index provides independent evidence that model capability is progressing rapidly, top-model performance is converging, and benchmark reliability and real-world utility require caution. citeturn0search0turn0search48
+Stanford's 2026 AI Index provides independent evidence that model capability is progressing rapidly, top-model performance is converging, and benchmark reliability and real-world utility require caution. See the Stanford AI Index evidence review.
 
-Artificial Analysis provides a current comparative methodology covering model and endpoint quality, price, latency, and cost per task. Its results are useful comparative evidence, not universal proof of enterprise suitability. citeturn0search1
+Artificial Analysis provides a current comparative methodology covering model and endpoint quality, price, latency, and cost per task. Its results are useful comparative evidence, not universal proof of enterprise suitability. See the Artificial Analysis evidence review.
 
 ### Recommendation
 
