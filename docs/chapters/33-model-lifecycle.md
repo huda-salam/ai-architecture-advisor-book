@@ -208,9 +208,9 @@ The lifecycle principle remains the same: the production dependency must be iden
 
 Pre-deployment evaluation is necessary but not sufficient.
 
-NIST's 2026 report on deployed AI monitoring identifies post-deployment monitoring as important for validating real-world behavior, detecting unforeseen outputs, and identifying unexpected consequences. It also notes that monitoring practices and terminology remain an evolving field. citeturn0search0turn0search1
+NIST's 2026 report on deployed AI monitoring identifies post-deployment monitoring as important for validating real-world behavior, detecting unforeseen outputs, and identifying unexpected consequences. It also notes that monitoring practices and terminology remain an evolving field. See the NIST AI 800-4 report listed in the Evidence Review.
 
-NIST AI RMF specifically calls for post-deployment monitoring, user feedback, appeal and override mechanisms, incident response, recovery, and change management. citeturn0search3
+NIST AI RMF specifically calls for post-deployment monitoring, user feedback, appeal and override mechanisms, incident response, recovery, and change management. See the NIST AI RMF Core and related guidance in the Evidence Review.
 
 A practical monitoring model includes:
 
@@ -321,7 +321,7 @@ Possible levels:
 - major architecture change;
 - materially changed risk boundary.
 
-NIST AI RMF calls for ongoing measurement and management rather than treating evaluation as a one-time event. urlNIST AI RMF Playbook — Measure and Managehttps://airc.nist.gov/airmf-resources/playbook/measure/
+NIST AI RMF calls for ongoing measurement and management rather than treating evaluation as a one-time event. See the NIST AI RMF Playbook — Measure and Manage reference in the Evidence Review.
 
 ---
 
@@ -373,7 +373,7 @@ Incident response should establish:
 
 For consequential systems, preserve enough evidence to reconstruct the incident while respecting privacy, security, and retention requirements.
 
-NIST AI RMF includes incident/error communication, response, recovery, and change management as part of post-deployment risk management. citeturn0search3
+NIST AI RMF includes incident/error communication, response, recovery, and change management as part of post-deployment risk management. See the NIST AI RMF Core and related guidance in the Evidence Review.
 
 ---
 
@@ -396,7 +396,7 @@ Before retirement, determine:
 - preserved artifacts;
 - rollback window.
 
-NIST AI RMF explicitly calls for safe decommissioning and phasing out of AI systems, with attention to dependencies, legal/regulatory requirements, continuity, and preservation of relevant artifacts. citeturn0search5turn0search6
+NIST AI RMF explicitly calls for safe decommissioning and phasing out of AI systems, with attention to dependencies, legal/regulatory requirements, continuity, and preservation of relevant artifacts. See the NIST AI RMF Core reference in the Evidence Review.
 
 Do not equate retirement with immediate destruction of every artifact. What should be retained, for how long, and under what controls is a separate governance decision.
 
@@ -444,7 +444,7 @@ The exact organizational structure varies.
 
 The architectural requirement is that accountability cannot disappear between teams.
 
-NIST AI RMF emphasizes documented roles, responsibilities, and communication lines for AI risk management. citeturn0search3
+NIST AI RMF emphasizes documented roles, responsibilities, and communication lines for AI risk management. See the NIST AI RMF Core and related guidance in the Evidence Review.
 
 ---
 
@@ -568,15 +568,15 @@ Classify lifecycle claims carefully.
 
 **Fact**
 
-NIST AI RMF explicitly addresses inventory, monitoring, change management, incident response, and safe decommissioning. citeturn0search3turn0search31
+NIST AI RMF explicitly addresses inventory, monitoring, change management, incident response, and safe decommissioning. See the NIST AI RMF references in the Evidence Review.
 
 **Technical Evidence**
 
-NIST's 2026 AI 800-4 report documents current challenges in post-deployment AI monitoring and notes that practices and terminology remain immature and fragmented. citeturn0search0
+NIST's 2026 AI 800-4 report documents current challenges in post-deployment AI monitoring and notes that practices and terminology remain immature and fragmented. See the report reference in the Evidence Review.
 
 **Theory / Framework**
 
-ISO/IEC 23894:2023 provides guidance for integrating AI risk management into AI-related activities and functions across organizations that develop, deploy, or use AI systems. citeturn0search2
+ISO/IEC 23894:2023 provides guidance for integrating AI risk management into AI-related activities and functions across organizations that develop, deploy, or use AI systems. See the ISO reference in the Evidence Review.
 
 **Recommendation**
 
@@ -584,7 +584,7 @@ The lifecycle gates, change classifications, and rollback requirements in this c
 
 **Uncertainty**
 
-There is no single universally accepted operational monitoring cadence or lifecycle process for every AI system. NIST's current monitoring work explicitly identifies open questions around what to monitor, when to monitor, and how monitoring should be tailored to risk. citeturn0search1
+There is no single universally accepted operational monitoring cadence or lifecycle process for every AI system. NIST's current monitoring work explicitly identifies open questions around what to monitor, when to monitor, and how monitoring should be tailored to risk. See the relevant NIST evidence in the Evidence Review.
 
 ---
 
