@@ -91,7 +91,9 @@ export default withMermaid(defineConfig({
             { text: '43. Failed AI Programs', link: '/chapters/43-failed-ai-programs' },
             { text: '43A. Failure Evidence Advisor Review', link: '/chapters/43a-advisor-review' },
             { text: '44. Third-Party LLM vs Proprietary Model Cases', link: '/chapters/44-third-party-llm-vs-proprietary-model-cases' },
-            { text: '44A. Model Ownership Advisor Review', link: '/chapters/44a-advisor-review' }
+            { text: '44A. Model Ownership Advisor Review', link: '/chapters/44a-advisor-review' },
+            { text: '45. AI Architecture Patterns & Anti-Patterns', link: '/chapters/45-ai-architecture-patterns' },
+            { text: '46. AI Evaluation & Testing Architecture', link: '/chapters/46-ai-evaluation-testing-architecture' }
           ]
         }
       ],
