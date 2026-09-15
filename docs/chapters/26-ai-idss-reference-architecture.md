@@ -8,7 +8,7 @@ An **AI-IDSS (AI Investment Decision Support System)** is not an LLM application
 
 The reference architecture in this chapter is deliberately **vendor-neutral**. It defines responsibilities and boundaries first; technologies are selected afterward.
 
-NIST AI RMF treats AI systems as socio-technical and emphasizes characteristics including validity/reliability, safety, security/resilience, accountability/transparency, explainability/interpretability, privacy, and fairness, with trade-offs determined by context. citeturn0search2turn0search10
+NIST AI RMF 1.0 treats AI systems as socio-technical and emphasizes characteristics including validity/reliability, safety, security/resilience, accountability/transparency, explainability/interpretability, privacy, and fairness, with trade-offs determined by context.
 
 ## 26.1 What the Reference Architecture Is — and Is Not
 
@@ -418,7 +418,7 @@ flowchart LR
     MG --> G
 ```
 
-NIST AI RMF uses Govern, Map, Measure, and Manage as its four functions. It also emphasizes documented roles, human oversight, third-party component risk, testing before deployment and during operation, and production monitoring. citeturn0search5turn0search7
+NIST AI RMF uses Govern, Map, Measure, and Manage as its four functions. It also emphasizes documented roles, human oversight, third-party component risk, testing before deployment and during operation, and production monitoring.
 
 For AI-IDSS, this means architecture review does not end when production deployment begins.
 
@@ -513,7 +513,7 @@ The AI can generate evidence-based recommendations. The accountable human decide
 
 This is an architecture recommendation for the investment decision-support context, not a universal requirement for all AI systems.
 
-NIST's GenAI Profile notes that GAI contexts may warrant additional human review, tracking, documentation, and management oversight depending on risks and context. citeturn0search21
+NIST's Generative AI Profile notes that GAI contexts may warrant additional human review, tracking, documentation, and management oversight depending on risks and context.
 
 ## 26.21 Trust Boundaries
 
@@ -765,16 +765,16 @@ What would change our mind:
 
 The architecture itself contains several different kinds of claims:
 
-- **Fact:** NIST AI RMF 1.0 is a voluntary framework for managing AI risks and describes trustworthiness characteristics and lifecycle-oriented risk management. citeturn0search2turn0search1
-- **Fact:** NIST's current AI RMF resources state that AI RMF 1.0 is being revised; the existing framework should therefore be cited with its version rather than treated as permanently final. citeturn0search3
-- **Fact:** NIST's AI RMF Core calls for documented human oversight, mapping of risks in third-party components, pre-deployment and ongoing testing, and production monitoring. citeturn0search5
-- **Industry/technical evidence:** NIST's 2026 monitoring report notes that post-deployment monitoring is important but that practices and terminology remain relatively nascent and fragmented. citeturn0search6
+- **Fact:** NIST AI RMF 1.0 is a voluntary framework for managing AI risks and describes trustworthiness characteristics and lifecycle-oriented risk management.
+- **Fact:** NIST's current AI RMF resources state that AI RMF 1.0 is being revised; the existing framework should therefore be cited with its version rather than treated as permanently final.
+- **Fact:** NIST's AI RMF Core calls for documented human oversight, mapping of risks in third-party components, pre-deployment and ongoing testing, and production monitoring.
+- **Industry/technical evidence:** NIST monitoring material indicates that post-deployment monitoring is important while practices and terminology remain relatively nascent and fragmented.
 - **Architecture recommendation:** AI-IDSS should keep authoritative data separate from AI-derived artifacts.
 - **Architecture recommendation:** consequential actions should remain within explicit authority boundaries.
 - **Inference:** the credibility of an AI-IDSS recommendation depends on the integrity of the chain from source evidence through processing, models, synthesis, and human decision.
 - **Assumption:** the initial AI-IDSS is intended primarily for investment decision support rather than autonomous capital allocation.
 
-Confidence should not be used to convert recommendations or inferences into facts.
+The detailed source identities, versions, URLs, evidence boundaries, and confidence assessments are maintained in the chapter evidence review. Confidence should not be used to convert recommendations or inferences into facts.
 
 ## 26.30 What Would Change Our Mind?
 
