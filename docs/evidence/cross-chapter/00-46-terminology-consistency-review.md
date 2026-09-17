@@ -1,4 +1,4 @@
-# 00–46 Cross-Chapter Terminology & Concept Consistency Review
+# Chapters 0–46 — Terminology & Concept Consistency Review
 
 **Review type:** Editorial and technical consistency review  
 **Scope:** Chapters 0–46 and advisor reference material  
