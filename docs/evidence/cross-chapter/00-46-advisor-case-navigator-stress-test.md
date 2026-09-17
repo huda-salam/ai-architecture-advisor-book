@@ -39,11 +39,12 @@ The test therefore measures:
 | 13 | AI recommends an action affecting an important business decision | Decision boundary | authority → evidence → human boundary → audit | Covered by Case 13 |
 | 14 | Advisor receives a proposal with insufficient evidence | Evidence gap | unknown → assumption → test → evidence → position | Covered by Case 14 |
 | 15 | Vendor says API compatibility guarantees multi-vendor portability | Red flag | interface compatibility → hidden dependencies → migration test | Red-Flag Index |
-| 16 | Team says fine-tuning is necessary because prompts are not enough | Technology choice | task failure → data → RAG/prompting/fine-tuning alternatives → evaluation | Partial; use Chapters 31–33 |
+| 16 | Team says fine-tuning is necessary because prompts are not enough | Technology choice | task failure → data → RAG/prompting/fine-tuning alternatives → evaluation | Covered by Case 15 |
 | 17 | Model quality is good but production latency is unacceptable | Cross-domain failure | quality → workload → serving → capacity → cost → business impact | Partial; use Chapters 16, 17, 31, 35 |
 | 18 | AI output is plausible but source evidence is weak | Evidence failure | provenance → retrieval → evidence → uncertainty → human boundary | Covered across 10, 28, 29, 41 |
 | 19 | AI system works in pilot but fails after organizational scale-up | Scale transition | workload change → data → operations → reliability → governance → TCO | Partial; use Chapters 16–18, 33–41 |
 | 20 | Executive asks “Should we build our own foundation model?” | Strategic technology choice | business need → control boundary → alternatives → economics → dependency → evidence | Covered across 5A, 6A, 30, 34, 36, 44 |
+| 21 | AI system is already in production and a material failure is reported | Incident | containment → failure classification → evidence reconstruction → control gap → remediation → revalidation | Covered by Case 16 |
 
 ---
 
@@ -51,7 +52,7 @@ The test therefore measures:
 
 ### Finding 1 — Core advisory entry cases are covered
 
-The primary navigator cases cover the most common decision entry points: AI necessity, LLM selection, RAG, agents, vendor claims, architecture, security, performance, deployment, economics, production, dependency, consequential decisions, and evidence gaps.
+The primary navigator cases cover the most common decision entry points: AI necessity, LLM selection, RAG, agents, vendor claims, architecture, security, performance, deployment, economics, production, dependency, consequential decisions, evidence gaps, intervention selection, and production incidents.
 
 **Status: PASS**
 
@@ -63,11 +64,9 @@ The navigator should therefore permit a case to branch across multiple domains r
 
 **Status: PASS WITH HARDENING**
 
-### Finding 3 — Technology-method selection needs stronger case navigation
+### Finding 3 — Technology-method selection now has an explicit entry point
 
-Fine-tuning vs RAG vs prompting is already covered deeply in Chapter 32, but the navigator's current cases reach it indirectly. A future navigator revision should include an explicit case:
-
-> **“The team wants to fine-tune the model. Is fine-tuning actually the right intervention?”**
+Fine-tuning vs RAG vs prompting is covered deeply in Chapter 32 and is now directly reachable from Case 15. The navigator frames the decision as an intervention problem rather than assuming that the requested technology is the answer.
 
 Required path:
 
@@ -85,15 +84,11 @@ Evaluation
 Lifecycle / cost / dependency
 ```
 
-**Status: IMPROVEMENT IDENTIFIED**
+**Status: PASS**
 
-### Finding 4 — Production failures need a post-incident entry point
+### Finding 4 — Production failures now have a post-incident entry point
 
-The current navigator has a production-approval case, but a production incident is a different advisory situation. The advisor needs to move from symptom to architectural failure mode rather than treating the problem as simply “production readiness was insufficient.”
-
-Recommended future case:
-
-> **“The AI system is already in production and something went wrong. Where do we investigate first?”**
+Case 16 distinguishes incident investigation from production approval. The advisor moves from observed symptom to containment, failure classification, evidence reconstruction, control gap, remediation, and revalidation.
 
 Suggested path:
 
@@ -104,37 +99,35 @@ Containment
       ↓
 Failure classification
       ↓
-Data / model / retrieval / tool / infrastructure / human boundary
-      ↓
 Evidence reconstruction
       ↓
-Control gap
+Control / design gap
       ↓
 Remediation
       ↓
 Revalidation
 ```
 
-**Status: IMPROVEMENT IDENTIFIED**
+**Status: PASS**
 
-### Finding 5 — Navigator should distinguish decision stage
+### Finding 5 — Decision stage is explicit but intentionally lightweight
 
-The same technology can require different questions depending on whether the organization is:
+The navigator now uses a small set of stage labels:
 
-- exploring;
-- selecting;
-- approving architecture;
-- piloting;
-- approving production;
-- operating;
-- investigating failure;
-- considering replacement or exit.
+- Exploring
+- Selecting
+- Architecture approval
+- Piloting
+- Production approval
+- Operating
+- Incident
+- Replacement / Exit
 
-The current navigator handles this implicitly. A later version may add a lightweight **Decision Stage** tag rather than duplicating cases.
+The stage is a routing aid. It is not a scoring mechanism and does not determine the recommendation.
 
-**Status: IMPROVEMENT IDENTIFIED**
+**Status: PASS**
 
-### Finding 6 — Navigation must not become a second book
+### Finding 6 — Navigator must not become a second book
 
 The stress test confirms that the navigator should remain concise. Technical mechanisms, evidence analysis, trade-offs, and detailed reasoning belong in canonical chapters.
 
@@ -175,9 +168,7 @@ The stress test indicates that practical advisory entry points can be grouped in
    “Something changed or failed. What do we investigate?”
 ```
 
-The first six are well represented in the current book. The seventh should become a future hardening target rather than a reason to expand the book immediately.
-
----
+All seven families now have explicit representation in the navigator. Cross-domain cases remain intentionally supported through multi-chapter branching rather than case proliferation.
 
 ## Acceptance Criteria
 
@@ -189,22 +180,19 @@ The Navigator is considered fit for the current release when:
 - the linked chapters contain the required technical depth;
 - red flags point toward meaningful investigation rather than slogans;
 - cross-domain cases can branch to more than one chapter;
+- decision stage can be identified without adding a complex taxonomy;
 - the navigator does not replace technical reasoning;
 - canonical knowledge remains in the chapters;
 - links resolve successfully in the documentation build.
 
----
-
 ## Future Hardening Queue
 
-The following improvements are intentionally recorded rather than immediately implemented:
+The major gaps identified by this stress test are now addressed. Remaining maintenance items are intentionally lightweight:
 
-1. add a fine-tuning intervention case;
-2. add a production incident/post-incident case;
-3. consider Decision Stage tags;
-4. consider an evidence-strength tag for urgent cases;
-5. add direct section-level anchors only where they materially reduce search time;
-6. periodically retest the navigator against new advisory cases.
+1. consider an evidence-strength tag for urgent cases;
+2. add direct section-level anchors only where they materially reduce search time;
+3. periodically retest the navigator against new advisory cases;
+4. review stage labels when the advisory operating model evolves.
 
 These are maintenance items, not evidence of a fundamental design gap.
 
