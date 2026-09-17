@@ -21,13 +21,13 @@ NIST AI RMF 1.0 defines four functions:
 - Measure
 - Manage
 
-NIST describes these as a flexible structure for managing AI risks, not as a rigid ordered checklist. Governance is cross-cutting, while Map, Measure, and Manage can be applied in system-specific contexts. NIST also states that risk management should continue throughout the AI lifecycle. citeturn0search0turn0search7
+NIST describes these as a flexible structure for managing AI risks, not as a rigid ordered checklist. Governance is cross-cutting, while Map, Measure, and Manage can be applied in system-specific contexts. NIST also states that risk management should continue throughout the AI lifecycle.
 
 **Primary sources:**
 - NIST AI RMF 1.0: https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10
 - NIST AI RMF Core: https://airc.nist.gov/airmf-resources/airmf/5-sec-core/
 
-**Current-status note:** NIST states that AI RMF 1.0 is being revised. The chapter therefore refers specifically to **AI RMF 1.0** rather than implying that it is the latest unrevised framework indefinitely. citeturn0search0turn0search3
+**Current-status note:** NIST states that AI RMF 1.0 is being revised. The chapter therefore refers specifically to **AI RMF 1.0** rather than implying that it is the latest unrevised framework indefinitely.
 
 ---
 
@@ -35,7 +35,7 @@ NIST describes these as a flexible structure for managing AI risks, not as a rig
 
 **Classification:** Framework evidence.
 
-NIST AI RMF frames risk as a composite of likelihood and magnitude of consequences. The chapter's conceptual formula reflects this framing but deliberately avoids claiming that all AI risks can be reduced to a simple numerical multiplication. citeturn0search13
+NIST AI RMF frames risk as a composite of likelihood and magnitude of consequences. The chapter's conceptual formula reflects this framing but deliberately avoids claiming that all AI risks can be reduced to a simple numerical multiplication.
 
 This distinction is important because qualitative, quantitative, and mixed-method assessment may all be appropriate.
 
@@ -45,7 +45,7 @@ This distinction is important because qualitative, quantitative, and mixed-metho
 
 **Classification:** Primary framework evidence.
 
-NIST MAP 1.1 calls for intended purposes, users, context, potential impacts, assumptions, limitations, and relevant metrics to be documented. MAP 3.3 also calls for targeted application scope to be specified based on capability and context. citeturn0search0turn0search36
+NIST MAP 1.1 calls for intended purposes, users, context, potential impacts, assumptions, limitations, and relevant metrics to be documented. MAP 3.3 also calls for targeted application scope to be specified based on capability and context.
 
 This directly supports the chapter's recommendation to begin risk analysis with intended use and consequence rather than model identity.
 
@@ -55,7 +55,7 @@ This directly supports the chapter's recommendation to begin risk analysis with 
 
 **Classification:** Primary framework evidence.
 
-NIST MEASURE supports quantitative, qualitative, or mixed methods and calls for appropriate metrics, regular assessment, documentation of uncertainty, and testing. NIST also states that AI systems should be tested before deployment and regularly during operation. citeturn0search0turn0search9
+NIST MEASURE supports quantitative, qualitative, or mixed methods and calls for appropriate metrics, regular assessment, documentation of uncertainty, and testing. NIST also states that AI systems should be tested before deployment and regularly during operation.
 
 The chapter therefore avoids prescribing a universal numerical risk scale.
 
@@ -65,7 +65,7 @@ The chapter therefore avoids prescribing a universal numerical risk scale.
 
 **Classification:** Primary framework evidence.
 
-NIST states that independent review can improve testing effectiveness and mitigate internal bias and conflicts of interest. citeturn0search0
+NIST states that independent review can improve testing effectiveness and mitigate internal bias and conflicts of interest.
 
 This is especially relevant to the advisor role because the advisor is intended to provide independent technical challenge rather than own the AI implementation.
 
@@ -77,7 +77,7 @@ This is especially relevant to the advisor role because the advisor is intended 
 
 **Classification:** Primary framework evidence + organizational governance inference.
 
-NIST GOVERN 1.3 states that processes should determine the needed level of risk management based on organizational risk tolerance. MANAGE 1.2 calls for treatment to be prioritized based on impact, likelihood, and available resources or methods. citeturn0search0
+NIST GOVERN 1.3 states that processes should determine the needed level of risk management based on organizational risk tolerance. MANAGE 1.2 calls for treatment to be prioritized based on impact, likelihood, and available resources or methods.
 
 This supports the chapter's distinction:
 
@@ -103,7 +103,7 @@ The chapter uses the distinction because architecture controls should be evaluat
 
 The preventive/detective/corrective/compensating/recovery classification is used as a practical architectural taxonomy. It should not be presented as an exclusive or universally standardized AI control taxonomy.
 
-The key evidence-supported principle is that NIST Manage calls for responses to prioritized AI risks and for ongoing monitoring and improvement. citeturn0search0turn0search10
+The key evidence-supported principle is that NIST Manage calls for responses to prioritized AI risks and for ongoing monitoring and improvement.
 
 ---
 
@@ -121,7 +121,7 @@ The actual controls must be derived from the threat and failure mechanism.
 
 **Classification:** Primary-source status clarification.
 
-The NIST AI RMF Playbook is explicitly described as voluntary guidance, not a one-size-fits-all checklist or ordered implementation procedure. NIST also states that the Playbook will be updated after AI RMF 1.0 is revised. citeturn0search5turn0search12
+The NIST AI RMF Playbook is explicitly described as voluntary guidance, not a one-size-fits-all checklist or ordered implementation procedure. NIST also states that the Playbook will be updated after AI RMF 1.0 is revised.
 
 Therefore Chapter 37 must not say or imply:
 
@@ -134,7 +134,7 @@ Therefore Chapter 37 must not say or imply:
 
 **Classification:** Primary framework evidence.
 
-NIST AI 600-1, the Generative AI Profile, is a companion resource to AI RMF 1.0 that identifies and proposes actions for risks specific to generative AI. NIST published it in July 2024 and updated its publication page in April 2026. citeturn0search1
+NIST AI 600-1, the Generative AI Profile, is a companion resource to AI RMF 1.0 that identifies and proposes actions for risks specific to generative AI. NIST published it in July 2024 and updated its publication page in April 2026.
 
 This supports the chapter's use of generative-AI-specific examples such as hallucination, prompt injection, and data-related risks, while the detailed controls remain architecture-dependent.
 
@@ -144,7 +144,7 @@ This supports the chapter's use of generative-AI-specific examples such as hallu
 
 **Classification:** International Standard.
 
-ISO/IEC 23894:2023 provides guidance for organizations that develop, produce, deploy, or use AI products, systems, and services. ISO states that the guidance can be customized to organizational context. citeturn0search4
+ISO/IEC 23894:2023 provides guidance for organizations that develop, produce, deploy, or use AI products, systems, and services. ISO states that the guidance can be customized to organizational context.
 
 This is useful corroborating evidence that AI risk management should be integrated into AI-related organizational activities rather than treated solely as a model-level exercise.
 
