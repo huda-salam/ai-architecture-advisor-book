@@ -409,6 +409,162 @@ The goal is therefore:
 
 ---
 
+## 27. Retrieval-Oriented Navigation
+
+A professional knowledge handbook should support both **linear learning** and **case-driven retrieval**.
+
+Readers should not be required to remember chapter numbers or understand the book's internal structure before they can find useful guidance.
+
+The handbook should therefore provide a navigation layer through which a reader can start from:
+
+- an executive question;
+- a technical question;
+- a real-world case;
+- a vendor or stakeholder claim;
+- a risk or failure symptom; or
+- an impending decision.
+
+### 27.1 Question-First Navigation
+
+For important recurring questions, provide a path of the form:
+
+**Question → What to investigate → Evidence / clue → Relevant chapter / section → Deeper reasoning**
+
+The navigation layer should answer:
+
+> **“Where should I look, what should I examine, and what distinction should I keep in mind?”**
+
+It should not merely provide a list of chapter links.
+
+### 27.2 Case-First Navigation
+
+Important cases should provide a path of the form:
+
+**Case → Immediate questions → Relevant technical domains → Evidence to seek → Failure modes / trade-offs → Relevant chapters → Decision boundary**
+
+This allows readers to learn through concrete situations while preserving access to the underlying technical material.
+
+### 27.3 Claim and Red-Flag Navigation
+
+When a claim commonly appears in proposals, vendor presentations, architecture reviews, or executive discussions, the handbook may provide a red-flag entry:
+
+**Claim → Why it may sound reasonable → What must be challenged → Evidence required → Relevant chapter(s)**
+
+Examples:
+
+- “The benchmark proves production readiness.”
+- “RAG eliminates hallucination.”
+- “Human approval makes the system safe.”
+- “API compatibility means portability.”
+- “Self-hosting means secure.”
+
+The purpose is not to label every claim as false. It is to identify the technical question that must be investigated.
+
+### 27.4 Answer Clues, Not Answer Substitution
+
+Navigation should provide **clues and reasoning paths**, not replace the reader's judgment.
+
+A shortcut should reduce search time, not reduce thinking.
+
+The preferred structure is:
+
+**Shortcut → Investigation → Evidence → Reasoning → Position**
+
+not:
+
+**Shortcut → Predefined answer**
+
+### 27.5 Canonical Knowledge Ownership
+
+Navigation entries must point to canonical knowledge rather than duplicating substantial explanations.
+
+If the same concept appears in several cases, maintain one primary technical treatment and use cross-references from the navigation layer.
+
+This prevents divergence between shortcut content and the underlying chapter.
+
+### 27.6 Two Reading Modes
+
+The handbook should explicitly support two complementary modes.
+
+**Learning Mode**
+
+```text
+Chapter → Concept → Architecture → Evidence → Reasoning → Judgment
+```
+
+Use this mode to build durable mental models and technical depth.
+
+**Advisory Mode**
+
+```text
+Question / Case / Claim
+        ↓
+Relevant clue
+        ↓
+Evidence to seek
+        ↓
+Technical chapter
+        ↓
+Failure / trade-off
+        ↓
+Technical position
+```
+
+Use this mode when preparing for a meeting, reviewing a proposal, responding to an unexpected question, or forming a time-constrained technical position.
+
+### 27.7 Coverage Requirements
+
+A mature navigation layer should progressively cover questions across:
+
+- AI suitability and necessity;
+- solution selection;
+- architecture;
+- data and knowledge;
+- security and authorization;
+- model capability and evaluation;
+- agents and automation;
+- performance and scalability;
+- reliability and resilience;
+- economics and TCO;
+- vendor dependency and reversibility;
+- production readiness;
+- risk and assurance;
+- evidence and auditability; and
+- technical recommendation.
+
+Coverage should follow actual decision frequency and importance rather than attempting to enumerate every conceivable question.
+
+### 27.8 Maintenance Rule
+
+Navigation is part of the knowledge architecture and must be reviewed when:
+
+- a canonical chapter moves;
+- a chapter is split or merged;
+- terminology changes;
+- a technical recommendation changes materially;
+- an evidence source becomes obsolete; or
+- a new recurring case exposes a missing retrieval path.
+
+A navigation link that points to stale or non-canonical knowledge is an editorial defect.
+
+### 27.9 Quality Test
+
+A navigation entry is useful when a competent reader can move from an unfamiliar question to the relevant technical material quickly without losing the epistemic distinctions of the source material.
+
+Reviewers should ask:
+
+1. Can the reader start from the problem rather than the chapter number?
+2. Does the entry identify what should be investigated?
+3. Does it identify what evidence matters?
+4. Does it distinguish fact, inference, assumption, and recommendation where relevant?
+5. Does it point to canonical technical material?
+6. Does it expose important failure modes or trade-offs?
+7. Does it preserve the reader's need to reason rather than supplying an unsupported shortcut answer?
+
+---
+
 ## Field Rule
 
 > **Write each important idea so that a competent reader can understand it, an editor can maintain it, and a future AI assistant can retrieve it without losing its epistemic meaning.**
+
+> **Make the book searchable by questions and cases, not only navigable by chapter numbers.**
