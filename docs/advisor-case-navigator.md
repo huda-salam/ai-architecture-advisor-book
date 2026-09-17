@@ -1,4 +1,6 @@
-# Advisor Case & Question Navigator
+# AI Technology & Architecture Advisor
+
+## Advisor Case & Question Navigator
 
 > **Read linearly if you want to learn. Navigate by case when you need to act.**
 
@@ -55,7 +57,7 @@ For rapid retrieval, cases can be grouped into seven families:
 
 **Evidence:** business objective, baseline, alternatives, measurable value, failure consequences, human boundary, cost assumptions.
 
-**Go to:** [5A — AI Suitability & Opportunity](./chapters/05a-ai-suitability-opportunity) · [6A — From AI Opportunity to AI Solution](./chapters/06a-from-ai-opportunity-to-solution) · [7 — Architecture Decision Framework](./chapters/07-architecture-decisions)
+**Go to:** [5A — AI Suitability & Opportunity](./chapters/05a-ai-suitability-opportunity) · [6A — From AI Opportunity to AI Solution](./chapters/06a-from-ai-opportunity-to-ai-solution) · [7 — Architecture Decision Framework](./chapters/07-architecture-decisions)
 
 **Red flag:** “AI is obviously needed.” → Compared with what?
 
@@ -287,7 +289,7 @@ Revalidation
 
 | Claim | Immediate challenge | Go deeper |
 |---|---|---|
-| “AI is obviously needed.” | Compared with what alternative? | [5A](./chapters/05a-ai-suitability-opportunity), [6A](./chapters/06a-from-ai-opportunity-to-solution) |
+| “AI is obviously needed.” | Compared with what alternative? | [5A](./chapters/05a-ai-suitability-opportunity), [6A](./chapters/06a-from-ai-opportunity-to-ai-solution) |
 | “The LLM can handle authorization.” | Where is authorization enforced? | [9](./chapters/09-enterprise-llm-architecture), [20](./chapters/20-identity-access-control) |
 | “RAG solves hallucination.” | What failure modes remain? | [10](./chapters/10-rag-architecture), [46](./chapters/46-ai-evaluation-testing-architecture) |
 | “Our benchmark is 95%.” | Task, dataset, baseline, population? | [31](./chapters/31-model-evaluation), [46](./chapters/46-ai-evaluation-testing-architecture) |
