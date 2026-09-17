@@ -42,7 +42,7 @@ Cross-cutting concerns:
 - [5. Advisory Communication & Influence](./chapters/05-advisory-communication)
 - [5A. AI Suitability & Opportunity](./chapters/05a-ai-suitability-opportunity)
 - [6. How to Evaluate a Technology Proposal](./chapters/06-evaluating-proposals)
-- [6A. From AI Opportunity to AI Solution](./chapters/06a-from-ai-opportunity-to-ai-solution)
+- [6A. From AI Opportunity to AI Solution](./chapters/06a-from-ai-opportunity-to-solution)
 - [7. Architecture Decision Framework](./chapters/07-architecture-decisions)
 - [8. AI Architecture Fundamentals](./chapters/08-ai-architecture-fundamentals)
 - [9. Enterprise LLM Architecture](./chapters/09-enterprise-llm-architecture)
