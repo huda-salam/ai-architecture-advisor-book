@@ -12,7 +12,44 @@ For every case, follow:
 
 ---
 
+## How to Use the Navigator
+
+Start from the situation that most closely resembles the decision in front of you. Do not assume that the case's linked chapter contains the answer; use it to identify the investigation path.
+
+### Decision Stage
+
+The same technology can require different questions at different stages. Use the lightest stage label that describes the current decision:
+
+- **Exploring** — deciding whether the problem merits investigation.
+- **Selecting** — comparing solution or technology options.
+- **Architecture approval** — deciding whether the proposed architecture is acceptable.
+- **Piloting** — testing assumptions before broader commitment.
+- **Production approval** — deciding whether the system is ready for operational use.
+- **Operating** — assessing a system already in service.
+- **Incident** — investigating an observed failure or material deviation.
+- **Replacement / Exit** — assessing migration, substitution, or dependency reduction.
+
+The stage is a routing aid, not a decision rule.
+
+### Entry Families
+
+For rapid retrieval, cases can be grouped into seven families:
+
+| Family | Typical question |
+|---|---|
+| Suitability | Should we use AI? |
+| Architecture | How should the system be shaped? |
+| Technology | Which technical approach is appropriate? |
+| Evidence | Can we trust this claim or result? |
+| Assurance | Is it secure, reliable, auditable, and production-ready? |
+| Economics / Dependency | What will it cost, and how reversible is it? |
+| Incident / Change | Something changed or failed. What do we investigate? |
+
+---
+
 ## 1. AI Is Proposed for a Business Problem
+
+**Stage:** Exploring / Selecting
 
 **Ask:** What problem are we solving? Why AI? What is the credible non-AI alternative? What incremental value does AI provide? What autonomy is actually required?
 
@@ -26,6 +63,8 @@ For every case, follow:
 
 ## 2. “We Need an LLM”
 
+**Stage:** Exploring / Selecting
+
 **Ask:** Why an LLM rather than conventional software, rules, analytics, or another AI approach? What task requires generative capability? What must remain deterministic?
 
 **Evidence:** task definition, baseline, capability requirements, knowledge sources, quality targets, latency/throughput, security, governance, cost.
@@ -37,6 +76,8 @@ For every case, follow:
 ---
 
 ## 3. RAG Is Proposed
+
+**Stage:** Selecting / Architecture approval / Piloting
 
 **Ask:** What knowledge problem does RAG solve? What is authoritative? How is retrieval evaluated? How is authorization enforced? What happens when retrieval is incomplete, stale, or wrong?
 
@@ -50,6 +91,8 @@ For every case, follow:
 
 ## 4. An AI Agent Is Proposed
 
+**Stage:** Selecting / Architecture approval / Piloting
+
 **Ask:** Why an agent instead of a deterministic workflow? What actions and tools can it invoke? What state/memory does it retain? Who authorizes actions? Can actions be stopped, reversed, replayed, and audited?
 
 **Evidence:** action inventory, tool permissions, identity, authorization enforcement, approval gates, memory/state, retries, rollback/compensation, audit trail, adversarial testing.
@@ -61,6 +104,8 @@ For every case, follow:
 ---
 
 ## 5. A Vendor Says “Our Benchmark Is 95%”
+
+**Stage:** Selecting / Due diligence / Production approval
 
 **Ask:** What was measured? On which dataset? Against which baseline? Is it representative? Which errors remain? Was it independently validated? What does the result mean operationally?
 
@@ -74,6 +119,8 @@ For every case, follow:
 
 ## 6. An Architecture Is Being Reviewed
 
+**Stage:** Architecture approval
+
 **Ask:** What requirements and constraints drive it? Where are trust boundaries? What fails first? Which responsibilities are deterministic versus probabilistic? Where are identity, authorization, data, evidence, audit, and recovery controls enforced? Which dependencies are difficult to reverse?
 
 **Evidence:** architecture diagram, request flows, requirements/NFRs, trust boundaries, failure modes, SLOs, security controls, dependency inventory, cost, recovery/rollback.
@@ -83,6 +130,8 @@ For every case, follow:
 ---
 
 ## 7. Security Is Being Questioned
+
+**Stage:** Architecture approval / Production approval / Operating
 
 **Ask:** What exactly is protected? Against which threats? Where is the trust boundary? Who can access data, models, tools, prompts, outputs, and logs? Is authorization enforced independently of the model?
 
@@ -96,6 +145,8 @@ For every case, follow:
 
 ## 8. Performance or Scalability Is Claimed
 
+**Stage:** Selecting / Piloting / Production approval / Operating
+
 **Ask:** What workload? What concurrency, latency, throughput, availability, and quality requirements? What is the bottleneck? What happens at peak load and when capacity is exhausted?
 
 **Evidence:** representative workload, concurrency profile, latency distribution, throughput, capacity model, utilization, scaling behaviour, failure margins, measured cost.
@@ -108,6 +159,8 @@ For every case, follow:
 
 ## 9. Cloud vs Self-Hosted Is Being Debated
 
+**Stage:** Selecting / Architecture approval
+
 **Ask:** Which controls are required? Which party operates each control? What threat model justifies the choice? What evidence supports the security and operational claims?
 
 **Evidence:** control requirements, responsibility boundary, residency, identity, encryption, network, availability, recovery, TCO, portability.
@@ -117,6 +170,8 @@ For every case, follow:
 ---
 
 ## 10. A Solution Is Presented as “Cheap”
+
+**Stage:** Selecting / Architecture approval / Operating
 
 **Ask:** Cheap relative to what? Under which workload? Are engineering, operations, data, network, observability, support, migration, and exit costs included? What happens as volume grows?
 
@@ -130,6 +185,8 @@ For every case, follow:
 
 ## 11. Production Approval Is Requested
 
+**Stage:** Production approval
+
 **Ask:** What evidence says the system is ready? What has not been tested? What failure modes remain? Are degraded modes, rollback, security, monitoring, audit, support, and incident response operational?
 
 **Evidence:** evaluation results, risk assessment, architecture review, operational readiness, rollback, monitoring, auditability, ownership, incident procedures.
@@ -141,6 +198,8 @@ For every case, follow:
 ---
 
 ## 12. Vendor Dependency or Lock-In Is Discussed
+
+**Stage:** Selecting / Operating / Replacement / Exit
 
 **Ask:** Which architectural layer creates the dependency? Is it deliberate? What is portable in practice? What would exit require? Which data, prompts, evaluations, workflows, or operational knowledge are difficult to migrate?
 
@@ -154,6 +213,8 @@ For every case, follow:
 
 ## 13. AI Output Will Influence a Consequential Decision
 
+**Stage:** Architecture approval / Production approval / Operating
+
 **Ask:** What authority remains human? Is AI recommending, prioritizing, predicting, or executing? What evidence supports the output? Can the recommendation be challenged and reconstructed? What happens when it is wrong?
 
 **Evidence:** authority model, decision boundary, evidence chain, uncertainty, human review design, audit trail, failure handling.
@@ -166,11 +227,59 @@ For every case, follow:
 
 ## 14. Evidence Is Insufficient
 
+**Stage:** Any stage
+
 **Ask:** What exactly is unknown? Which assumption carries the decision? What evidence would reduce uncertainty? Can it be tested before commitment? What would change the technical position?
 
 **Evidence path:** [0 — Reasoning & Evidence Standard](./chapters/00-reasoning-evidence) · [6 — Evaluating Technology Proposals](./chapters/06-evaluating-proposals) · [7 — Architecture Decision Framework](./chapters/07-architecture-decisions) · [46 — AI Evaluation & Testing Architecture](./chapters/46-ai-evaluation-testing-architecture)
 
 **Field rule:** If we do not know yet, determine how to know.
+
+---
+
+## 15. The Team Wants to Fine-Tune the Model
+
+**Stage:** Selecting / Piloting
+
+**Ask:** What task is failing, and how is it failing? Is the problem prompting, workflow, retrieval, data quality, model capability, or domain adaptation? What would fine-tuning change? What would remain unchanged? What alternatives are credible?
+
+**Evidence:** representative failure set, task definition, training data quality and rights, baseline prompt/workflow, RAG alternative, fine-tuning objective, evaluation design, maintenance burden, latency/cost impact, rollback path.
+
+**Go to:** [31 — Model Evaluation](./chapters/31-model-evaluation) · [32 — Fine-Tuning vs RAG vs Prompting](./chapters/32-fine-tuning-vs-rag-vs-prompting) · [33 — Model Lifecycle](./chapters/33-model-lifecycle) · [34 — AI TCO](./chapters/34-ai-tco) · [46 — AI Evaluation & Testing Architecture](./chapters/46-ai-evaluation-testing-architecture)
+
+**Red flag:** “Prompting is not enough, therefore fine-tuning is necessary.” → What specific failure requires model adaptation?
+
+---
+
+## 16. The AI System Is Already in Production and Something Went Wrong
+
+**Stage:** Incident / Operating
+
+**Ask:** What was observed, what changed, and what must be contained first? Is the failure in data, retrieval, model behaviour, orchestration, tool execution, infrastructure, security, or the human decision boundary? Can the consequential path be reconstructed?
+
+**Evidence:** incident timeline, inputs, model/version, prompts/configuration, retrieved evidence, tool calls, authorization decisions, outputs, human actions, logs, metrics, traces, deployment changes, rollback state.
+
+**Go to:** [18 — Reliability](./chapters/18-reliability) · [22 — AI-Specific Threats](./chapters/22-ai-specific-threats) · [28 — Explainability & Evidence](./chapters/28-explainability-evidence) · [29 — Human Decision Boundary](./chapters/29-human-decision-boundary) · [33 — Model Lifecycle](./chapters/33-model-lifecycle) · [40 — Production Readiness](./chapters/40-production-readiness) · [41 — Auditability](./chapters/41-auditability) · [46 — AI Evaluation & Testing Architecture](./chapters/46-ai-evaluation-testing-architecture)
+
+**Investigation path:**
+
+```text
+Observed incident
+      ↓
+Containment
+      ↓
+Failure classification
+      ↓
+Evidence reconstruction
+      ↓
+Control / design gap
+      ↓
+Remediation
+      ↓
+Revalidation
+```
+
+**Red flag:** Treating every AI incident as a “model problem” before checking data, retrieval, orchestration, controls, infrastructure, and human decision boundaries.
 
 ---
 
