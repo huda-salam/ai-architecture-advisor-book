@@ -4,6 +4,12 @@
 >
 > Use this page when preparing for, conducting, or reviewing an AI technology decision. It is intentionally concise. Follow the links when technical depth is required.
 
+## Start Here
+
+- **Need a fast case route?** → [Advisor Case & Question Navigator](./advisor-case-navigator)
+- **Need a working checklist or decision template?** → [Advisor Toolkit](./advisor-toolkit)
+- **Need conceptual depth?** → [Chapters](./chapters/00-reasoning-evidence)
+
 ## 1. Before the Meeting
 
 ### Business
@@ -189,4 +195,4 @@ Before giving a technical position, confirm that you can state:
 
 ## Field Rule
 
-> **Use the quick reference to decide what to ask. Use the technical chapters to understand whether the answers are technically credible.**
+> **Use the quick reference to decide what to ask. Use the technical chapters to understand whether the answers are technically credible. Use the toolkit when you need to record the analysis.**
