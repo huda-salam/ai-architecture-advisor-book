@@ -26,8 +26,6 @@
   --advisor-violet-soft: rgba(167, 139, 250, 0.13);
 }
 
-/* ---------- Base reading experience ---------- */
-
 .VPDoc {
   --advisor-reading-width: 820px;
 }
@@ -56,20 +54,9 @@
   letter-spacing: -0.015em;
 }
 
-.VPDoc h3 {
-  margin-top: 2rem;
-}
-
-.VPDoc a {
-  font-weight: 500;
-  text-underline-offset: 3px;
-}
-
-.VPDoc strong {
-  color: var(--vp-c-text-1);
-}
-
-/* ---------- Lead / introductory paragraphs ---------- */
+.VPDoc h3 { margin-top: 2rem; }
+.VPDoc a { font-weight: 500; text-underline-offset: 3px; }
+.VPDoc strong { color: var(--vp-c-text-1); }
 
 .VPDoc .lead,
 .VPDoc p.lead {
@@ -77,8 +64,6 @@
   line-height: 1.8;
   color: var(--vp-c-text-2);
 }
-
-/* ---------- Tables ---------- */
 
 .VPDoc table {
   display: table;
@@ -103,26 +88,17 @@
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
-.VPDoc tr:last-child td {
-  border-bottom: 0;
-}
-
+.VPDoc tr:last-child td { border-bottom: 0; }
 .VPDoc th:last-child,
-.VPDoc td:last-child {
-  border-right: 0;
-}
-
+.VPDoc td:last-child { border-right: 0; }
 .VPDoc tr:nth-child(even) td {
   background: color-mix(in srgb, var(--vp-c-bg-soft) 48%, transparent);
 }
-
-/* ---------- Code and technical fragments ---------- */
 
 .VPDoc div[class*='language-'] {
   border: 1px solid var(--vp-c-divider);
   box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
 }
-
 .dark .VPDoc div[class*='language-'] {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
@@ -135,8 +111,6 @@
   padding: 0.12rem 0.35rem;
 }
 
-/* ---------- VitePress custom containers ---------- */
-
 .VPDoc .custom-block {
   border-radius: 10px;
   border-width: 1px;
@@ -147,23 +121,18 @@
   border-color: color-mix(in srgb, var(--vp-c-brand-1) 40%, var(--vp-c-divider));
   background: linear-gradient(135deg, var(--vp-c-brand-soft), transparent 72%);
 }
-
 .VPDoc .custom-block.info {
   border-color: color-mix(in srgb, var(--advisor-violet) 35%, var(--vp-c-divider));
   background: linear-gradient(135deg, var(--advisor-violet-soft), transparent 72%);
 }
-
 .VPDoc .custom-block.warning {
   border-color: color-mix(in srgb, var(--advisor-amber) 42%, var(--vp-c-divider));
   background: linear-gradient(135deg, var(--advisor-amber-soft), transparent 72%);
 }
-
 .VPDoc .custom-block.danger {
   border-color: color-mix(in srgb, var(--advisor-coral) 42%, var(--vp-c-divider));
   background: linear-gradient(135deg, var(--advisor-coral-soft), transparent 72%);
 }
-
-/* ---------- Semantic emphasis helpers ---------- */
 
 .advisor-foundation,
 .advisor-deep-dive,
@@ -175,54 +144,29 @@
   border-radius: 10px;
   font-size: 0.92rem;
 }
-
 .advisor-foundation {
   border-left: 4px solid var(--vp-c-brand-1);
   background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 72%);
 }
-
 .advisor-deep-dive {
   border-left: 4px solid var(--advisor-violet);
   background: linear-gradient(90deg, var(--advisor-violet-soft), transparent 72%);
 }
-
 .advisor-lens {
   border-left: 4px solid var(--advisor-amber);
   background: linear-gradient(90deg, var(--advisor-amber-soft), transparent 72%);
 }
-
 .architecture-warning {
   border-left: 4px solid var(--advisor-coral);
   background: linear-gradient(90deg, var(--advisor-coral-soft), transparent 72%);
 }
 
-/* ---------- Sidebar / navigation ---------- */
-
-.VPSidebarItem.level-0 > .item > .text {
-  font-weight: 700;
-}
-
-.VPSidebarItem .item .text {
-  transition: color 0.15s ease, transform 0.15s ease;
-}
-
-.VPSidebarItem .item:hover .text {
-  color: var(--vp-c-brand-1);
-}
-
-.VPSidebarItem.is-active > .item .text {
-  color: var(--vp-c-brand-1);
-  font-weight: 650;
-}
-
-/* ---------- Top navigation ---------- */
-
+.VPSidebarItem.level-0 > .item > .text { font-weight: 700; }
+.VPSidebarItem .item .text { transition: color 0.15s ease, transform 0.15s ease; }
+.VPSidebarItem .item:hover .text { color: var(--vp-c-brand-1); }
+.VPSidebarItem.is-active > .item .text { color: var(--vp-c-brand-1); font-weight: 650; }
 .VPNavBar .VPNavBarMenuLink:hover,
-.VPNavBar .VPNavBarMenuLink.active {
-  color: var(--vp-c-brand-1);
-}
-
-/* ---------- Mermaid ---------- */
+.VPNavBar .VPNavBarMenuLink.active { color: var(--vp-c-brand-1); }
 
 .mermaid {
   cursor: zoom-in;
@@ -240,8 +184,6 @@
   max-width: 100%;
   height: auto;
 }
-
-/* ---------- Expanded diagram viewer ---------- */
 
 .diagram-viewer {
   position: fixed;
@@ -270,10 +212,7 @@
   color: var(--vp-c-text-1);
 }
 
-.diagram-viewer-controls {
-  display: flex;
-  gap: 6px;
-}
+.diagram-viewer-controls { display: flex; gap: 6px; }
 
 .diagram-viewer-controls button {
   min-width: 38px;
@@ -305,65 +244,38 @@
   cursor: grab;
 }
 
-.diagram-viewer-stage:active {
-  cursor: grabbing;
-}
+.diagram-viewer-stage:active { cursor: grabbing; }
 
 .diagram-viewer-content {
   transform-origin: center center;
   will-change: transform;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 90vw;
-  max-height: calc(100vh - 72px);
+  width: max-content;
+  height: max-content;
+  min-width: 1px;
+  min-height: 1px;
+  display: block;
+  max-width: none;
+  max-height: none;
 }
 
-.diagram-viewer-content svg {
+.diagram-viewer-svg {
+  display: block;
   width: auto;
   height: auto;
-  max-width: 90vw;
-  max-height: calc(100vh - 84px);
+  max-width: none;
+  max-height: none;
+  overflow: visible;
 }
 
-.diagram-viewer-open {
-  overflow: hidden;
-}
+.diagram-viewer-open { overflow: hidden; }
 
 @media (max-width: 640px) {
-  .VPDoc h1 {
-    font-size: 2rem;
-  }
-
-  .VPDoc h2 {
-    margin-top: 2.2rem;
-  }
-
-  .VPDoc .content {
-    line-height: 1.7;
-  }
-
-  .VPDoc table {
-    font-size: 0.88rem;
-  }
-
-  .mermaid {
-    padding: 0.65rem;
-    border-radius: 9px;
-  }
-
-  .diagram-viewer-toolbar {
-    min-height: 48px;
-    padding: 6px 8px;
-  }
-
-  .diagram-viewer-controls button {
-    min-width: 34px;
-    height: 34px;
-    padding: 0 7px;
-  }
-
-  .diagram-viewer-label {
-    font-size: 13px;
-  }
+  .VPDoc h1 { font-size: 2rem; }
+  .VPDoc h2 { margin-top: 2.2rem; }
+  .VPDoc .content { line-height: 1.7; }
+  .VPDoc table { font-size: 0.88rem; }
+  .mermaid { padding: 0.65rem; border-radius: 9px; }
+  .diagram-viewer-toolbar { min-height: 48px; padding: 6px 8px; }
+  .diagram-viewer-controls button { min-width: 34px; height: 34px; padding: 0 7px; }
+  .diagram-viewer-label { font-size: 13px; }
 }
