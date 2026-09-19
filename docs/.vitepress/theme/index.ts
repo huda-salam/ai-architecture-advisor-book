@@ -52,7 +52,7 @@ function zoomAt(factor: number, clientX?: number, clientY?: number) {
   applyTransform()
 }
 
-function openViewer(svg: SVGElement) {
+function openViewer(sourceSvg: SVGElement) {
   closeViewer()
 
   viewer = document.createElement('div')
@@ -94,11 +94,19 @@ function openViewer(svg: SVGElement) {
   stage.className = 'diagram-viewer-stage'
 
   content = document.createElement('div')
-  content.className = 'diagram-viewer-content mermaid'
+  content.className = 'diagram-viewer-content'
 
-  // Keep the Mermaid wrapper class so VitePress/Mermaid CSS continues to
-  // style node labels, edges, markers, and other generated SVG elements.
-  content.appendChild(svg.cloneNode(true))
+  const svg = sourceSvg.cloneNode(true) as SVGElement
+  svg.classList.add('diagram-viewer-svg')
+
+  // The cloned SVG is detached from its original layout. Preserve its
+  // rendered size explicitly so browser flex sizing cannot collapse it.
+  const sourceRect = sourceSvg.getBoundingClientRect()
+  if (sourceRect.width > 0) svg.setAttribute('width', String(sourceRect.width))
+  if (sourceRect.height > 0) svg.setAttribute('height', String(sourceRect.height))
+  svg.removeAttribute('style')
+
+  content.appendChild(svg)
   stage.appendChild(content)
   viewer.append(toolbar, stage)
   document.body.appendChild(viewer)
