@@ -24,6 +24,12 @@ Business-Value Evidence
 Production Decision
 ```
 
+## What Must Be True
+
+Production readiness requires evidence across the system boundary: model behavior, data and retrieval where applicable, security and authorization, performance, reliability, operations, human decision boundaries, auditability, ownership, economics, and rollback or degradation paths.
+
+**Editorial distinction:** business-value evidence is a production go/no-go input, but business value itself is not a technical readiness property.
+
 ## Technical Position
 
 Production readiness is a system-level property, not solely a model-quality result.
