@@ -182,7 +182,7 @@ export default withMermaid(defineConfig({
             { text: 'Chapter 25 Evidence Hardening', link: '25-iteration-1-evidence-hardening' },
             { text: 'Chapter 25 Adversarial Review', link: '25-iteration-2-adversarial-review' },
             { text: 'Chapter 25 Cross-Chapter Final Hardening', link: '25-iteration-3-cross-chapter-final-hardening' },
-            { text: 'Chapter 26 Final Evidence & Cross-Chapter Review', link: '26-iteration-4-final-evidence-and-cross-chapter-final-review' },
+            { text: 'Chapter 26 Final Evidence & Cross-Chapter Review', link: '26-iteration-4-final-evidence-and-cross-chapter-review' },
             { text: 'Chapter 27 Final Evidence Adversarial Review', link: '27-iteration-4-final-evidence-adversarial-review' },
             { text: 'Chapter 28 Final Evidence Adversarial Review', link: '28-iteration-4-final-evidence-adversarial-review' },
             { text: 'Chapter 29 Final Evidence Adversarial Review', link: '29-iteration-4-final-evidence-adversarial-review' },
