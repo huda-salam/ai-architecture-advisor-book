@@ -41,3 +41,16 @@ Recommendation
 > **Do not use a template to create the appearance of rigor. Use it to expose missing reasoning.**
 
 A completed checklist with weak evidence is still a weak assessment.
+
+
+## Worked Advisory Cases
+
+These cases demonstrate how the toolkit is used against realistic claims and architecture choices:
+
+- [RAG Does Not Automatically Solve Hallucination](./tools/worked-case-rag-not-hallucination)
+- [Agent or Deterministic Workflow?](./tools/worked-case-agent-vs-workflow)
+- [“Our Benchmark Is 95%”](./tools/worked-case-benchmark-95)
+- [Cloud vs Self-Hosted AI](./tools/worked-case-cloud-vs-self-hosted)
+- [Fine-Tuning Is Proposed](./tools/worked-case-fine-tuning)
+- [“The Model Is Production-Ready”](./tools/worked-case-production-readiness)
+- [“The API Is Compatible, So We Can Switch Later”](./tools/worked-case-vendor-exit)
