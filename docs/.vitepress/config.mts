@@ -11,11 +11,25 @@ export default withMermaid(defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Executive Guide', link: '/executive-summary' },
+      { text: 'Advisor Toolkit', link: '/advisor-toolkit' },
       { text: 'Chapters', link: '/chapters/00-reasoning-evidence' },
       { text: 'Evidence & Reviews', link: '/evidence/' },
       { text: 'Editorial Standard', link: '/standards/knowledge-ready-editorial-standard' }
     ],
     sidebar: {
+      '/advisor-toolkit': [
+        {
+          text: 'Advisor Toolkit',
+          items: [
+            { text: 'Toolkit Overview', link: '/advisor-toolkit' },
+            { text: 'AI Proposal Review Checklist', link: '/tools/ai-proposal-review-checklist' },
+            { text: 'Architecture Decision Record', link: '/tools/adr-template' },
+            { text: 'AI Evaluation Worksheet', link: '/tools/ai-evaluation-worksheet' },
+            { text: 'Architecture Pattern Review', link: '/tools/architecture-pattern-review-template' },
+            { text: 'Worked Example — Security Claim', link: '/tools/worked-example-proprietary-llm-security' }
+          ]
+        }
+      ],
       '/chapters/': [
         {
           text: 'Part I — The Mandate',
@@ -168,7 +182,7 @@ export default withMermaid(defineConfig({
             { text: 'Chapter 25 Evidence Hardening', link: '25-iteration-1-evidence-hardening' },
             { text: 'Chapter 25 Adversarial Review', link: '25-iteration-2-adversarial-review' },
             { text: 'Chapter 25 Cross-Chapter Final Hardening', link: '25-iteration-3-cross-chapter-final-hardening' },
-            { text: 'Chapter 26 Final Evidence & Cross-Chapter Review', link: '26-iteration-4-final-evidence-and-cross-chapter-review' },
+            { text: 'Chapter 26 Final Evidence & Cross-Chapter Review', link: '26-iteration-4-final-evidence-and-cross-chapter-final-review' },
             { text: 'Chapter 27 Final Evidence Adversarial Review', link: '27-iteration-4-final-evidence-adversarial-review' },
             { text: 'Chapter 28 Final Evidence Adversarial Review', link: '28-iteration-4-final-evidence-adversarial-review' },
             { text: 'Chapter 29 Final Evidence Adversarial Review', link: '29-iteration-4-final-evidence-adversarial-review' },
