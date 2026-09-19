@@ -1,11 +1,247 @@
+:root {
+  --vp-c-brand-1: #0f766e;
+  --vp-c-brand-2: #0d9488;
+  --vp-c-brand-3: #14b8a6;
+  --vp-c-brand-soft: rgba(20, 184, 166, 0.12);
+  --vp-c-indigo-1: #5b5bd6;
+  --vp-c-indigo-soft: rgba(91, 91, 214, 0.11);
+  --advisor-amber: #d97706;
+  --advisor-amber-soft: rgba(217, 119, 6, 0.11);
+  --advisor-coral: #dc5a5a;
+  --advisor-coral-soft: rgba(220, 90, 90, 0.10);
+  --advisor-violet: #7c3aed;
+  --advisor-violet-soft: rgba(124, 58, 237, 0.10);
+}
+
+.dark {
+  --vp-c-brand-1: #2dd4bf;
+  --vp-c-brand-2: #14b8a6;
+  --vp-c-brand-3: #5eead4;
+  --vp-c-brand-soft: rgba(45, 212, 191, 0.13);
+  --advisor-amber: #f59e0b;
+  --advisor-amber-soft: rgba(245, 158, 11, 0.13);
+  --advisor-coral: #fb7185;
+  --advisor-coral-soft: rgba(251, 113, 133, 0.12);
+  --advisor-violet: #a78bfa;
+  --advisor-violet-soft: rgba(167, 139, 250, 0.13);
+}
+
+/* ---------- Base reading experience ---------- */
+
+.VPDoc {
+  --advisor-reading-width: 820px;
+}
+
+.VPDoc .content-container {
+  max-width: var(--advisor-reading-width);
+}
+
+.VPDoc .content {
+  line-height: 1.78;
+}
+
+.VPDoc h1 {
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  background: linear-gradient(100deg, var(--vp-c-brand-1), var(--advisor-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.VPDoc h2 {
+  margin-top: 2.8rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+  letter-spacing: -0.015em;
+}
+
+.VPDoc h3 {
+  margin-top: 2rem;
+}
+
+.VPDoc a {
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+.VPDoc strong {
+  color: var(--vp-c-text-1);
+}
+
+/* ---------- Lead / introductory paragraphs ---------- */
+
+.VPDoc .lead,
+.VPDoc p.lead {
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: var(--vp-c-text-2);
+}
+
+/* ---------- Tables ---------- */
+
+.VPDoc table {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+}
+
+.VPDoc th {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+}
+
+.VPDoc th,
+.VPDoc td {
+  border-right: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.VPDoc tr:last-child td {
+  border-bottom: 0;
+}
+
+.VPDoc th:last-child,
+.VPDoc td:last-child {
+  border-right: 0;
+}
+
+.VPDoc tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 48%, transparent);
+}
+
+/* ---------- Code and technical fragments ---------- */
+
+.VPDoc div[class*='language-'] {
+  border: 1px solid var(--vp-c-divider);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+}
+
+.dark .VPDoc div[class*='language-'] {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.VPDoc :not(pre) > code {
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand-1);
+  border-radius: 5px;
+  padding: 0.12rem 0.35rem;
+}
+
+/* ---------- VitePress custom containers ---------- */
+
+.VPDoc .custom-block {
+  border-radius: 10px;
+  border-width: 1px;
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.045);
+}
+
+.VPDoc .custom-block.tip {
+  border-color: color-mix(in srgb, var(--vp-c-brand-1) 40%, var(--vp-c-divider));
+  background: linear-gradient(135deg, var(--vp-c-brand-soft), transparent 72%);
+}
+
+.VPDoc .custom-block.info {
+  border-color: color-mix(in srgb, var(--advisor-violet) 35%, var(--vp-c-divider));
+  background: linear-gradient(135deg, var(--advisor-violet-soft), transparent 72%);
+}
+
+.VPDoc .custom-block.warning {
+  border-color: color-mix(in srgb, var(--advisor-amber) 42%, var(--vp-c-divider));
+  background: linear-gradient(135deg, var(--advisor-amber-soft), transparent 72%);
+}
+
+.VPDoc .custom-block.danger {
+  border-color: color-mix(in srgb, var(--advisor-coral) 42%, var(--vp-c-divider));
+  background: linear-gradient(135deg, var(--advisor-coral-soft), transparent 72%);
+}
+
+/* ---------- Semantic emphasis helpers ---------- */
+
+.advisor-foundation,
+.advisor-deep-dive,
+.advisor-lens,
+.architecture-warning {
+  margin: 1.6rem 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  font-size: 0.92rem;
+}
+
+.advisor-foundation {
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 72%);
+}
+
+.advisor-deep-dive {
+  border-left: 4px solid var(--advisor-violet);
+  background: linear-gradient(90deg, var(--advisor-violet-soft), transparent 72%);
+}
+
+.advisor-lens {
+  border-left: 4px solid var(--advisor-amber);
+  background: linear-gradient(90deg, var(--advisor-amber-soft), transparent 72%);
+}
+
+.architecture-warning {
+  border-left: 4px solid var(--advisor-coral);
+  background: linear-gradient(90deg, var(--advisor-coral-soft), transparent 72%);
+}
+
+/* ---------- Sidebar / navigation ---------- */
+
+.VPSidebarItem.level-0 > .item > .text {
+  font-weight: 700;
+}
+
+.VPSidebarItem .item .text {
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.VPSidebarItem .item:hover .text {
+  color: var(--vp-c-brand-1);
+}
+
+.VPSidebarItem.is-active > .item .text {
+  color: var(--vp-c-brand-1);
+  font-weight: 650;
+}
+
+/* ---------- Top navigation ---------- */
+
+.VPNavBar .VPNavBarMenuLink:hover,
+.VPNavBar .VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1);
+}
+
+/* ---------- Mermaid ---------- */
+
 .mermaid {
   cursor: zoom-in;
+  margin: 1.75rem 0;
+  padding: 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 15% 10%, var(--vp-c-brand-soft), transparent 32%),
+    var(--vp-c-bg-soft);
+  overflow-x: auto;
 }
 
 .mermaid svg {
   max-width: 100%;
   height: auto;
 }
+
+/* ---------- Expanded diagram viewer ---------- */
 
 .diagram-viewer {
   position: fixed;
@@ -30,7 +266,7 @@
 
 .diagram-viewer-label {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 650;
   color: var(--vp-c-text-1);
 }
 
@@ -54,6 +290,7 @@
 
 .diagram-viewer-controls button:hover {
   border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
 }
 
 .diagram-viewer-stage {
@@ -94,6 +331,27 @@
 }
 
 @media (max-width: 640px) {
+  .VPDoc h1 {
+    font-size: 2rem;
+  }
+
+  .VPDoc h2 {
+    margin-top: 2.2rem;
+  }
+
+  .VPDoc .content {
+    line-height: 1.7;
+  }
+
+  .VPDoc table {
+    font-size: 0.88rem;
+  }
+
+  .mermaid {
+    padding: 0.65rem;
+    border-radius: 9px;
+  }
+
   .diagram-viewer-toolbar {
     min-height: 48px;
     padding: 6px 8px;
