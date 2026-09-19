@@ -43,6 +43,12 @@ Recommendation
 A completed checklist with weak evidence is still a weak assessment.
 
 
+## Worked-Case Adversarial Review
+
+Before expanding the case library, use the adversarial review to test whether each case exposes assumptions, evidence burden, failure modes, alternatives, and validation rather than merely presenting a plausible conclusion.
+
+[Read the adversarial review](./evidence/cross-chapter/00-47-worked-advisory-cases-adversarial-review)
+
 ## Worked Advisory Cases
 
 These cases demonstrate how the toolkit is used against realistic claims and architecture choices:
