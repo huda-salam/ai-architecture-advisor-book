@@ -23,6 +23,14 @@ Ask what must be true: required knowledge must be authoritative, available, retr
 
 Wrong retrieval, stale authority, unauthorized retrieval, contradictory evidence, model misinterpretation, noisy context, and unsupported citations can all remain.
 
+### Hidden Assumptions
+
+- Retrieved material is authoritative rather than merely relevant.
+- Retrieval quality is sufficient for the required task.
+- The model will use retrieved evidence correctly.
+- Retrieved passages actually support the generated claim.
+- Access controls apply consistently across indexing, retrieval, context construction, and generation.
+
 ## Technical Position
 
 RAG should be evaluated as an end-to-end retrieval-and-generation system, not treated as a hallucination switch.
