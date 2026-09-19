@@ -14,13 +14,19 @@ let startOffsetY = 0
 let touchDistance = 0
 let touchScale = 1
 
+// Render the detached SVG at a larger intrinsic resolution before applying
+// the viewer transform. This is especially useful for Mermaid diagrams that
+// contain foreignObject/HTML text, which browsers can rasterize while zooming.
+const DIAGRAM_RENDER_SCALE = 4
+const MAX_ZOOM = 5
+
 function applyTransform() {
   if (!content) return
   content.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`
 }
 
 function resetView() {
-  scale = 1
+  scale = 1 / DIAGRAM_RENDER_SCALE
   offsetX = 0
   offsetY = 0
   applyTransform()
@@ -36,7 +42,7 @@ function closeViewer() {
 }
 
 function zoomAt(factor: number, clientX?: number, clientY?: number) {
-  const next = Math.min(5, Math.max(0.5, scale * factor))
+  const next = Math.min(MAX_ZOOM, Math.max(0.125, scale * factor))
   if (!viewer || !content || next === scale) return
 
   if (clientX !== undefined && clientY !== undefined) {
@@ -100,10 +106,15 @@ function openViewer(sourceSvg: SVGElement) {
   svg.classList.add('diagram-viewer-svg')
 
   // The cloned SVG is detached from its original layout. Preserve its
-  // rendered size explicitly so browser flex sizing cannot collapse it.
+  // aspect ratio, but give it a larger intrinsic drawing surface so that
+  // browser-rasterized foreignObject content remains crisp while zooming.
   const sourceRect = sourceSvg.getBoundingClientRect()
-  if (sourceRect.width > 0) svg.setAttribute('width', String(sourceRect.width))
-  if (sourceRect.height > 0) svg.setAttribute('height', String(sourceRect.height))
+  if (sourceRect.width > 0) {
+    svg.setAttribute('width', String(sourceRect.width * DIAGRAM_RENDER_SCALE))
+  }
+  if (sourceRect.height > 0) {
+    svg.setAttribute('height', String(sourceRect.height * DIAGRAM_RENDER_SCALE))
+  }
   svg.removeAttribute('style')
 
   content.appendChild(svg)
@@ -155,7 +166,7 @@ function openViewer(sourceSvg: SVGElement) {
       event.touches[0].clientX - event.touches[1].clientX,
       event.touches[0].clientY - event.touches[1].clientY
     )
-    scale = Math.min(5, Math.max(0.5, touchScale * (distance / touchDistance)))
+    scale = Math.min(MAX_ZOOM, Math.max(0.125, touchScale * (distance / touchDistance)))
     applyTransform()
   }, { passive: false })
 
