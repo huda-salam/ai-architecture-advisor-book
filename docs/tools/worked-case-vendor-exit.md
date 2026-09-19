@@ -6,6 +6,10 @@ Test practical portability. Ask what must migrate: prompts, structured outputs, 
 
 Perform a small exit exercise and measure migration effort, behavior changes, quality regression, latency, cost, control gaps, data migration, and time to restore acceptable service.
 
+## Evidence to Request
+
+Request provider-specific dependencies, data export capabilities, migration tooling, contractual constraints, and evidence from a small exit exercise.
+
 ## Technical Position
 
 API compatibility can reduce migration effort, but does not establish practical reversibility. Reversibility must be evaluated across data, behavior, controls, operations, economics, and organizational dependencies.
