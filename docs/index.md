@@ -13,6 +13,7 @@ It is not an AI strategy plan, product manual, or implementation guide. Its purp
 - [Executive Summary](./executive-summary)
 - [Advisor Quick Reference](./advisor-quick-reference)
 - [Advisor Case & Question Navigator](./advisor-case-navigator)
+- [Advisor Toolkit](./advisor-toolkit)
 
 > **Read linearly if you want to learn. Navigate by case when you need to act.**
 
